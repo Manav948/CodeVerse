@@ -9,10 +9,10 @@ interface Props {
 }
 const ProviderBtns = ({ SignInCard, disabled, onLoading, intent }: Props) => {
     return (
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-4">
             <ProviderBtn
                 onLoading={onLoading}
-                providerName="Google"
+                providerName="google"
                 disabled={disabled}
                 intent={intent}
                 className="w-full flex items-center gap-2 rounded-[1.9rem] border text-sm h-12 sm:h-10 sm:text-base"
@@ -30,7 +30,7 @@ const ProviderBtns = ({ SignInCard, disabled, onLoading, intent }: Props) => {
             <ProviderBtn
                 onLoading={onLoading}
                 disabled={disabled}
-                providerName="GitHub"
+                providerName="github"
                 intent={intent}
                 className="w-full flex items-center gap-2 rounded-[1.9rem] border text-sm h-12 sm:h-10 sm:text-base"
             >

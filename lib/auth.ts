@@ -10,9 +10,6 @@ import bcrypt from "bcryptjs";
 
 
 export const authOptions: NextAuthOptions = {
-    session: {
-        "strategy": "jwt"
-    },
     pages: {
         error: "sign-in",
         signIn: "sign-in"
@@ -33,8 +30,8 @@ export const authOptions: NextAuthOptions = {
             }
         }),
         GithubProvider({
-            clientId: process.env.GITHUB_CLIENT_ID!,
-            clientSecret: process.env.GITHUB_CLIENT_SECRET!,
+            clientId: process.env.GITHUB_ID!,
+            clientSecret: process.env.GITHUB_SECRET!,
             async profile(profile) {
                 const username = generateFromEmail(profile.email, 5)
                 return {

@@ -16,13 +16,13 @@ const AuthCard = ({ mode }: Props) => {
     <div className="w-full max-w-md">
       <Card className="relative overflow-hidden border-white/10 bg-white/5 backdrop-blur-xl">
         <CardHeader className="flex flex-col items-center gap-3 text-center">
-          {/* <Image
-            alt="Auth Logo"
+          <Image
+            className="rounded-full object-cover shadow-md"
+            alt="Auth logo"
             width={56}
             height={56}
-            className="rounded-xl"
-            src={"https://github.com/shadcn.png"}
-          /> */}
+            src="/logo.jpg"
+          />
 
           <CardTitle className="text-2xl font-semibold text-white">
             {isSignIn ? "Welcome back" : "Create your account"}

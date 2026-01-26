@@ -71,7 +71,7 @@ const SignUpCard = () => {
   };
 
   return (
-    <CardContent className="relative overflow-hidden rounded-3xl p-8">
+    <CardContent className="relative overflow-hidden rounded-3xl p-3">
       <div className="absolute inset-0 -z-10 bg-linear-to-br from-[#0f172a] via-[#020617] to-[#020617]" />
       <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl" />
       <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
@@ -99,7 +99,7 @@ const SignUpCard = () => {
                     placeholder="Email"
                     type="email"
                     {...field}
-                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40"
+                    className="h-8 bg-white/5 border-white/10 text-white placeholder:text-white/40"
                   />
                 </FormControl>
                 <FormMessage />
@@ -150,7 +150,7 @@ const SignUpCard = () => {
             {loading ? <LoadingState loadingText="Creating account" /> : "Create account"}
           </Button>
 
-          <p className="text-center text-sm text-white/60">
+          {/* <p className="text-center text-sm text-white/60">
             Already have an account?{" "}
             <Link
               href="/sign-in"
@@ -158,7 +158,7 @@ const SignUpCard = () => {
             >
               Sign in
             </Link>
-          </p>
+          </p> */}
         </form>
       </Form>
     </CardContent>

@@ -55,7 +55,7 @@ const SignInCard = () => {
       }
 
       toast.success("Signed in successfully");
-      router.push("/onboarding"); // or "/"
+      router.push("/dashboard"); // or "/"
       router.refresh();
     } catch (error) {
       console.error("Sign-in failed:", error);
@@ -137,12 +137,12 @@ const SignInCard = () => {
             )}
           </Button>
 
-          <p className="text-center text-sm text-white/60">
+          {/* <p className="text-center text-sm text-white/60">
             Don’t have an account?{" "}
             <Link href="/sign-up" className="text-cyan-400 hover:underline">
               Create one
             </Link>
-          </p>
+          </p> */}
         </form>
       </Form>
     </CardContent>

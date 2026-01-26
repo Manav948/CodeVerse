@@ -4,7 +4,7 @@ import { Button } from '../ui/button';
 
 interface Props extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     children: React.ReactNode;
-    providerName: "Google" | "GitHub"
+    providerName: "google" | "github"
     intent: "signin" | "signup";
     onLoading: React.Dispatch<React.SetStateAction<boolean>>
 }

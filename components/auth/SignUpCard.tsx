@@ -21,7 +21,6 @@ import {
 import ProviderBtns from "./ProviderBtns";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import Link from "next/link";
 import { LoadingState } from "../ui/LoadingState";
 
 type SignUpValues = z.infer<typeof signUpSchema>;

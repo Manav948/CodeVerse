@@ -1,21 +1,6 @@
 "use client";
-
-import React from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { signOut } from "next-auth/react";
-import { Bell, LogOut, Plus, Settings2, Search } from "lucide-react";
-
+import { Bell, Plus, Search } from "lucide-react";
 import { Button } from "../../ui/button";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from "../../ui/dropdown-menu";
-import { UserAvatar } from "../../ui/user-avatar";
 import User from "./User";
 
 const Header = () => {
@@ -24,7 +9,6 @@ const Header = () => {
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/40 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4">
 
-        {/* Left: Search */}
         <div className="relative w-full max-w-sm">
           <Search
             size={16}
@@ -37,22 +21,18 @@ const Header = () => {
           />
         </div>
 
-        {/* Right: Actions */}
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-5">
 
-          {/* Create */}
           <Button className="h-10 gap-2 rounded-xl bg-linear-to-r from-purple-500 to-cyan-500 text-white hover:opacity-90">
             <Plus size={16} />
             Create
           </Button>
 
-          {/* Notifications */}
           <button className="relative rounded-xl p-2 text-white/70 hover:bg-white/10">
             <Bell size={18} />
             <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-red-500" />
           </button>
 
-          {/* User Menu */}
           <User />
         </div>
       </div>

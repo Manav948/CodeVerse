@@ -1,3 +1,4 @@
+"use client";
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -28,7 +29,6 @@ const User = () => {
                     sideOffset={10}
                     className="w-56 rounded-xl border border-white/10 bg-black p-2 text-gray-400 shadow-xl"
                 >
-                    {/* User info */}
                     <div className="flex items-center gap-3 px-2 py-2">
                         <UserAvatar />
                         <div className="leading-tight">

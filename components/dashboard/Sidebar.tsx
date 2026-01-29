@@ -4,12 +4,6 @@ import SidebarMobile from "../sidebar/SidebarMobile";
 const Sidebar = () => {
   return (
     <>
-      {/* Mobile hamburger */}
-      <div className="md:hidden">
-        <SidebarMobile />
-      </div>
-
-      {/* Desktop sidebar */}
       <SidebarContainer />
     </>
   );

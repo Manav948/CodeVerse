@@ -9,7 +9,11 @@ const SidebarContainer = () => {
       "
     >
       <div className="mb-6 flex items-center gap-2 px-2">
-        <div className="h-10 w-10 rounded-xl bg-linear-to-br from-purple-500 to-cyan-500" />
+        <img
+          src="/logo.jpg"
+          alt="Code Verse"
+          className="h-9 w-9 rounded-xl object-cover"
+        />
         <h1
           className="
             text-lg font-bold

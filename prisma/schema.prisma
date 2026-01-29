@@ -41,24 +41,71 @@ model Session {
 }
 
 model VerificationToken {
-  identifier  String
-  token       String   @unique
-  expires     DateTime
+  identifier String
+  token      String   @unique
+  expires    DateTime
 
   @@unique([identifier, token])
 }
 
 model User {
-   id                 String              @id @default(cuid())
-  name               String?
-  username           String              @unique
-  surname            String?
-  email              String?             @unique
-  emailVerified      DateTime?           @map("email_verified")
-  hashedPassword     String?
-  image              String?
-  language           String?
-  completeOnboarding Boolean             @default(false)
-  accounts           Account[]
-  sessions           Session[]
+  id             String    @id @default(cuid())
+  name           String?
+  username       String    @unique
+  email          String?   @unique
+  emailVerified  DateTime? @map("email_verified")
+  hashedPassword String?
+  image          String?
+  accounts       Account[]
+  sessions       Session[]
+  snippets       Snippet[]
+}
+
+enum SnippetVisibility {
+  PUBLIC
+  PRIVATE
+  UNLISTED
+}
+
+enum CodeLanguage {
+  HTML
+  CSS
+  React
+  JAVASCRIPT
+  TYPESCRIPT
+  PYTHON
+  JAVA
+  C
+  CPP
+  GO
+  RUST
+  OTHER
+}
+
+model Snippet {
+  id          String            @id @default(cuid())
+  user        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  title       String
+  code        String            @db.Text
+  description String
+  visibility  SnippetVisibility
+  Language    CodeLanguage
+  created_at  DateTime          @default(now())
+  updated_at  DateTime          @updatedAt
+  tags        SnippetTag[]
+}
+
+model Tag {
+  id       String       @id @default(uuid())
+  name     String
+  snippets SnippetTag[]
+}
+
+model SnippetTag {
+  id        String  @id @default(uuid())
+  snippet   Snippet @relation(fields: [snippetId], references: [id], onDelete: Cascade)
+  snippetId String
+  tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId     String
 }

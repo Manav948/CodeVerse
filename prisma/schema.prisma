@@ -56,9 +56,12 @@ model User {
   emailVerified  DateTime? @map("email_verified")
   hashedPassword String?
   image          String?
+  totalSnippets  Int       @default(0)
+  lastActiveAt   DateTime?
   accounts       Account[]
   sessions       Session[]
   snippets       Snippet[]
+  comments       Comment[]
 }
 
 enum SnippetVisibility {
@@ -90,10 +93,11 @@ model Snippet {
   code        String            @db.Text
   description String
   visibility  SnippetVisibility
-  Language    CodeLanguage
+  language    CodeLanguage      @default(JAVASCRIPT)
   created_at  DateTime          @default(now())
   updated_at  DateTime          @updatedAt
   tags        SnippetTag[]
+  comments    Comment[]
 }
 
 model Tag {
@@ -108,4 +112,17 @@ model SnippetTag {
   snippetId String
   tag       Tag     @relation(fields: [tagId], references: [id], onDelete: Cascade)
   tagId     String
+}
+
+model Comment {
+  id              String   @id @default(cuid())
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId          String
+  commentText     String
+  commentableId   String
+  commentableType String
+  created_at      DateTime @default(now())
+  updated_at      DateTime @updatedAt
+  snippet         Snippet? @relation(fields: [snippetId], references: [id], onDelete: Cascade)
+  snippetId       String?
 }

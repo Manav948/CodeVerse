@@ -48,7 +48,7 @@ const Header = () => {
             "
           >
             <Plus size={16} />
-            <span className="ml-2 hidden md:inline">Create</span>
+            <span className="ml-2 hidden md:inline">Create Post</span>
           </Button>
 
           <button className="relative rounded-xl p-2 text-white/70 hover:bg-white/10 cursor-pointer">

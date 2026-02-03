@@ -12,7 +12,7 @@ import {
 const options = [
   { label: "Home", href: "/", icon: Home },
   { label: "Q & A", href: "/", icon: MessageCircle },
-  { label: "Snippets", href: "/", icon: Code2 },
+  { label: "Snippets", href: "/snippet", icon: Code2 },
   { label: "Articles", href: "/", icon: FileText },
   { label: "Community", href: "/", icon: Users },
   { label: "Bookmarks", href: "/", icon: Bookmark },

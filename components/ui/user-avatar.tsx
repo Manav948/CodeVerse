@@ -7,13 +7,16 @@ interface Props {
   size?: number
   className?: string
   profileImage?: string | null
+  username?: string | null
 }
 
 export const UserAvatar = ({
   profileImage,
   className,
-  size = 40, 
+  size = 40,
+  username,
 }: Props) => {
+  const initial = username ? username.charAt(0).toUpperCase() : "U";
   return (
     <div
       className={clsx(
@@ -31,7 +34,9 @@ export const UserAvatar = ({
           priority
         />
       ) : (
-        <User size={Math.floor(size * 0.6)} /> 
+        <div className="flex items-center justify-center w-full h-full bg-gradient-to-br from-purple-500 to-cyan-500 text-white font-semibold text-lg">
+          {initial}
+        </div>
       )}
     </div>
   )

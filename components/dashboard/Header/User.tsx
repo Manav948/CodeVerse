@@ -27,6 +27,7 @@ const User = () => {
                     <button className="rounded-full ring-2 ring-transparent hover:ring-white/20 transition cursor-pointer">
                         <UserAvatar
                         profileImage={user?.image ?? null}
+                        username={user?.username ?? null}
                         />
                     </button>
                 </DropdownMenuTrigger>

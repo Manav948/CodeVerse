@@ -57,7 +57,7 @@ const SignUpCard = () => {
         return;
       }
 
-      router.push("/");
+      router.push("/sign-in");
     } catch (error: any) {
       if (axios.isAxiosError(error) && error.response?.status === 409) {
         toast.error("Email already exists");

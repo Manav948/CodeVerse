@@ -7,7 +7,7 @@ export async function POST(request: Request) {
     const body: unknown = await request.json();
     const result = signUpSchema.safeParse(body)
     if (!result.success) {
-        return NextResponse.json("Missing Field , Wrong Data", { status: 203 })
+        return NextResponse.json("Missing Field , Wrong Data", { status: 400 })
     }
     const { email, password, username } = result.data
     try {
@@ -17,7 +17,7 @@ export async function POST(request: Request) {
             }
         })
         if (existingUsername) {
-            return NextResponse.json("Username is already exist", { status: 203 })
+            return NextResponse.json("Username is already exist", { status: 409 })
         }
         const existedUser = await db.user.findUnique({
             where: {
@@ -25,13 +25,14 @@ export async function POST(request: Request) {
             }
         })
         if (existedUser) {
-            return NextResponse.json("User Already Exists", { status: 203 })
+            return NextResponse.json("User Already Exists", { status: 409 })
         }
         const hashedPassword = await bcrypt.hash(password, 12)
         const newUser = await db.user.create({
             data: {
                 email,
                 username,
+                name: username,
                 hashedPassword
             }
         })

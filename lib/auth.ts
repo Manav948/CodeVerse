@@ -76,7 +76,7 @@ export const authOptions: NextAuthOptions = {
                 session.user.id = token.id as string
                 session.user.name = token.name
                 session.user.email = token.email
-                session.user.username = token.username as string | null
+                session.user.username = token.username
             }
             const user = await db.user.findUnique({
                 where: {

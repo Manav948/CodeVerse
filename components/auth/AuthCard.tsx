@@ -4,6 +4,9 @@ import Image from "next/image";
 import SignUpCard from "./SignUpCard";
 import SignInCard from "./SignInCard";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 interface Props {
   mode: "signin" | "signup";
@@ -11,6 +14,14 @@ interface Props {
 
 const AuthCard = ({ mode }: Props) => {
   const isSignIn = mode === "signin";
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "authenticated") {
+      router.push("/dashboard");
+    }
+  }, [status, router]);
 
   return (
     <div className="w-full max-w-md">

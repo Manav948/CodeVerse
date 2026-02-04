@@ -26,8 +26,8 @@ const User = () => {
                 <DropdownMenuTrigger asChild>
                     <button className="rounded-full ring-2 ring-transparent hover:ring-white/20 transition cursor-pointer">
                         <UserAvatar
-                        profileImage={user?.image ?? null}
-                        username={user?.username ?? null}
+                            profileImage={user?.image ?? null}
+                            username={user?.username ?? null}
                         />
                     </button>
                 </DropdownMenuTrigger>
@@ -37,9 +37,10 @@ const User = () => {
                     sideOffset={10}
                     className="w-56 rounded-xl border border-white/10 bg-black p-2 text-gray-400 shadow-xl cursor-pointer"
                 >
-                    <div className="flex items-center gap-3 px-2 py-2">
+                    <div className="flex items-center gap-3">
                         <UserAvatar
-                        profileImage={user?.image ?? null}
+                            profileImage={user?.image ?? null}
+                            username={user?.username ?? null}
                         />
                         <div className="leading-tight">
                             <p className="text-sm font-medium">{user?.username ?? "Guest"}</p>

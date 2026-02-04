@@ -10,12 +10,12 @@ import {
 } from "lucide-react";
 
 const options = [
-  { label: "Home", href: "/", icon: Home },
-  { label: "Q & A", href: "/", icon: MessageCircle },
+  { label: "Home", href: "/dashboard", icon: Home },
+  { label: "Q & A", href: "/qa", icon: MessageCircle },
   { label: "Snippets", href: "/snippet", icon: Code2 },
-  { label: "Articles", href: "/", icon: FileText },
-  { label: "Community", href: "/", icon: Users },
-  { label: "Bookmarks", href: "/", icon: Bookmark },
+  { label: "Articles", href: "/article", icon: FileText },
+  { label: "Community", href: "/community", icon: Users },
+  { label: "Bookmarks", href: "/bookmark", icon: Bookmark },
 ];
 
 const OptionSidebar = () => {

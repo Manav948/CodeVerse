@@ -15,7 +15,7 @@ const ProviderBtn = ({ children, providerName, onLoading, intent, ...props }: Pr
         onLoading(true)
         setShowLoggedInfo(true)
         try {
-            await signIn(providerName, { callbackUrl: intent === "signin" ? "/sign-in" : "/" })
+            await signIn(providerName, { callbackUrl: intent === "signin" ? "/dashboard" : "/dashboard" })
         } catch (error) {
             console.error("Error in signHandler function")
         } finally {

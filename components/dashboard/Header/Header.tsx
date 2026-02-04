@@ -1,11 +1,21 @@
 "use client";
 
-import { Bell, Plus, Search } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import { Button } from "../../ui/button";
 import User from "./User";
 import SidebarMobile from "@/components/sidebar/SidebarMobile";
+import { usePathname, useRouter } from "next/navigation";
+import { HeaderAction } from "@/lib/header-actions";
 
 const Header = () => {
+  const pathname = usePathname();
+  const router = useRouter();
+  const action =
+    HeaderAction[pathname] ||
+    Object.entries(HeaderAction).find(([key]) =>
+      pathname.startsWith(key)
+    )?.[1];
+
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/40 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4">
@@ -38,20 +48,23 @@ const Header = () => {
         </div>
 
         <div className="flex items-center gap-2 md:gap-4">
+          {action && (
+            <Button
+              onClick={() => router.push(action.href)}
+              className="
+                h-10 rounded-xl
+                bg-linear-to-r from-purple-500 to-cyan-500
+                text-white hover:opacity-90
+                px-3 md:px-4
+                flex items-center gap-2
+              "
+            >
+              <action.icon size={16} />
+              <span className="hidden md:inline">{action.label}</span>
+            </Button>
+          )}
 
-          <Button
-            className="
-              h-10 rounded-xl
-              bg-linear-to-r from-purple-500 to-cyan-500
-              text-white hover:opacity-90
-              px-3 md:px-4 cursor-pointer
-            "
-          >
-            <Plus size={16} />
-            <span className="ml-2 hidden md:inline">Create Post</span>
-          </Button>
-
-          <button className="relative rounded-xl p-2 text-white/70 hover:bg-white/10 cursor-pointer">
+          <button className="relative rounded-xl p-2 text-white/70 hover:bg-white/10">
             <Bell size={20} />
             <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-red-500" />
           </button>

@@ -10,16 +10,16 @@ import { HeaderAction } from "@/lib/header-actions";
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
-  const action =
-    HeaderAction[pathname] ||
-    Object.entries(HeaderAction).find(([key]) =>
-      pathname.startsWith(key)
-    )?.[1];
+
+  const matched = HeaderAction.find((item) =>
+    item.match(pathname)
+  );
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/40 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4">
 
+        {/* Left */}
         <div className="flex flex-1 items-center gap-2">
           <div className="md:hidden">
             <SidebarMobile />
@@ -31,36 +31,35 @@ const Header = () => {
               className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40"
             />
             <input
-              type="text"
               placeholder="Search..."
               className="
                 h-10 w-full rounded-xl
                 border border-white/10
                 bg-white/5
-                pl-9 pr-3
-                text-sm text-white
+                pl-9 pr-3 text-sm text-white
                 placeholder:text-white/40
-                focus:outline-none
-                focus:ring-2 focus:ring-cyan-500/40
+                focus:outline-none focus:ring-2 focus:ring-cyan-500/40
               "
             />
           </div>
         </div>
 
-        <div className="flex items-center gap-2 md:gap-4">
-          {action && (
+        {/* Right */}
+        <div className="flex items-center gap-3">
+          {matched && (
             <Button
-              onClick={() => router.push(action.href)}
+              onClick={() => router.push(matched.action.href)}
               className="
                 h-10 rounded-xl
                 bg-linear-to-r from-purple-500 to-cyan-500
                 text-white hover:opacity-90
-                px-3 md:px-4
-                flex items-center gap-2
+                px-3 md:px-4 flex items-center gap-2
               "
             >
-              <action.icon size={16} />
-              <span className="hidden md:inline">{action.label}</span>
+              <matched.action.icon size={16} />
+              <span className="hidden md:inline">
+                {matched.action.label}
+              </span>
             </Button>
           )}
 

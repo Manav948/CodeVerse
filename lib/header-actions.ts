@@ -1,35 +1,45 @@
-import { Plus, FileCode, PenSquare, ArrowLeft } from "lucide-react";
+import { Plus, PenSquare, ArrowLeft } from "lucide-react";
 
-export type HeaderAction = {
+export type HeaderActionConfig = {
   label: string;
   href: string;
   icon: React.ElementType;
 };
 
-export const HeaderAction: Record<string, HeaderAction> = {
-  "/snippet": {
-    label: "Add Snippet",
-    href: "/snippet",
-    icon: Plus,
+export const HeaderAction: {
+  match: (pathname: string) => boolean;
+  action: HeaderActionConfig;
+}[] = [
+  {
+    match: (path) => path.startsWith("/snippet"),
+    action: {
+      label: "Add Snippet",
+      href: "/snippet/new",
+      icon: Plus,
+    },
   },
-  "/articles": {
-    label: "Add Article",
-    href: "/article",
-    icon: PenSquare,
+  {
+    match: (path) => path.startsWith("/articles"),
+    action: {
+      label: "Add Article",
+      href: "/articles/new",
+      icon: PenSquare,
+    },
   },
-  "/Q & A": {
-    label: "Ask Question",
-    href: "/qa",
-    icon: Plus,
+  {
+    match: (path) => path.startsWith("/qa"),
+    action: {
+      label: "Ask Question",
+      href: "/qa/new",
+      icon: Plus,
+    },
   },
-  "/": {
-    label: "Add Post",
-    href: "/post",
-    icon: Plus,
+  {
+    match: (path) => path.startsWith("/bookmark"),
+    action: {
+      label: "Back",
+      href: "/dashboard",
+      icon: ArrowLeft,
+    },
   },
-   "/Bookmark": {
-    label: "Back",
-    href: "/dashboard",
-    icon: ArrowLeft,
-  },
-};
+];

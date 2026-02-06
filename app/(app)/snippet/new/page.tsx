@@ -3,7 +3,7 @@ import React from 'react'
 
 const page = () => {
   return (
-    <div className='bg-black text-white'>
+    <div className='bg-black text-white min-h-screen'>
       <AddSnippet />
     </div>
   )

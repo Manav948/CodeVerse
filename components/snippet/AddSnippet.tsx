@@ -1,9 +1,9 @@
 "use client";
 
-import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
-import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import toast from "react-hot-toast";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
@@ -18,8 +18,16 @@ import {
 import { Input } from "../ui/input";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "../ui/select";
 
 import { addSnippetSchema, AddSnippetSchema } from "@/schema/addSnippetSchema";
+import { SNIPPET_LANGUAGES, LANGUAGE_LABELS } from "@/lib/snippet-languages";
 
 const AddSnippet = () => {
   const router = useRouter();
@@ -44,7 +52,7 @@ const AddSnippet = () => {
       toast.success("Snippet created successfully");
       router.push("/snippet");
     },
-    onError: (err: AxiosError) => {
+    onError: () => {
       toast.error("Failed to create snippet");
     },
   });
@@ -54,9 +62,8 @@ const AddSnippet = () => {
   };
 
   return (
-    <div className="mx-auto max-w-3xl py-10">
+    <div className="mx-auto max-w-3xl py-8">
       <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
-        {/* ambient gradients */}
         <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl" />
         <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
 
@@ -69,7 +76,6 @@ const AddSnippet = () => {
             onSubmit={form.handleSubmit(onSubmit)}
             className="flex flex-col gap-5"
           >
-            {/* Title */}
             <FormField
               control={form.control}
               name="title"
@@ -78,8 +84,8 @@ const AddSnippet = () => {
                   <FormLabel>Title</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Snippet title"
                       {...field}
+                      placeholder="Snippet title"
                       className="bg-white/5 border-white/10 text-white"
                     />
                   </FormControl>
@@ -88,7 +94,6 @@ const AddSnippet = () => {
               )}
             />
 
-            {/* Description */}
             <FormField
               control={form.control}
               name="description"
@@ -97,17 +102,15 @@ const AddSnippet = () => {
                   <FormLabel>Description</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Short description"
                       {...field}
-                      className="bg-white/5 border-white/10 text-white min-h-20"
+                      placeholder="Short description"
+                      className="min-h-20 bg-white/5 border-white/10 text-white"
                     />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-
-            {/* Language */}
             <FormField
               control={form.control}
               name="language"
@@ -115,18 +118,31 @@ const AddSnippet = () => {
                 <FormItem>
                   <FormLabel>Language</FormLabel>
                   <FormControl>
-                    <Input
-                      placeholder="e.g. JAVASCRIPT"
-                      {...field}
-                      className="bg-white/5 border-white/10 text-white"
-                    />
+                    <Select
+                      value={field.value}
+                      onValueChange={field.onChange}
+                    >
+                      <SelectTrigger className="bg-white/5 border-white/10 text-white">
+                        <SelectValue placeholder="Select language" />
+                      </SelectTrigger>
+
+                      <SelectContent className="bg-black border-white/10">
+                        {SNIPPET_LANGUAGES.map((lang) => (
+                          <SelectItem
+                            key={lang}
+                            value={lang}
+                            className="text-white hover:bg-white/10"
+                          >
+                            {LANGUAGE_LABELS[lang] ?? lang}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
 
-            {/* Code */}
             <FormField
               control={form.control}
               name="code"
@@ -135,9 +151,9 @@ const AddSnippet = () => {
                   <FormLabel>Code</FormLabel>
                   <FormControl>
                     <Textarea
-                      placeholder="Paste your code here"
                       {...field}
-                      className="bg-black/40 border-white/10 text-white min-h-50 font-mono"
+                      placeholder="Paste your code here"
+                      className="min-h-55 bg-black/40 border-white/10 text-white font-mono"
                     />
                   </FormControl>
                   <FormMessage />
@@ -145,7 +161,6 @@ const AddSnippet = () => {
               )}
             />
 
-            {/* Tags */}
             <FormField
               control={form.control}
               name="tags"
@@ -154,7 +169,7 @@ const AddSnippet = () => {
                   <FormLabel>Tags</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="e.g. react, nextjs, prisma"
+                      placeholder="react, nextjs, prisma"
                       className="bg-white/5 border-white/10 text-white"
                       onChange={(e) =>
                         field.onChange(
@@ -166,19 +181,17 @@ const AddSnippet = () => {
                       }
                     />
                   </FormControl>
-                  <FormMessage />
                 </FormItem>
               )}
             />
 
-            {/* Submit */}
             <Button
-              disabled={isPending}
               type="submit"
+              disabled={isPending}
               className="
                 mt-4 h-11 rounded-xl
                 bg-linear-to-r from-purple-500 to-cyan-500
-                text-white font-semibold
+                font-semibold text-white
                 hover:opacity-90
               "
             >

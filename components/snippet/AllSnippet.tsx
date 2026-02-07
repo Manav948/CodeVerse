@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import SnippetCard from "./Snippet";
+import Loader from "../ui/Loading";
 
 const AllSnippet = () => {
   const { data, isLoading } = useQuery({
@@ -16,7 +17,7 @@ const AllSnippet = () => {
   if (isLoading) {
     return (
       <div className="py-20 text-center text-white/50">
-        Loading snippets...
+        <Loader />
       </div>
     );
   }

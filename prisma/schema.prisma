@@ -49,19 +49,21 @@ model VerificationToken {
 }
 
 model User {
-  id             String    @id @default(cuid())
+  id             String     @id @default(cuid())
   name           String?
-  username       String    @unique
-  email          String?   @unique
-  emailVerified  DateTime? @map("email_verified")
+  username       String     @unique
+  email          String?    @unique
+  emailVerified  DateTime?  @map("email_verified")
   hashedPassword String?
   image          String?
-  totalSnippets  Int       @default(0)
+  totalSnippets  Int        @default(0)
   lastActiveAt   DateTime?
   accounts       Account[]
   sessions       Session[]
   snippets       Snippet[]
   comments       Comment[]
+  posts          Post[]
+  bookMarks      BookMark[]
 }
 
 enum SnippetVisibility {
@@ -98,12 +100,17 @@ model Snippet {
   updated_at  DateTime          @updatedAt
   tags        SnippetTag[]
   comments    Comment[]
+  bookmark    BookMark[]
+
+  @@index([userId])
+  @@index([created_at])
 }
 
 model Tag {
   id       String       @id @default(uuid())
-  name     String
+  name     String @unique
   snippets SnippetTag[]
+  posts    PostTag[]
 }
 
 model SnippetTag {
@@ -125,4 +132,51 @@ model Comment {
   updated_at      DateTime @updatedAt
   snippet         Snippet? @relation(fields: [snippetId], references: [id], onDelete: Cascade)
   snippetId       String?
+  post            Post?    @relation(fields: [postId], references: [id])
+  postId          String?
+}
+
+model Post {
+  id          String     @id @default(cuid())
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  title       String
+  description String
+  image       String[]
+  links       String[]
+  comment     Comment[]
+  bookmark    BookMark[]
+  tags        PostTag[]
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+
+  @@index([userId])
+  @@index([created_at]) 
+}
+
+model PostTag {
+  id     String @id @default(cuid())
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId  String
+
+  @@unique([postId, tagId])
+}
+
+model BookMark {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  post   Post?   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  postId String?
+
+  snippet   Snippet? @relation(fields: [snippetId], references: [id])
+  snippetId String?
+
+  created_at DateTime @default(now())
+
+  @@unique([userId, postId])
+  @@unique([userId, snippetId])
 }

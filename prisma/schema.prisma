@@ -64,6 +64,8 @@ model User {
   comments       Comment[]
   posts          Post[]
   bookMarks      BookMark[]
+  questions      Question[]
+  answers        Answer[]
 }
 
 enum SnippetVisibility {
@@ -108,7 +110,7 @@ model Snippet {
 
 model Tag {
   id       String       @id @default(uuid())
-  name     String @unique
+  name     String       @unique
   snippets SnippetTag[]
   posts    PostTag[]
 }
@@ -122,18 +124,20 @@ model SnippetTag {
 }
 
 model Comment {
-  id              String   @id @default(cuid())
-  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id              String    @id @default(cuid())
+  user            User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId          String
   commentText     String
   commentableId   String
   commentableType String
-  created_at      DateTime @default(now())
-  updated_at      DateTime @updatedAt
-  snippet         Snippet? @relation(fields: [snippetId], references: [id], onDelete: Cascade)
+  created_at      DateTime  @default(now())
+  updated_at      DateTime  @updatedAt
+  snippet         Snippet?  @relation(fields: [snippetId], references: [id], onDelete: Cascade)
   snippetId       String?
-  post            Post?    @relation(fields: [postId], references: [id])
+  post            Post?     @relation(fields: [postId], references: [id])
   postId          String?
+  question        Question? @relation(fields: [questionId], references: [id])
+  questionId      String?
 }
 
 model Post {
@@ -151,7 +155,7 @@ model Post {
   updated_at  DateTime   @updatedAt
 
   @@index([userId])
-  @@index([created_at]) 
+  @@index([created_at])
 }
 
 model PostTag {
@@ -162,6 +166,36 @@ model PostTag {
   tagId  String
 
   @@unique([postId, tagId])
+}
+
+model Question {
+  id          String     @id @default(cuid())
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  title       String
+  description String
+  created_at  DateTime   @default(now())
+  updated_at  DateTime   @updatedAt
+  bookmark    BookMark[]
+  comments    Comment[]
+  answer      Answer[]
+
+  @@index([userId])
+  @@index([created_at])
+}
+
+model Answer {
+  id          String   @id @default(cuid())
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId      String
+  description String
+  created_at  DateTime @default(now())
+  updated_at  DateTime @updatedAt
+  question    Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+  questionId  String
+
+  @@index([questionId])
+  @@index([userId])
 }
 
 model BookMark {
@@ -175,7 +209,9 @@ model BookMark {
   snippet   Snippet? @relation(fields: [snippetId], references: [id])
   snippetId String?
 
-  created_at DateTime @default(now())
+  created_at DateTime  @default(now())
+  question   Question? @relation(fields: [questionId], references: [id])
+  questionId String?
 
   @@unique([userId, postId])
   @@unique([userId, snippetId])

@@ -86,7 +86,6 @@ const AddSnippet = () => {
                   onSubmit={form.handleSubmit((data) => mutate(data))}
                   className="space-y-6"
                 >
-                  {/* Title */}
                   <FormField
                     control={form.control}
                     name="title"
@@ -180,7 +179,6 @@ const AddSnippet = () => {
                     />
                   </div>
 
-                  {/* Code Editor */}
                   <FormField
                     control={form.control}
                     name="code"
@@ -192,7 +190,7 @@ const AddSnippet = () => {
                             {...field}
                             placeholder="Paste your code here"
                             className="
-                              min-h-[260px]
+                              min-h-65
                               bg-black/60
                               border-white/10
                               font-mono text-sm
@@ -204,7 +202,6 @@ const AddSnippet = () => {
                     )}
                   />
 
-                  {/* Tags */}
                   <FormField
                     control={form.control}
                     name="tags"
@@ -229,7 +226,6 @@ const AddSnippet = () => {
                     )}
                   />
 
-                  {/* Submit */}
                   <Button
                     type="submit"
                     disabled={isPending}

@@ -1,12 +1,13 @@
 export type PostWithExtras = {
     id: string
     title: string
-    description: string,
-    image: string[],
-    created_at: string
-    updated_at: string
+    description: string
+    image: string[]
+    links: string[]
+    created_at: Date
+    updated_at: Date
 
-    user?: {
+    user: {
         id: string
         name: string | null
         username: string
@@ -24,7 +25,7 @@ export type PostWithExtras = {
         user: {
             id: string
             name: string | null
-            username?: string
+            username: string
         }
     }[]
 }

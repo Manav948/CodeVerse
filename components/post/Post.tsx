@@ -20,7 +20,7 @@ type Props = {
 
 const PostCard = ({ post }: Props) => {
   const [open, setOpen] = useState(false);
-
+  console.log(post)
   return (
     <>
       <Card

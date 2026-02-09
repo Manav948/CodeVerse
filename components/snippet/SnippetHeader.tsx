@@ -59,10 +59,10 @@ const SnippetHeader = ({ user }: { user?: SnippetUser }) => {
 
           <div className="flex flex-col leading-tight">
             <span className="text-sm font-medium text-white">
-              {displayName}
+              @{displayName}
             </span>
             <span className="text-xs text-white/40">
-              posted a snippet
+              {displayName}
             </span>
           </div>
         </div>

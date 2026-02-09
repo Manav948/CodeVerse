@@ -1,5 +1,5 @@
 import Dashboard from '@/components/dashboard/Dashboard'
-import React from 'react'
+import PostContainer from '@/components/post/PostContainer'
 
 const page = () => {
     return (

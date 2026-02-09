@@ -29,6 +29,9 @@ import {
 import { addSnippetSchema, AddSnippetSchema } from "@/schema/addSnippetSchema";
 import { SNIPPET_LANGUAGES, LANGUAGE_LABELS } from "@/lib/snippet-languages";
 
+import Header from "../dashboard/Header/Header";
+import Sidebar from "../dashboard/Sidebar";
+
 const AddSnippet = () => {
   const router = useRouter();
 
@@ -45,160 +48,205 @@ const AddSnippet = () => {
   });
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (data: AddSnippetSchema) => {
-      await axios.post("/api/snippet/add", data);
-    },
+    mutationFn: (data: AddSnippetSchema) =>
+      axios.post("/api/snippet/add", data),
     onSuccess: () => {
-      toast.success("Snippet created successfully");
+      toast.success("Snippet created");
       router.push("/snippet");
     },
-    onError: () => {
-      toast.error("Failed to create snippet");
-    },
+    onError: () => toast.error("Failed to create snippet"),
   });
 
-  const onSubmit = (data: AddSnippetSchema) => {
-    mutate(data);
-  };
-
   return (
-    <div className="mx-auto max-w-3xl py-8">
-      <div className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 backdrop-blur-xl">
-        <div className="pointer-events-none absolute -top-24 -left-24 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl" />
-        <div className="pointer-events-none absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
+    <div className="min-h-screen bg-black text-white overflow-hidden">
+      <Header />
+      <div className="flex h-[calc(100vh-64px)]">
+        <aside className="hidden md:block w-64 shrink-0 border-r border-white/10">
+          <Sidebar />
+        </aside>
 
-        <h1 className="mb-6 text-2xl font-semibold text-white">
-          Create Snippet
-        </h1>
+        <main className="relative flex-1 overflow-y-auto overflow-x-hidden">
 
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="flex flex-col gap-5"
-          >
-            <FormField
-              control={form.control}
-              name="title"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Title</FormLabel>
-                  <FormControl>
-                    <Input
-                      {...field}
-                      placeholder="Snippet title"
-                      className="bg-white/5 border-white/10 text-white"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Description</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      placeholder="Short description"
-                      className="min-h-20 bg-white/5 border-white/10 text-white"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <FormField
-              control={form.control}
-              name="language"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Language</FormLabel>
-                  <FormControl>
-                    <Select
-                      value={field.value}
-                      onValueChange={field.onChange}
-                    >
-                      <SelectTrigger className="bg-white/5 border-white/10 text-white">
-                        <SelectValue placeholder="Select language" />
-                      </SelectTrigger>
-
-                      <SelectContent className="bg-black border-white/10">
-                        {SNIPPET_LANGUAGES.map((lang) => (
-                          <SelectItem
-                            key={lang}
-                            value={lang}
-                            className="text-white hover:bg-white/10"
-                          >
-                            {LANGUAGE_LABELS[lang] ?? lang}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="code"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Code</FormLabel>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      placeholder="Paste your code here"
-                      className="min-h-55 bg-black/40 border-white/10 text-white font-mono"
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="tags"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Tags</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="react, nextjs, prisma"
-                      className="bg-white/5 border-white/10 text-white"
-                      onChange={(e) =>
-                        field.onChange(
-                          e.target.value
-                            .split(",")
-                            .map((t) => t.trim())
-                            .filter(Boolean)
-                        )
-                      }
-                    />
-                  </FormControl>
-                </FormItem>
-              )}
-            />
-
-            <Button
-              type="submit"
-              disabled={isPending}
+          <div className="pointer-events-none absolute -top-40 -left-40 h-96 w-96 rounded-full bg-purple-500/20 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl" />
+          <div className="relative mx-auto max-w-3xl p-8">
+            <div
               className="
-                mt-4 h-11 rounded-xl
-                bg-linear-to-r from-purple-500 to-cyan-500
-                font-semibold text-white
-                hover:opacity-90
+                rounded-3xl border border-white/10
+                bg-white/5 backdrop-blur-xl
+                p-8
               "
             >
-              {isPending ? "Creating..." : "Create Snippet"}
-            </Button>
-          </form>
-        </Form>
+              <h1 className="mb-6 text-2xl font-semibold">
+                Create Snippet
+              </h1>
+
+              <Form {...form}>
+                <form
+                  onSubmit={form.handleSubmit((data) => mutate(data))}
+                  className="space-y-6"
+                >
+                  {/* Title */}
+                  <FormField
+                    control={form.control}
+                    name="title"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Title</FormLabel>
+                        <FormControl>
+                          <Input
+                            {...field}
+                            placeholder="Snippet title"
+                            className="bg-white/5 border-white/10"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  /> 
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            placeholder="Short description"
+                            className="min-h-20 bg-white/5 border-white/10"
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                    <FormField
+                      control={form.control}
+                      name="language"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Language</FormLabel>
+                          <FormControl>
+                            <Select
+                              value={field.value}
+                              onValueChange={field.onChange}
+                            >
+                              <SelectTrigger className="bg-white/5 border-white/10">
+                                <SelectValue placeholder="Select language" />
+                              </SelectTrigger>
+                              <SelectContent className="bg-black border-white/10">
+                                {SNIPPET_LANGUAGES.map((lang) => (
+                                  <SelectItem
+                                    key={lang}
+                                    value={lang}
+                                    className="text-white"
+                                  >
+                                    {LANGUAGE_LABELS[lang] ?? lang}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="visibility"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Visibility</FormLabel>
+                          <FormControl>
+                            <Select
+                              value={field.value}
+                              onValueChange={field.onChange}
+                            >
+                              <SelectTrigger className="bg-white/5 border-white/10">
+                                <SelectValue />
+                              </SelectTrigger>
+                              <SelectContent className="bg-black border-white/10 text-white p-1">
+                                <SelectItem value="PUBLIC">Public</SelectItem>
+                                <SelectItem value="PRIVATE">Private</SelectItem>
+                                <SelectItem value="SHARED">Shared</SelectItem>
+                              </SelectContent>
+                            </Select>
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  {/* Code Editor */}
+                  <FormField
+                    control={form.control}
+                    name="code"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Code</FormLabel>
+                        <FormControl>
+                          <Textarea
+                            {...field}
+                            placeholder="Paste your code here"
+                            className="
+                              min-h-[260px]
+                              bg-black/60
+                              border-white/10
+                              font-mono text-sm
+                            "
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Tags */}
+                  <FormField
+                    control={form.control}
+                    name="tags"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Tags</FormLabel>
+                        <FormControl>
+                          <Input
+                            placeholder="react, nextjs, prisma"
+                            className="bg-white/5 border-white/10"
+                            onChange={(e) =>
+                              field.onChange(
+                                e.target.value
+                                  .split(",")
+                                  .map((t) => t.trim())
+                                  .filter(Boolean)
+                              )
+                            }
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  {/* Submit */}
+                  <Button
+                    type="submit"
+                    disabled={isPending}
+                    className="
+                      h-11 w-full rounded-xl
+                      bg-linear-to-r from-purple-500 to-cyan-500
+                      font-semibold text-white
+                      hover:opacity-90
+                    "
+                  >
+                    {isPending ? "Creating..." : "Create Snippet"}
+                  </Button>
+                </form>
+              </Form>
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   );

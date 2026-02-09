@@ -11,6 +11,14 @@ export const HeaderAction: {
   action: HeaderActionConfig;
 }[] = [
   {
+    match: (path) => path.startsWith("/dashboard"),
+    action: {
+      label: "Add Post",
+      href: "/dashboard/new",
+      icon: Plus,
+    },
+  },
+  {
     match: (path) => path.startsWith("/snippet"),
     action: {
       label: "Add Snippet",

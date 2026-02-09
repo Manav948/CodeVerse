@@ -12,20 +12,14 @@ export const addPostSchema = z.object({
         max(5000),
 
     image: z
-        .array(z.string().url("Invalid image URL"))
-        .optional()
-        .default([]),
+        .array(z.string().url("Invalid image URL")),
 
     links: z
-        .array(z.string().url("Invalid link URL"))
-        .optional()
-        .default([]),
+        .array(z.string().url("Invalid link URL")),
 
     tags: z
         .array(z.string().min(1))
         .max(10, "Max 10 tags allowed")
-        .optional()
-        .default([]),
 })
 
 export type AddPostSchema = z.infer<typeof addPostSchema>

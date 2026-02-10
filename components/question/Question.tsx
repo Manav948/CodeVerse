@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { FileCode } from "lucide-react";
+import { FileCode, Heart, MessageCircle } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import toast from "react-hot-toast";
@@ -72,8 +72,28 @@ const Question = ({ question }: Props) => {
             {question.description}
           </p>
         </div>
+
+        <div className="flex items-center justify-between text-xs text-white/50">
+          <span>
+            {new Date(question.created_at).toLocaleDateString()}
+          </span>
+
+          <div className="flex items-center gap-5">
+            <button className="flex items-center gap-1 hover:text-white">
+              <Heart size={16} /> Like
+            </button>
+            <button className="flex items-center gap-1 hover:text-white">
+              <MessageCircle size={16} /> Comment
+            </button>
+            <button
+              onClick={() => setOpen(true)}
+              className="hover:text-white font-medium"
+            >
+              View →
+            </button>
+          </div>
+        </div>
       </Card>
-      <Separator className="bg-white/20" />
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent className="max-w-4xl border-white/10 bg-black text-white">
           <h2 className="text-xl font-semibold">{question.title}</h2>
@@ -81,6 +101,26 @@ const Question = ({ question }: Props) => {
 
           <Separator className="my-2 bg-white/10" />
 
+          <div className="flex items-center justify-between text-xs text-white/50">
+            <span>
+              {new Date(question.created_at).toLocaleDateString()}
+            </span>
+
+            <div className="flex items-center gap-5">
+              <button className="flex items-center gap-1 hover:text-white">
+                <Heart size={16} /> Like
+              </button>
+              <button className="flex items-center gap-1 hover:text-white">
+                <MessageCircle size={16} /> Comment
+              </button>
+              <button
+                onClick={() => setOpen(true)}
+                className="hover:text-white font-medium"
+              >
+                View →
+              </button>
+            </div>
+          </div>
 
           <Button
             variant="secondary"

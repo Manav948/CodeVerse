@@ -96,11 +96,10 @@ const AddQuestions = () => {
                                     <Button
                                         type="submit"
                                         disabled={isPending}
-                                        className="
-                      h-11 w-full rounded-xl
-                      bg-linear-to-r from-purple-500 to-cyan-500
-                      font-semibold text-white
-                      hover:opacity-90
+                                        className="h-11 w-full rounded-xl
+                                                   bg-linear-to-r from-purple-500 to-cyan-500
+                                                   font-semibold text-white
+                                                   hover:opacity-90
                     "
                                     >
                                         {isPending ? "Creating..." : "Ask Question"}

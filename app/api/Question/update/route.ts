@@ -2,39 +2,48 @@ import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { updateQuestionSchema } from "@/schema/updateQuestionSchema"
 import { getServerSession } from "next-auth"
-import { NextResponse } from "next/server"
+import { NextRequest, NextResponse } from "next/server"
 
-interface Props {
-    params: Promise<{ questionId: string }>
-}
-export async function POST(request: Request, { params }: Props) {
+export async function POST(request: NextRequest) {
     try {
         const session = await getServerSession(authOptions)
         if (!session?.user) {
-            return new Response("Unauthorized User", { status: 401 })
+            return NextResponse.json({ message: "Unauthorized User" }, { status: 401 })
         }
         const body = await request.json()
         const result = updateQuestionSchema.safeParse(body)
         if (!result.success) {
-            return new Response("Invalid request body", { status: 400 })
+            return NextResponse.json({ message: "Invalid request body" }, { status: 400 })
+        }
+        const questionId = typeof body?.questionId === "string" ? body.questionId : null
+        if (!questionId) {
+            return NextResponse.json(
+                { message: "Missing required field: questionId" },
+                { status: 400 }
+            )
         }
         const { title, description } = result.data
-        const { questionId } = await params
 
-        const updateQuestion = await db.question.update({
-            where: {
-                id: questionId
-            },
-            data: {
-                title: title,
-                description: description,
-            }
+        const existing = await db.question.findFirst({
+            where: { id: questionId, userId: session.user.id },
+            select: { id: true },
         })
-        if (!updateQuestion) {
-            return NextResponse.json("Question not found", { status: 404 })
+
+        if (!existing) {
+            return NextResponse.json({ message: "Question not found" }, { status: 404 })
         }
-        return NextResponse.json(JSON.stringify(updateQuestion), { status: 200 })
+
+        const updatedQuestion = await db.question.update({
+            where: { id: questionId },
+            data: {
+                title,
+                description,
+            },
+        })
+
+        return NextResponse.json(updatedQuestion, { status: 200 })
     } catch (error) {
-        return new Response("Internal Server Error", { status: 500 })
+        console.error("Error updating question:", error)
+        return NextResponse.json({ message: "Internal Server Error" }, { status: 500 })
     }
 }

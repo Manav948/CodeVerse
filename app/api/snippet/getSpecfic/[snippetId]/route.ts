@@ -1,20 +1,21 @@
 import { authOptions, } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
 
 interface Props {
     params: Promise<{ snippetId: string }>
 }
 
-export async function GET(request: Request, { params }: Props) {
+export async function GET(_request: NextRequest, { params }: Props) {
     try {
         const session = await getServerSession(authOptions)
         if (!session?.user) {
-            return new Response("Unauthorized User", { status: 401 })
+            return NextResponse.json({ message: "Unauthorized User" }, { status: 401 })
         }
         const { snippetId } = await params
         if (!snippetId) {
-            return new Response("Snippet ID is required", { status: 400 })
+            return NextResponse.json({ message: "Snippet ID is required" }, { status: 400 })
         }
         const snippet = await db.snippet.findUnique({
             where: {
@@ -51,11 +52,11 @@ export async function GET(request: Request, { params }: Props) {
             }
         })
         if (!snippet) {
-            return new Response("Snippet not found", { status: 404 })
+            return NextResponse.json({ message: "Snippet not found" }, { status: 404 })
         }
-        return new Response(JSON.stringify(snippet), { status: 200 })
+        return NextResponse.json(snippet, { status: 200 })
     } catch (error) {
         console.log("[SNIPPET_GET_SPECIFIC_ERROR]", error)
-        return new Response("Internal Server Error", { status: 500 })
+        return NextResponse.json({ message: "Internal Server Error" }, { status: 500 })
     }
 } 

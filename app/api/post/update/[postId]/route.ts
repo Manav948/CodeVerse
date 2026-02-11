@@ -2,13 +2,13 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { updatePostSchema } from "@/schema/updatePostSchema";
 import { getServerSession } from "next-auth";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
 interface Props {
-  params: { postId: string };
+  params: Promise<{ postId: string }>;
 }
 
-export async function POST(request: Request, { params }: Props) {
+export async function POST(request: NextRequest, { params }: Props) {
   try {
     const session = await getServerSession(authOptions);
 
@@ -24,7 +24,7 @@ export async function POST(request: Request, { params }: Props) {
     }
 
     const { title, description, links, tags } = parsed.data;
-    const { postId } = params;
+    const { postId } = await params;
 
     const existingPost = await db.post.findFirst({
       where: {

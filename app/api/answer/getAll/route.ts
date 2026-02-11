@@ -3,15 +3,8 @@ import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-interface Props {
-  params: {
-    questionId: string;
-  };
-}
-
 export async function GET(
-  request: Request,
-  { params }: Props
+  request: Request
 ) {
   try {
     const session = await getServerSession(authOptions);
@@ -23,7 +16,15 @@ export async function GET(
       );
     }
 
-    const { questionId } = params;
+    const { searchParams } = new URL(request.url);
+    const questionId = searchParams.get("questionId");
+
+    if (!questionId) {
+      return NextResponse.json(
+        { message: "Missing required query param: questionId" },
+        { status: 400 }
+      );
+    }
 
     const answers = await db.answer.findMany({
       where: { questionId },

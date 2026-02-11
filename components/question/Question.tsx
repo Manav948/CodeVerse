@@ -26,7 +26,7 @@ const Question = ({ question }: Props) => {
   }
 
   const replayButton = () => {
-    router.push("/qa/answer")
+    router.push("/qa/answer/new")
   }
   return (
     <>
@@ -137,7 +137,7 @@ const Question = ({ question }: Props) => {
         </DialogContent>
       </Dialog>
     </>
-  );
+  );  
 };
 
 export default Question;

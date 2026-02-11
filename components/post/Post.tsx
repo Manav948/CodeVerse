@@ -20,6 +20,10 @@ type Props = {
 
 const PostCard = ({ post }: Props) => {
   const [open, setOpen] = useState(false);
+  const [likeCount , setLikeCount] = useState(0);
+  const Couter = () => {
+    setLikeCount(likeCount => likeCount + 1);
+  }
   console.log(post)
   return (
     <>
@@ -89,8 +93,8 @@ const PostCard = ({ post }: Props) => {
             </span>
 
             <div className="flex items-center gap-5">
-              <button className="flex items-center gap-1 hover:text-white">
-                <Heart size={16} /> Like
+              <button onClick={Couter} className="flex items-center gap-1 hover:text-white">
+                <Heart size={16} /> {likeCount}
               </button>
               <button className="flex items-center gap-1 hover:text-white">
                 <MessageCircle size={16} /> Comment

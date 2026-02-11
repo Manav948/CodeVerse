@@ -4,12 +4,13 @@ import { useState } from "react";
 import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { FileCode, Heart, MessageCircle } from "lucide-react";
+import { CornerUpRight, FileCode, Heart, MessageCircle } from "lucide-react";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import { QuestionWithExtras } from "@/types/question";
 import QuestionHeader from "./QuestionHeader";
+import { useRouter } from "next/navigation";
 
 type Props = {
   question: QuestionWithExtras;
@@ -17,11 +18,15 @@ type Props = {
 
 const Question = ({ question }: Props) => {
   const [open, setOpen] = useState(false);
-
+  const router = useRouter()
   const copyButton = (e: any) => {
     e.stopPropagation();
     navigator.clipboard.writeText(question.description);
     toast.success("Question copied successfully")
+  }
+
+  const replayButton = () => {
+    router.push("/qa/answer")
   }
   return (
     <>
@@ -82,8 +87,8 @@ const Question = ({ question }: Props) => {
             <button className="flex items-center gap-1 hover:text-white">
               <Heart size={16} /> Like
             </button>
-            <button className="flex items-center gap-1 hover:text-white">
-              <MessageCircle size={16} /> Comment
+            <button onClick={replayButton} className="flex items-center gap-1 hover:text-white">
+              <CornerUpRight size={16} /> Replay
             </button>
             <button
               onClick={() => setOpen(true)}
@@ -111,7 +116,7 @@ const Question = ({ question }: Props) => {
                 <Heart size={16} /> Like
               </button>
               <button className="flex items-center gap-1 hover:text-white">
-                <MessageCircle size={16} /> Comment
+                <CornerUpRight size={16} /> Replay
               </button>
               <button
                 onClick={() => setOpen(true)}

@@ -1,7 +1,6 @@
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { updateQuestionSchema } from "@/schema/updateQuestionSchema"
-import { updateSnippetSchema } from "@/schema/updateSnippetSchema"
 import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
 

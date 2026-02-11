@@ -3,7 +3,7 @@ import Image from "next/image";
 import { Separator } from "../ui/separator";
 import { EllipsisVertical } from "lucide-react";
 
-type PostUser = {
+type ArticleUser = {
   username?: string | null;
   name?: string | null;
   image?: string | null;
@@ -27,7 +27,7 @@ function getAvatarGradient(seed?: string) {
   return avatarColors[Math.abs(hash) % avatarColors.length];
 }
 
-const PostHeader = ({ user }: { user?: PostUser }) => {
+const ArticleHeader = ({ user }: { user?: ArticleUser }) => {
   const username = user?.username ?? "user";
   const displayName = user?.name ?? username;
   const firstLetter = username.charAt(0).toUpperCase();
@@ -87,4 +87,4 @@ const PostHeader = ({ user }: { user?: PostUser }) => {
   );
 };
 
-export default PostHeader;
+export default ArticleHeader;

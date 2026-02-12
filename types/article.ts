@@ -18,6 +18,8 @@ export type ArticleWithExtras = {
         id: string
         name: string
     }[]
+    isLiked: boolean,
+    likeCount: number
 
     comments: {
         id: string

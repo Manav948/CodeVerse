@@ -1,15 +1,17 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogContent } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { SnippetWithExtras } from "@/types/snippet";
-import { FileCode } from "lucide-react";
+import { FileCode, Heart } from "lucide-react";
 import SnippetHeader from "./SnippetHeader";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
 import toast from "react-hot-toast";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
 
 type Props = {
   snippet: SnippetWithExtras;
@@ -17,71 +19,80 @@ type Props = {
 
 const SnippetCard = ({ snippet }: Props) => {
   const [open, setOpen] = useState(false);
+  const queryClient = useQueryClient();
 
-  const copyButton = (e: any) => {
-    e.stopPropagation();
+  const { mutate: toggleLike, isPending } = useMutation({
+    mutationFn: async () => {
+      await axios.post(`/api/snippet/likes/${snippet.id}`);
+    },
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["snippets"] });
+
+      const previousSnippets =
+        queryClient.getQueryData<SnippetWithExtras[]>(["snippets"]);
+
+      queryClient.setQueryData<SnippetWithExtras[]>(["snippets"], (old) =>
+        old?.map((s) =>
+          s.id === snippet.id
+            ? {
+              ...s,
+              isLiked: !s.isLiked,
+              likeCount: s.isLiked
+                ? s.likeCount - 1
+                : s.likeCount + 1,
+            }
+            : s
+        ) || []
+      );
+
+      return { previousSnippets };
+    },
+
+    onError: (_err, _vars, context) => {
+      if (context?.previousSnippets) {
+        queryClient.setQueryData(["snippets"], context.previousSnippets);
+      }
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["snippets"] });
+    },
+  });
+
+  const copyButton = () => {
     navigator.clipboard.writeText(snippet.code);
-    toast.success("Snippet copied successfully")
-  }
+    toast.success("Snippet copied");
+  };
+
   return (
     <>
       <Card
-        onClick={() => setOpen(true)}
         className="
           relative overflow-hidden
-          cursor-pointer
-          rounded-xl
-          bg-black
-          p-5
-          border-none
+          rounded-2xl
+          bg-black/60
+          backdrop-blur-xl
+          p-6
           transition-all duration-300
-          hover:border-cyan-400/40
+          hover:border-cyan-400/30
+          border border-white/5
         "
       >
-        {/* <div className="pointer-events-none absolute inset-0">
-          <div
-            className="
-              absolute right-1 left-55
-              h-80 w-80
-              rounded-full
-              bg-purple-500/20
-              blur-3xl
-            "
-          />
-          
-          <div
-            className="
-              absolute bottom-0 right-12
-              h-80 w-80
-              rounded-full
-              bg-cyan-500/20
-              blur-3xl
-            "
-          />
-          <div className="absolute inset-0 bg-linear-to-br from-white/5 via-transparent to-transparent" />
-        </div> */}
-
-        <div className="relative z-10 flex flex-col gap-3">
+        <div className="space-y-4">
           <SnippetHeader user={snippet.user} />
 
-          <h3 className="text-lg font-semibold text-white line-clamp-1">
+          <h3 className="text-lg font-semibold text-white">
             {snippet.title}
           </h3>
 
+         
           <p className="text-sm text-white/60 line-clamp-2">
             {snippet.description}
           </p>
 
-          <div
-            className="
-              relative rounded-xl
-              bg-white/5
-              p-4
-              text-xs text-white/80
-              font-mono
-              line-clamp-3
-            "
-          >
+          
+          <div className="relative rounded-xl bg-white/10 border border-white/10 p-4 font-mono text-xs text-white/80 line-clamp-4">
             {snippet.code}
             <FileCode
               size={16}
@@ -89,44 +100,86 @@ const SnippetCard = ({ snippet }: Props) => {
             />
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 pt-1">
-            <Badge className="bg-cyan-500/10 text-cyan-400">
-              {snippet.language}
-            </Badge>
+          
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
 
-            {snippet.tags.slice(0, 3).map((tag) => (
-              <Badge
-                key={tag.id}
-                className="bg-white/10 text-white/70"
-              >
-                #{tag.name}
+            <div className="flex flex-wrap gap-2">
+              <Badge className="bg-cyan-500/10 text-cyan-400">
+                {snippet.language}
               </Badge>
-            ))}
 
-            {snippet.tags.length > 3 && (
-              <span className="text-xs text-white/40">
-                +{snippet.tags.length - 3} more
-              </span>
-            )}
+              {snippet.tags.slice(0, 3).map((tag) => (
+                <Badge
+                  key={tag.id}
+                  className="bg-white/10 text-white/70"
+                >
+                  #{tag.name}
+                </Badge>
+              ))}
+            </div>
+            <div className="flex items-center gap-5 text-sm">
+
+               <button
+                disabled={isPending}
+                onClick={() => toggleLike()}
+                className={`flex items-center gap-1 transition-all duration-200
+                  ${snippet.isLiked ? "text-red-500 scale-105" : "hover:text-white"}
+                ${isPending ? "opacity-50 cursor-not-allowed" : ""}
+  `}
+              >
+                <Heart
+                  size={16}
+                  fill={snippet.isLiked ? "currentColor" : "none"}
+                  className="transition-all duration-200"
+                />
+                <span>{snippet.likeCount}</span>
+              </button>
+
+              <button
+                onClick={() => setOpen(true)}
+                className="text-white/60 hover:text-white"
+              >
+                View →
+              </button>
+
+            </div>
           </div>
         </div>
       </Card>
-      <Separator className="bg-white/20" />
+
+      <Separator className="bg-white/10 my-6" />
+
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent className="max-w-4xl border-white/10 bg-black text-white">
-          <h2 className="text-xl font-semibold">{snippet.title}</h2>
-          <p className="text-sm text-white/60">{snippet.description}</p>
+        <DialogContent
+          className="
+            max-w-4xl
+            border border-white/10
+            bg-black
+            text-white
+            backdrop-blur-xl
+          "
+        >
+          <DialogHeader className="space-y-4 mt-15">
+            <SnippetHeader user={snippet.user} />
 
-          <Separator className="my-2 bg-white/10" />
+            <h2 className="text-2xl font-semibold">
+              {snippet.title}
+            </h2>
 
-          <pre className="mt-2 max-h-[60vh] overflow-auto rounded-xl bg-white/5 p-4 text-sm">
+            <p className="text-xs text-white/40">
+              {new Date(snippet.created_at).toLocaleString()}
+            </p>
+          </DialogHeader>
+
+          <Separator className="my-4 bg-white/10" />
+
+          <pre className="max-h-[60vh] overflow-auto rounded-xl bg-white/10 border border-white/10 p-5 text-sm font-mono">
             <code>{snippet.code}</code>
           </pre>
 
           <Button
-            variant="secondary"
-            className="mt-3 w-fit"
             onClick={copyButton}
+            className="mt-4 bg-linear-to-r from-cyan-500 to-blue-500 hover:opacity-90"
           >
             Copy Snippet
           </Button>

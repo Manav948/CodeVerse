@@ -32,16 +32,27 @@ export async function GET() {
                             }
                         }
                     },
-                    orderBy : {
-                        created_at : "asc"
+                    orderBy: {
+                        created_at: "asc"
+                    }
+                },
+                questionLikes: {
+                    select: {
+                        userId: true
                     }
                 }
             },
+
             orderBy: {
                 created_at: "desc"
             }
         })
-        return NextResponse.json(question, { status: 200 })
+        const transformedQuestion = question.map((quest) => ({
+            ...quest,
+            likeCount: quest.questionLikes.length,
+            isLiked: quest.questionLikes.map((like) => like.userId === userId)
+        }))
+        return NextResponse.json(transformedQuestion, { status: 200 })
     }
     catch (error) {
         console.log("Error While fetching Question", error)

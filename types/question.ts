@@ -4,6 +4,8 @@ export type QuestionWithExtras = {
     description: string
     created_at: Date
     updated_at: Date
+    isLiked : boolean
+    likeCount : number
 
     user: {
         id: string

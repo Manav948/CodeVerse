@@ -33,6 +33,11 @@ export async function GET() {
                         }
                     }
                 },
+                snippetLikes: {
+                    select: {
+                        userId: true
+                    }
+                }
             },
             orderBy: {
                 created_at: "desc"
@@ -43,7 +48,9 @@ export async function GET() {
         }
         const transformedSnippets = snippets.map((snippet) => ({
             ...snippet,
-            tags: snippet.tags.map((snippetTag) => snippetTag.tag)
+            tags: snippet.tags.map((snippetTag) => snippetTag.tag),
+            likeCount: snippet.snippetLikes.length,
+            isLiked: snippet.snippetLikes.map((like) => like.userId === userId)
         }))
         return NextResponse.json(transformedSnippets, { status: 200 })
     }

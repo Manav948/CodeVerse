@@ -6,9 +6,11 @@ import { NextResponse } from "next/server";
 export async function GET() {
     try {
         const session = await getServerSession(authOptions)
+        const userId = await session?.user.id
         if (!session?.user) {
             return NextResponse.json("User Not Authenticated", { status: 401 })
         }
+
         const snippets = await db.snippet.findMany({
             where: {
                 visibility: "PUBLIC"
@@ -43,6 +45,11 @@ export async function GET() {
                             }
                         }
                     }
+                },
+                snippetLikes: {
+                    select: {
+                        userId: true
+                    }
                 }
             }
         })
@@ -51,7 +58,9 @@ export async function GET() {
         }
         const transformedSnippets = snippets.map((snippet) => ({
             ...snippet,
-            tags: snippet.tags.map((snippetTag) => snippetTag.tag)
+            tags: snippet.tags.map((snippetTag) => snippetTag.tag),
+            likeCount: snippet.snippetLikes.length,
+            isLiked: snippet.snippetLikes.map((like) => like.userId === userId)
         }))
         return NextResponse.json(transformedSnippets, { status: 200 })
     }

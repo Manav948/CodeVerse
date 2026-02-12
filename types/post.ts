@@ -18,6 +18,8 @@ export type PostWithExtras = {
         id: string
         name: string
     }[]
+    likeCount: number
+    isLiked: boolean
 
     comments?: {
         id: string

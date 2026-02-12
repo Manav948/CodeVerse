@@ -13,18 +13,56 @@ import {
   DialogContent,
   DialogHeader,
 } from "../ui/dialog";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type Props = {
   post: PostWithExtras;
 };
-
 const PostCard = ({ post }: Props) => {
   const [open, setOpen] = useState(false);
-  const [likeCount , setLikeCount] = useState(0);
-  const Couter = () => {
-    setLikeCount(likeCount => likeCount + 1);
-  }
+  const queryClient = useQueryClient();
+  const router = useRouter();
   console.log(post)
+
+  const { mutate: toggleLike, isPending } = useMutation({
+    mutationFn: async () => {
+      await axios.post(`/api/post/likes/${post.id}`);
+    },
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["post"] });
+
+      const previousPosts = queryClient.getQueryData<PostWithExtras[]>(["post"]);
+
+      queryClient.setQueryData<PostWithExtras[]>(["post"], (old) =>
+        old?.map((p) =>
+          p.id === post.id
+            ? {
+              ...p,
+              isLiked: !p.isLiked,
+              likeCount: p.isLiked
+                ? p.likeCount - 1
+                : p.likeCount + 1,
+            }
+            : p
+        ) || []
+      );
+      router.refresh();
+
+      return { previousPosts };
+    },
+
+    onError: (err, variables, context) => {
+      if (context?.previousPosts) {
+        queryClient.setQueryData(["posts"], context.previousPosts);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+  });
+
   return (
     <>
       <Card
@@ -93,9 +131,22 @@ const PostCard = ({ post }: Props) => {
             </span>
 
             <div className="flex items-center gap-5">
-              <button onClick={Couter} className="flex items-center gap-1 hover:text-white">
-                <Heart size={16} /> {likeCount}
+              <button
+                disabled={isPending}
+                onClick={() => toggleLike()}
+                className={`flex items-center gap-1 transition-all duration-200
+                  ${post.isLiked ? "text-red-500 scale-105" : "hover:text-white"}
+                ${isPending ? "opacity-50 cursor-not-allowed" : ""}
+  `}
+              >
+                <Heart
+                  size={16}
+                  fill={post.isLiked ? "currentColor" : "none"}
+                  className="transition-all duration-200"
+                />
+                <span>{post.likeCount}</span>
               </button>
+
               <button className="flex items-center gap-1 hover:text-white">
                 <MessageCircle size={16} /> Comment
               </button>

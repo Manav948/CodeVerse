@@ -27,6 +27,11 @@ export async function GET() {
                         username: true,
                         image: true
                     }
+                },
+                postLikes: {
+                    select: {
+                        userId: true
+                    }
                 }
             },
             orderBy: {
@@ -38,7 +43,9 @@ export async function GET() {
         }
         const transformedSnippets = post.map((post) => ({
             ...post,
-            tags: post.tags.map((postTag) => postTag.tag)
+            tags: post.tags.map((postTag) => postTag.tag),
+            likeCount: post.postLikes.length,
+            isLiked: post.postLikes.some((like) => like.userId === userId)
         }))
         return NextResponse.json(transformedSnippets, { status: 200 })
     }

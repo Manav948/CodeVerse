@@ -9,6 +9,7 @@ export async function GET() {
         if (!session?.user) {
             return NextResponse.json("User Not Authenticated", { status: 401 })
         }
+        const userId = await session.user.id
         const post = await db.post.findMany({
             orderBy: {
                 created_at: "desc"
@@ -27,6 +28,11 @@ export async function GET() {
                         tag: true
                     }
                 },
+                postLikes: {
+                    select: {
+                        userId: true
+                    }
+                }
             }
         })
         if (post.length === 0) {
@@ -34,7 +40,9 @@ export async function GET() {
         }
         const transformedSnippets = post.map((post) => ({
             ...post,
-            tags: post.tags.map((postTag) => postTag.tag)
+            tags: post.tags.map((postTag) => postTag.tag),
+            likeCount: post.postLikes.length,
+            isLiked: post.postLikes.some((like) => like.userId === userId)
         }))
         return NextResponse.json(transformedSnippets, { status: 200 })
     }

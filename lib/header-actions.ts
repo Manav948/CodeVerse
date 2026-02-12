@@ -27,10 +27,10 @@ export const HeaderAction: {
     },
   },
   {
-    match: (path) => path.startsWith("/articles"),
+    match: (path) => path.startsWith("/article"),
     action: {
       label: "Add Article",
-      href: "/articles/new",
+      href: "/article/new",
       icon: PenSquare,
     },
   },

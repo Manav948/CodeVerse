@@ -32,6 +32,11 @@ export async function GET() {
                     select: {
                         userId: true
                     }
+                },
+                bookmark: {
+                    select: {
+                        userId: true
+                    }
                 }
             }
         })
@@ -42,7 +47,8 @@ export async function GET() {
             ...post,
             tags: post.tags.map((postTag) => postTag.tag),
             likeCount: post.postLikes.length,
-            isLiked: post.postLikes.some((like) => like.userId === userId)
+            isLiked: post.postLikes.some((like) => like.userId === userId),
+            bookmarked: post.bookmark.some((bookmark) => bookmark.userId === userId)
         }))
         return NextResponse.json(transformedSnippets, { status: 200 })
     }

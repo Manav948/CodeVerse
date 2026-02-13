@@ -20,7 +20,7 @@ export type PostWithExtras = {
     }[]
     likeCount: number
     isLiked: boolean
-
+    bookmarked : boolean
     comments?: {
         id: string
         commentText: string

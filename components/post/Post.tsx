@@ -7,7 +7,7 @@ import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
 import PostHeader from "./PostHeader";
-import { Heart, MessageCircle } from "lucide-react";
+import { Bookmark, Heart, MessageCircle } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -62,6 +62,29 @@ const PostCard = ({ post }: Props) => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
+
+  const { mutate: toggleBookmark } = useMutation({
+    mutationFn: async () => {
+      await axios.post(`/api/post/bookmark/${post.id}`)
+    },
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["posts"] })
+      const previous = queryClient.getQueryData<PostWithExtras[]>(["posts"])
+      queryClient.setQueryData<PostWithExtras[]>(
+        ["posts"],
+        (old) => old?.map((p) => p.id === post.id ? { ...p, bookmarked: !p.bookmarked } : p) || []
+      )
+      return { previous }
+    },
+    onError: (_, __, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["posts"], context.previous);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+  })
 
   return (
     <>
@@ -145,6 +168,19 @@ const PostCard = ({ post }: Props) => {
                   className="transition-all duration-200"
                 />
                 <span>{post.likeCount}</span>
+              </button>
+
+              <button
+                onClick={() => toggleBookmark()}
+                className={`transition ${post.bookmarked
+                    ? "text-yellow-400"
+                    : "hover:text-white"
+                  }`}
+              >
+                <Bookmark
+                  size={18}
+                  fill={post.bookmarked ? "currentColor" : "none"}
+                />
               </button>
 
               <button className="flex items-center gap-1 hover:text-white">

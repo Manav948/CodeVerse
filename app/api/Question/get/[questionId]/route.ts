@@ -3,59 +3,64 @@ import { db } from "@/lib/db";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function GET() {
-    try {
-        const session = await getServerSession(authOptions)
-        if (!session?.user) {
-            return NextResponse.json("User Not Authenticated", { status: 401 })
-        }
-        const userId = session.user.id;
-        const question = await db.question.findMany({
-            where: {
-                userId: userId
-            },
-            include: {
-                user: {
-                    select: {
-                        id: true,
-                        username: true,
-                        image: true
-                    }
-                },
-                answer: {
-                    include: {
-                        user: {
-                            select: {
-                                id: true,
-                                username: true,
-                                image: true
-                            }
-                        }
-                    },
-                    orderBy: {
-                        created_at: "asc"
-                    }
-                },
-                questionLikes: {
-                    select: {
-                        userId: true
-                    }
-                }
-            },
+interface Props {
+  params: Promise<{
+    questionId: string;
+  }>;
+}
 
-            orderBy: {
-                created_at: "desc"
-            }
-        })
-        const transformedQuestion = question.map((quest) => ({
-            ...quest,
-            likeCount: quest.questionLikes.length,
-            isLiked: quest.questionLikes.map((like) => like.userId === userId)
-        }))
-        return NextResponse.json(transformedQuestion, { status: 200 })
+export async function GET(request: Request, { params }: Props) {
+  try {
+    const { questionId } = await params;
+
+    const session = await getServerSession(authOptions);
+    const userId = session?.user?.id;
+
+    const question = await db.question.findUnique({
+      where: { id: questionId },
+      include: {
+        user: {
+          select: {
+            id: true,
+            username: true,
+            image: true,
+          },
+        },
+        answer: {
+          include: {
+            user: {
+              select: {
+                id: true,
+                username: true,
+                image: true,
+              },
+            },
+          },
+          orderBy: {
+            created_at: "asc",
+          },
+        },
+        questionLikes: {
+          select: { userId: true },
+        },
+      },
+    });
+
+    if (!question) {
+      return NextResponse.json("Question not found", { status: 404 });
     }
-    catch (error) {
-        console.log("Error While fetching Question", error)
-        return NextResponse.json("Internal Server Error", { status: 500 })
-    }
+
+    const transformed = {
+      ...question,
+      likeCount: question.questionLikes.length,
+      isLiked: question.questionLikes.some(
+        (like) => like.userId === userId
+      ),
+    };
+
+    return NextResponse.json(transformed, { status: 200 });
+  } catch (error) {
+    console.error(error);
+    return NextResponse.json("Internal Error", { status: 500 });
+  }
 }

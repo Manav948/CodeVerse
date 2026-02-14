@@ -10,6 +10,7 @@ import PostCard from "../post/Post";
 import SnippetCard from "../snippet/Snippet";
 import Question from "../question/Question";
 import Article from "../article/Article";
+import Loader from "../ui/Loading";
 
 
 const tabs = ["all", "post", "snippet", "question", "article"] as const;
@@ -29,8 +30,8 @@ const BookMarks = () => {
 
   if (isLoading) {
     return (
-      <div className="text-white/60 animate-pulse">
-        Loading bookmarks...
+      <div className="text-white/60 animate-pulse flex items-center justify-center">
+        <Loader />
       </div>
     );
   }

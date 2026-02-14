@@ -15,6 +15,7 @@ import { Button } from "../ui/button";
 import { useState, useRef } from "react";
 import AddAnswer from "./Answer";
 import AnswerHeader from "./AnswerHeader";
+import Loader from "../ui/Loading";
 
 interface Props {
   questionId: string;
@@ -88,7 +89,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
   if (isLoading) {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
-        <LoadingState />
+        <Loader />
       </div>
     );
   }
@@ -117,14 +118,13 @@ const GetQuestionDetails = ({ questionId }: Props) => {
     <div className="min-h-screen bg-black text-white">
       <div className="mx-auto max-w-3xl px-6 py-10 space-y-10">
 
-        {/* QUESTION CARD */}
-        <Card className="border border-white/10 bg-white/5 backdrop-blur-xl p-6 rounded-2xl space-y-5">
+        <Card className="border border-white/10 bg-black backdrop-blur-xl p-6 rounded-2xl space-y-5">
 
           <h2 className="text-2xl text-white font-semibold">
             {data.title}
           </h2>
 
-          <p className="bg-black/40 p-5 rounded-xl text-white/80 whitespace-pre-wrap leading-relaxed">
+          <p className="bg-white/10 p-5 rounded-xl text-white/80 whitespace-pre-wrap leading-relaxed">
             {data.description}
           </p>
 
@@ -183,7 +183,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
           {data.answer.map((ans) => (
             <Card
               key={ans.id}
-              className="bg-white/5 border border-white/10 p-5 rounded-xl space-y-3"
+              className="bg-black border border-white/10 p-5 rounded-xl space-y-3"
             >
               <AnswerHeader user={ans.user    } />
               <div className="flex justify-between text-xs text-white/50">

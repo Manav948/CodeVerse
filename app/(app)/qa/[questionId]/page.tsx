@@ -10,7 +10,7 @@ export default async function Page({ params }: Props) {
   const { questionId } = await params;
 
   return (
-    <div className="min-h-screen bg-black text-white p-6">
+    <div className="min-h-screen bg-black text-white">
       <AnswerContainer questionId={questionId} />
     </div>
   );

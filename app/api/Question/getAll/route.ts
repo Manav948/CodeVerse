@@ -47,6 +47,11 @@ export async function GET() {
             userId: true,
           },
         },
+        bookmark :{
+          select :{
+            userId : true
+          }
+        }
       },
     });
 
@@ -56,6 +61,7 @@ export async function GET() {
       isLiked: q.questionLikes.some(
         (like) => like.userId === userId
       ),
+      bookmarked : q.bookmark.some((bookmark) => bookmark.userId === userId)
     }));
 
     return NextResponse.json(transformed, { status: 200 });

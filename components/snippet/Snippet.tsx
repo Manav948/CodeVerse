@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { SnippetWithExtras } from "@/types/snippet";
-import { FileCode, Heart } from "lucide-react";
+import { Bookmark, FileCode, Heart } from "lucide-react";
 import SnippetHeader from "./SnippetHeader";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
@@ -60,6 +60,44 @@ const SnippetCard = ({ snippet }: Props) => {
     },
   });
 
+  const { mutate: toggleBookmark, isPending: isBookmarking } = useMutation({
+    mutationFn: async () => {
+      await axios.post(`/api/snippet/bookmark/${snippet.id}`);
+    },
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["snippets"] });
+
+      const previousSnippets =
+        queryClient.getQueryData<SnippetWithExtras[]>(["snippets"]);
+
+      queryClient.setQueryData<SnippetWithExtras[]>(["snippets"], (old) =>
+        old?.map((s) =>
+          s.id === snippet.id
+            ? { ...s, bookmarked: !s.bookmarked }
+            : s
+        ) || []
+      );
+
+      return { previousSnippets };
+    },
+
+    onError: (_err, _vars, context) => {
+      if (context?.previousSnippets) {
+        queryClient.setQueryData(["snippets"], context.previousSnippets);
+      }
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["snippets"] });
+    },
+
+    onSuccess: () => {
+      toast.success("Bookmark updated");
+    },
+  });
+
+
   const copyButton = () => {
     navigator.clipboard.writeText(snippet.code);
     toast.success("Snippet copied");
@@ -86,12 +124,12 @@ const SnippetCard = ({ snippet }: Props) => {
             {snippet.title}
           </h3>
 
-         
+
           <p className="text-sm text-white/60 line-clamp-2">
             {snippet.description}
           </p>
 
-          
+
           <div className="relative rounded-xl bg-white/10 border border-white/10 p-4 font-mono text-xs text-white/80 line-clamp-4">
             {snippet.code}
             <FileCode
@@ -100,7 +138,7 @@ const SnippetCard = ({ snippet }: Props) => {
             />
           </div>
 
-          
+
           <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
 
             <div className="flex flex-wrap gap-2">
@@ -119,11 +157,11 @@ const SnippetCard = ({ snippet }: Props) => {
             </div>
             <div className="flex items-center gap-5 text-sm">
 
-               <button
+              <button
                 disabled={isPending}
                 onClick={() => toggleLike()}
-                className={`flex items-center gap-1 transition-all duration-200
-                  ${snippet.isLiked ? "text-red-500 scale-105" : "hover:text-white"}
+                className={`flex items-center gap-1 transition-all duration-200 
+                  ${snippet.isLiked ? "text-red-500 scale-105" : "hover:text-white text-white"}
                 ${isPending ? "opacity-50 cursor-not-allowed" : ""}
   `}
               >
@@ -133,6 +171,19 @@ const SnippetCard = ({ snippet }: Props) => {
                   className="transition-all duration-200"
                 />
                 <span>{snippet.likeCount}</span>
+              </button>
+              <button
+                onClick={() => toggleBookmark()}
+                className={`flex items-center gap-1 transition-all duration-200 text-white ${snippet.bookmarked
+                  ? "text-yellow-400"
+                  : "hover:text-white"
+                  }`}
+              >
+                <Bookmark
+                  size={18}
+                  fill={snippet.bookmarked ? "currentColor" : "none"}
+                />
+                <span>BookMark</span>
               </button>
 
               <button

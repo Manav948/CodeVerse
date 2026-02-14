@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
-import { CornerUpRight, Heart } from "lucide-react";
+import { Bookmark, CornerUpRight, Heart } from "lucide-react";
 import toast from "react-hot-toast";
 import { QuestionWithExtras } from "@/types/question";
 import QuestionHeader from "./QuestionHeader";
@@ -37,12 +37,12 @@ const Question = ({ question }: Props) => {
         old?.map((q) =>
           q.id === question.id
             ? {
-                ...q,
-                isLiked: !q.isLiked,
-                likeCount: q.isLiked
-                  ? q.likeCount - 1
-                  : q.likeCount + 1,
-              }
+              ...q,
+              isLiked: !q.isLiked,
+              likeCount: q.isLiked
+                ? q.likeCount - 1
+                : q.likeCount + 1,
+            }
             : q
         ) || []
       );
@@ -52,7 +52,7 @@ const Question = ({ question }: Props) => {
 
     onError: (_err, _vars, context) => {
       if (context?.previousQuestions) {
-        queryClient.setQueryData(["question"], context.previousQuestions);
+        queryClient.setQueryData(["questions"], context.previousQuestions);
       }
     },
 
@@ -60,6 +60,33 @@ const Question = ({ question }: Props) => {
       queryClient.invalidateQueries({ queryKey: ["question"] });
     },
   });
+
+  const { mutate: toggleBookmark } = useMutation({
+    mutationFn: async () => {
+      await axios.post(`/api/Question/bookmark/${question.id}`)
+    },
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["question"] })
+      const previous = queryClient.getQueryData<QuestionWithExtras[]>(["question"])
+      queryClient.setQueryData<QuestionWithExtras[]>(
+        ["question"],
+        (old) => old?.map((p) => p.id === question.id ? { ...p, bookmarked: !p.bookmarked } : p) || []
+      )
+      return { previous }
+    },
+    onError: (_, __, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["question"], context.previous);
+      }
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["question"] });
+    },
+    onSuccess: () => {
+      toast.success("BookMarked Successfully")
+    }
+  })
+
 
   const copyButton = (e: any) => {
     e.stopPropagation();
@@ -115,10 +142,9 @@ const Question = ({ question }: Props) => {
                   toggleLike();
                 }}
                 className={`flex items-center gap-2 transition-all duration-200
-                  ${
-                    question.isLiked
-                      ? "text-red-500"
-                      : "text-white/60 hover:text-red-400"
+                  ${question.isLiked
+                    ? "text-red-500"
+                    : "text-white/60 hover:text-red-400"
                   }
                   ${isPending ? "opacity-50" : ""}
                 `}
@@ -128,6 +154,19 @@ const Question = ({ question }: Props) => {
                   fill={question.isLiked ? "currentColor" : "none"}
                 />
                 {question.likeCount}
+              </button>
+              <button
+                onClick={() => toggleBookmark()}
+                className={`flex  gap-2 transition ${question.bookmarked
+                  ? "text-yellow-400"
+                  : "hover:text-white"
+                  }`}
+              >
+                <Bookmark
+                  size={18}
+                  fill={question.bookmarked ? "currentColor" : "none"}
+                />
+                <span>BookMark</span>
               </button>
               <button
                 onClick={replyButton}
@@ -188,11 +227,10 @@ const Question = ({ question }: Props) => {
                 e.stopPropagation();
                 toggleLike();
               }}
-              className={`flex items-center gap-2 ${
-                question.isLiked
-                  ? "text-red-500"
-                  : "text-white/60 hover:text-red-400"
-              }`}
+              className={`flex items-center gap-2 ${question.isLiked
+                ? "text-red-500"
+                : "text-white/60 hover:text-red-400"
+                }`}
             >
               <Heart
                 size={18}

@@ -20,6 +20,7 @@ export type ArticleWithExtras = {
     }[]
     isLiked: boolean,
     likeCount: number
+    bookmarked : boolean
 
     comments: {
         id: string

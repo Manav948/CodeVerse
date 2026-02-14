@@ -5,6 +5,7 @@ export type QuestionWithExtras = {
     created_at: Date
     updated_at: Date
     isLiked : boolean
+    bookmarked : boolean
     likeCount : number
 
     user: {

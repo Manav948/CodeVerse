@@ -6,11 +6,12 @@ import Image from "next/image";
 import { Card } from "../ui/card";
 import { Badge } from "../ui/badge";
 import { Separator } from "../ui/separator";
-import { Heart, MessageCircle } from "lucide-react";
+import { Bookmark, Heart, MessageCircle } from "lucide-react";
 import { ArticleWithExtras } from "@/types/article";
 import ArticleHeader from "./ArticleHeader";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 type Props = {
   article: ArticleWithExtras;
@@ -46,13 +47,51 @@ const Article = ({ article }: Props) => {
 
     onError: (err, variables, context) => {
       if (context?.previousPosts) {
-        queryClient.setQueryData(["posts"], context.previousPosts);
+        queryClient.setQueryData(["article"], context.previousPosts);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["article"] });
     },
   });
+
+  const { mutate: toggleBookmark, isPending: isBookmarking } = useMutation({
+    mutationFn: async () => {
+      await axios.post(`/api/article/bookmark/${article.id}`);
+    },
+
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: ["article"] });
+
+      const previousArticle =
+        queryClient.getQueryData<ArticleWithExtras[]>(["article"]);
+
+      queryClient.setQueryData<ArticleWithExtras[]>(["article"], (old) =>
+        old?.map((s) =>
+          s.id === article.id
+            ? { ...s, bookmarked: !s.bookmarked }
+            : s
+        ) || []
+      );
+
+      return { previousArticle };
+    },
+
+    onError: (_err, _vars, context) => {
+      if (context?.previousArticle) {
+        queryClient.setQueryData(["article"], context.previousArticle);
+      }
+    },
+
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["article"] });
+    },
+
+    onSuccess: () => {
+      toast.success("Bookmark Successfully");
+    },
+  });
+
   console.log(article)
   return (
     <>
@@ -135,7 +174,21 @@ const Article = ({ article }: Props) => {
                   fill={article.isLiked ? "currentColor" : "none"}
                   className="transition-all duration-200"
                 />
-                <span>{article  .likeCount}</span>
+                <span>{article.likeCount}</span>
+              </button>
+
+              <button
+                onClick={() => toggleBookmark()}
+                className={`flex items-center gap-2 transition ${article.bookmarked
+                  ? "text-yellow-400"
+                  : "hover:text-white"
+                  }`}
+              >
+                <Bookmark
+                  size={18}
+                  fill={article.bookmarked ? "currentColor" : "none"}
+                />
+                <span>BookMark</span>
               </button>
               <button className="flex items-center gap-1 hover:text-white">
                 <MessageCircle size={16} /> Comment
@@ -149,7 +202,7 @@ const Article = ({ article }: Props) => {
           </div>
         </div>
       </Card>
-      
+
     </>
   );
 };

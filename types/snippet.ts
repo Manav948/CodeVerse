@@ -21,6 +21,7 @@ export type SnippetWithExtras = {
   }[]
   isLiked : boolean
   likeCount : number
+  bookmarked : boolean
 
   comments?: {
     id: string

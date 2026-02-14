@@ -37,6 +37,11 @@ export async function GET() {
                     select: {
                         userId: true
                     }
+                },
+                bookmark :{
+                    select : {
+                        userId : true
+                    }
                 }
             },
             orderBy: {
@@ -50,7 +55,8 @@ export async function GET() {
             ...snippet,
             tags: snippet.tags.map((snippetTag) => snippetTag.tag),
             likeCount: snippet.snippetLikes.length,
-            isLiked: snippet.snippetLikes.map((like) => like.userId === userId)
+            isLiked: snippet.snippetLikes.some((like) => like.userId === userId),
+            bookmarked : snippet.bookmark.some((bookmark) => bookmark.userId === userId)
         }))
         return NextResponse.json(transformedSnippets, { status: 200 })
     }

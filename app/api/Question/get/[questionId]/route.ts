@@ -43,6 +43,11 @@ export async function GET(request: Request, { params }: Props) {
         questionLikes: {
           select: { userId: true },
         },
+        bookmark :{
+          select :{
+            userId : true
+          }
+        }
       },
     });
 
@@ -53,9 +58,8 @@ export async function GET(request: Request, { params }: Props) {
     const transformed = {
       ...question,
       likeCount: question.questionLikes.length,
-      isLiked: question.questionLikes.some(
-        (like) => like.userId === userId
-      ),
+      isLiked: question.questionLikes.some((like) => like.userId === userId),
+      bookmarked : question.bookmark.some((bookmark) => bookmark.userId === userId)
     };
 
     return NextResponse.json(transformed, { status: 200 });

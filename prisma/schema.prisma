@@ -272,6 +272,8 @@ model BookMark {
 
   @@unique([userId, postId])
   @@unique([userId, snippetId])
+  @@unique([userId, questionId])
+  @@unique([userId,articleId])
 }
 
 model Article {

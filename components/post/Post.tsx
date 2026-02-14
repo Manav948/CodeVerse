@@ -16,6 +16,7 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 type Props = {
   post: PostWithExtras;
@@ -55,11 +56,11 @@ const PostCard = ({ post }: Props) => {
 
     onError: (err, variables, context) => {
       if (context?.previousPosts) {
-        queryClient.setQueryData(["posts"], context.previousPosts);
+        queryClient.setQueryData(["post"], context.previousPosts);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["post"] });
     },
   });
 
@@ -68,22 +69,25 @@ const PostCard = ({ post }: Props) => {
       await axios.post(`/api/post/bookmark/${post.id}`)
     },
     onMutate: async () => {
-      await queryClient.cancelQueries({ queryKey: ["posts"] })
-      const previous = queryClient.getQueryData<PostWithExtras[]>(["posts"])
+      await queryClient.cancelQueries({ queryKey: ["post"] })
+      const previous = queryClient.getQueryData<PostWithExtras[]>(["post"])
       queryClient.setQueryData<PostWithExtras[]>(
-        ["posts"],
+        ["post"],
         (old) => old?.map((p) => p.id === post.id ? { ...p, bookmarked: !p.bookmarked } : p) || []
       )
       return { previous }
     },
     onError: (_, __, context) => {
       if (context?.previous) {
-        queryClient.setQueryData(["posts"], context.previous);
+        queryClient.setQueryData(["post"], context.previous);
       }
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
+      queryClient.invalidateQueries({ queryKey: ["post"] });
     },
+    onSuccess: () => {
+      toast.success("BookMarked Successfully")
+    }
   })
 
   return (
@@ -172,15 +176,16 @@ const PostCard = ({ post }: Props) => {
 
               <button
                 onClick={() => toggleBookmark()}
-                className={`transition ${post.bookmarked
-                    ? "text-yellow-400"
-                    : "hover:text-white"
+                className={`flex  gap-2 transition ${post.bookmarked
+                  ? "text-yellow-400"
+                  : "hover:text-white"
                   }`}
               >
                 <Bookmark
                   size={18}
                   fill={post.bookmarked ? "currentColor" : "none"}
                 />
+                <span>BookMark</span>
               </button>
 
               <button className="flex items-center gap-1 hover:text-white">

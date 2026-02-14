@@ -14,6 +14,7 @@ import { LoadingState } from "../ui/LoadingState";
 import { Button } from "../ui/button";
 import { useState, useRef } from "react";
 import AddAnswer from "./Answer";
+import AnswerHeader from "./AnswerHeader";
 
 interface Props {
   questionId: string;
@@ -184,6 +185,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
               key={ans.id}
               className="bg-white/5 border border-white/10 p-5 rounded-xl space-y-3"
             >
+              <AnswerHeader user={ans.user    } />
               <div className="flex justify-between text-xs text-white/50">
                 <div className="flex gap-3">
                   <span>{ans.user.username}</span>

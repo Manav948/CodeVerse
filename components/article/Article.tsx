@@ -135,7 +135,7 @@ const Article = ({ article }: Props) => {
             </div>
           )}
 
-          {article.articleTags.length > 0 && (
+          {article.articleTags?.length > 0 && (
             <div className="flex flex-wrap gap-2">
               {article.articleTags.slice(0, 3).map((tag) => (
                 <Badge

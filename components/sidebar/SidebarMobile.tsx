@@ -69,8 +69,7 @@ const SidebarMobile = () => {
               className="
                 group relative flex items-center gap-3
                 rounded-xl px-4 py-2.5
-                bg-linear-to-r from-purple-500/20 to-cyan-500/20
-                text-white
+                bg-white text-black
                 border border-white/10
                 hover:from-purple-500/30 hover:to-cyan-500/30
                 transition-all
@@ -86,8 +85,7 @@ const SidebarMobile = () => {
               className="
                 group relative flex items-center gap-3
                 rounded-xl px-4 py-2.5
-                bg-linear-to-r from-rose-500/20 to-red-500/20
-                text-red-400
+                bg-red-500/70 text-white
                 border border-red-500/20
                 hover:from-rose-500/30 hover:to-red-500/30
                 transition-all

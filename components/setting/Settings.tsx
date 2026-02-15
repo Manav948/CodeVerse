@@ -63,40 +63,42 @@ const Settings = () => {
   const gradient = getAvatarGradient(username);
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8 px-4 sm:px-6 lg:px-0">
       <div>
-        <h1 className="text-3xl font-semibold">Account</h1>
+        <h1 className="text-2xl sm:text-3xl font-semibold">
+          Account
+        </h1>
         <p className="text-white/50 text-sm mt-1">
           Manage your account information.
         </p>
       </div>
 
-      <Card className="bg-black border border-white/10 rounded-2xl p-8 space-y-8">
+      <Card className="bg-black border border-white/10 rounded-2xl p-5 sm:p-8 space-y-8">
 
-        <h2 className="text-lg font-medium text-white/80">
+        <h2 className="text-base sm:text-lg font-medium text-white/80">
           Profile Details
         </h2>
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-6">
+          <div className="flex items-center gap-4 sm:gap-6">
 
-          <div className="flex items-center gap-6">
             {user.image ? (
               <Image
                 src={user.image}
                 alt={username}
-                width={64}
-                height={64}
-                className="rounded-full object-cover border border-white/10"
+                width={80}
+                height={80}
+                className="rounded-full object-cover border border-white/10 w-16 h-16 sm:w-20 sm:h-20"
               />
             ) : (
               <div
-                className={`flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br ${gradient} text-xl font-semibold text-white`}
+                className={`flex h-16 w-16 sm:h-20 sm:w-20 items-center justify-center rounded-full bg-linear-to-br ${gradient} text-xl sm:text-2xl font-semibold text-white`}
               >
                 {firstLetter}
               </div>
             )}
 
             <div className="flex flex-col">
-              <span className="text-white font-medium text-lg">
+              <span className="text-white font-medium text-base sm:text-lg">
                 {displayName}
               </span>
               <span className="text-white/50 text-sm">
@@ -104,10 +106,9 @@ const Settings = () => {
               </span>
             </div>
           </div>
-
           <Button
             variant="secondary"
-            className="flex items-center gap-2"
+            className="flex items-center justify-center gap-2 w-full sm:w-auto"
             onClick={() => setEditing(true)}
           >
             <Pencil size={14} />
@@ -116,19 +117,20 @@ const Settings = () => {
         </div>
 
         <div className="border-t border-white/10" />
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
           <div>
             <p className="text-white font-medium">
               Email address
             </p>
-            <p className="text-white/50 text-sm mt-1">
+            <p className="text-white/50 text-sm mt-1 break-all">
               {user.email ?? "No email added"}
             </p>
           </div>
 
           <Button
             variant="ghost"
-            className="flex items-center gap-2 text-white/60 hover:text-black"
+            className="flex items-center justify-center gap-2 text-white/60 hover:text-black w-full sm:w-auto"
           >
             <Plus size={14} />
             Add email
@@ -136,7 +138,8 @@ const Settings = () => {
         </div>
 
         <div className="border-t border-white/10" />
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+
           <div>
             <p className="text-white font-medium">
               Connected accounts
@@ -148,13 +151,14 @@ const Settings = () => {
 
           <Button
             variant="ghost"
-            className="flex items-center gap-2 text-white/60 hover:text-black"
+            className="flex items-center justify-center gap-2 text-white/60 hover:text-black w-full sm:w-auto"
           >
             <Plus size={14} />
             Connect account
           </Button>
         </div>
       </Card>
+
       <EditProfileModal
         open={editing}
         setOpen={setEditing}
@@ -162,6 +166,7 @@ const Settings = () => {
       />
     </div>
   );
+
 };
 
 export default Settings;

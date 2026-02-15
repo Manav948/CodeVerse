@@ -164,7 +164,7 @@ const Article = ({ article }: Props) => {
               <button
                 disabled={isPending}
                 onClick={() => toggleLike()}
-                className={`flex items-center gap-1 transition-all duration-200
+                className={`flex items-center gap-1 transition-all duration-200 cursor-pointer
                   ${article.isLiked ? "text-red-500 scale-105" : "hover:text-white"}
                 ${isPending ? "opacity-50 cursor-not-allowed" : ""}
   `}
@@ -179,8 +179,8 @@ const Article = ({ article }: Props) => {
 
               <button
                 onClick={() => toggleBookmark()}
-                className={`flex items-center gap-2 transition ${article.bookmarked
-                  ? "text-yellow-400"
+                className={`flex items-center gap-2 transition cursor-pointer ${article.bookmarked
+                  ? "text-gray-400"
                   : "hover:text-white"
                   }`}
               >
@@ -190,11 +190,11 @@ const Article = ({ article }: Props) => {
                 />
                 <span>BookMark</span>
               </button>
-              <button className="flex items-center gap-1 hover:text-white">
+              <button className="flex items-center gap-1 hover:text-white cursor-pointer">
                 <MessageCircle size={16} /> Comment
               </button>
               <button
-                className="hover:text-white font-medium"
+                className="hover:text-white font-medium cursor-pointer"
               >
                 View →
               </button>

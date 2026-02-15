@@ -161,7 +161,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
           <Button
             onClick={handleAnswerClick}
-            className="bg-linear-to-r from-purple-500 to-cyan-500"
+            className="bg-linear-to-r bg-red-500/60 text-white"
           >
             Write Answer
           </Button>

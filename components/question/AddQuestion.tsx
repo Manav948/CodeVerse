@@ -97,7 +97,7 @@ const AddQuestions = () => {
                                         type="submit"
                                         disabled={isPending}
                                         className="h-11 w-full rounded-xl
-                                                   bg-linear-to-r from-purple-500 to-cyan-500
+                                                   bg-red-500/60
                                                    font-semibold text-white
                                                    hover:opacity-90
                     "

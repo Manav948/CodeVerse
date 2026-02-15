@@ -40,7 +40,6 @@ const User = () => {
         sideOffset={10}
         className="w-60 rounded-xl border border-white/10 bg-black p-3 text-white shadow-xl backdrop-blur-xl"
       >
-        {/* User Info */}
         <div className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
           <UserAvatar
             profileImage={user?.image ?? null}
@@ -59,7 +58,6 @@ const User = () => {
 
         <DropdownMenuSeparator className="my-3 bg-white/10" />
 
-        {/* Settings */}
         <DropdownMenuItem asChild>
           <Link
             href="/dashboard/settings"
@@ -70,7 +68,6 @@ const User = () => {
           </Link>
         </DropdownMenuItem>
 
-        {/* Logout */}
         <DropdownMenuItem
           onClick={logOutHandler}
           className="flex items-center gap-3 rounded-lg px-3 py-2 text-red-400 hover:bg-red-500/10 transition cursor-pointer"

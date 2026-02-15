@@ -15,7 +15,7 @@ const Community = () => {
         transition={{ duration: 0.6 }}
         className="relative w-full max-w-2xl"
       >
-        <Card className="relative overflow-hidden rounded-3xl bg-black backdrop-blur-2xl border border-white/10 p-10 text-center shadow-[0_0_60px_rgba(168,85,247,0.15)]">
+        <Card className="relative overflow-hidden rounded-3xl bg-black backdrop-blur-2xl border border-white/10 p-10 text-center">
 
           <div className="absolute inset-0 rounded-3xl border border-purple-500/20 pointer-events-none" />
 
@@ -59,7 +59,7 @@ const Community = () => {
           </div>
 
           <div className="mt-8">
-            <Button className="relative overflow-hidden rounded-xl h-12 px-8 font-semibold text-white bg-linear-to-r from-purple-500 via-pink-500 to-cyan-500 hover:opacity-95 transition-all duration-300 shadow-lg shadow-purple-500/30">
+            <Button className="relative overflow-hidden rounded-xl h-12 px-8 font-semibold text-white bg-red-500/60  hover:opacity-95 transition-all duration-300">
               Upgrade to Premium
             </Button>
           </div>

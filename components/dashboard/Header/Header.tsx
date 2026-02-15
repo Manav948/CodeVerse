@@ -18,8 +18,6 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/40 backdrop-blur-xl">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4">
-
-        {/* Left */}
         <div className="flex flex-1 items-center gap-2">
           <div className="md:hidden">
             <SidebarMobile />
@@ -44,16 +42,14 @@ const Header = () => {
           </div>
         </div>
 
-        {/* Right */}
         <div className="flex items-center gap-3">
           {matched && (
             <Button
               onClick={() => router.push(matched.action.href)}
               className="
                 h-10 rounded-xl
-                bg-linear-to-r from-purple-500 to-cyan-500
-                text-white hover:opacity-90
-                px-3 md:px-4 flex items-center gap-2
+                bg-red-500/60 text-white
+                px-3 md:px-3 flex items-center gap-2
               "
             >
               <matched.action.icon size={16} />

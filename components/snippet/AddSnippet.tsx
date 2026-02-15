@@ -73,7 +73,7 @@ const AddSnippet = () => {
             <div
               className="
                 rounded-3xl border border-white/10
-                bg-white/5 backdrop-blur-xl
+                bg-black backdrop-blur-xl
                 p-8
               "
             >
@@ -231,7 +231,7 @@ const AddSnippet = () => {
                     disabled={isPending}
                     className="
                       h-11 w-full rounded-xl
-                      bg-linear-to-r from-purple-500 to-cyan-500
+                      bg-red-500/60
                       font-semibold text-white
                       hover:opacity-90
                     "

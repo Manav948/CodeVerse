@@ -161,7 +161,7 @@ const PostCard = ({ post }: Props) => {
               <button
                 disabled={isPending}
                 onClick={() => toggleLike()}
-                className={`flex items-center gap-1 transition-all duration-200
+                className={`flex items-center gap-1 transition-all duration-200 cursor-pointer
                   ${post.isLiked ? "text-red-500 scale-105" : "hover:text-white"}
                 ${isPending ? "opacity-50 cursor-not-allowed" : ""}
   `}
@@ -169,16 +169,16 @@ const PostCard = ({ post }: Props) => {
                 <Heart
                   size={16}
                   fill={post.isLiked ? "currentColor" : "none"}
-                  className="transition-all duration-200"
+                  className="transition-all duration-200 cursor-pointer"
                 />
                 <span>{post.likeCount}</span>
               </button>
 
               <button
                 onClick={() => toggleBookmark()}
-                className={`flex  gap-2 transition ${post.bookmarked
-                  ? "text-yellow-400"
-                  : "hover:text-white"
+                className={`flex  gap-2 transition cursor-pointer ${post.bookmarked
+                  ? "text-gray-400"
+                  : "hover:text-black"
                   }`}
               >
                 <Bookmark
@@ -188,12 +188,12 @@ const PostCard = ({ post }: Props) => {
                 <span>BookMark</span>
               </button>
 
-              <button className="flex items-center gap-1 hover:text-white">
+              <button className="flex items-center gap-1 hover:text-white cursor-pointer">
                 <MessageCircle size={16} /> Comment
               </button>
               <button
                 onClick={() => setOpen(true)}
-                className="hover:text-white font-medium"
+                className="hover:text-white font-medium cursor-pointer"
               >
                 View →
               </button>

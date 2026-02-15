@@ -111,7 +111,7 @@ const AddAnswer = ({ questionId }: Props) => {
                 disabled={isPending}
                 className="
                   h-11 px-6 rounded-xl
-                  bg-linear-to-r from-purple-500 to-cyan-500
+                  bg-red-500/60 
                   font-semibold text-white
                   hover:opacity-90
                   flex items-center gap-2

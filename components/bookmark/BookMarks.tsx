@@ -11,6 +11,7 @@ import SnippetCard from "../snippet/Snippet";
 import Question from "../question/Question";
 import Article from "../article/Article";
 import Loader from "../ui/Loading";
+import NotFoundState from "../ui/notFound";
 
 
 const tabs = ["all", "post", "snippet", "question", "article"] as const;
@@ -46,8 +47,8 @@ const BookMarks = () => {
 
   if (!data || data.length === 0) {
     return (
-      <div className="text-white/50">
-        No bookmarks found.
+      <div className="flex items-center justify-center text-white/50">
+        <NotFoundState type="bookmark" />
       </div>
     );
   }

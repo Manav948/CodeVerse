@@ -107,10 +107,7 @@ const Question = ({ question }: Props) => {
           rounded-2xl
           bg-black/60
           backdrop-blur-xl
-          p-6
-          border border-white/5
-          transition-all duration-300
-          hover:border-cyan-400/30
+          p-6 border-none
           cursor-pointer
         "
       >
@@ -141,7 +138,7 @@ const Question = ({ question }: Props) => {
                   e.stopPropagation();
                   toggleLike();
                 }}
-                className={`flex items-center gap-2 transition-all duration-200
+                className={`flex items-center gap-2 transition-all duration-200 cursor-pointer
                   ${question.isLiked
                     ? "text-red-500"
                     : "text-white/60 hover:text-red-400"
@@ -157,8 +154,8 @@ const Question = ({ question }: Props) => {
               </button>
               <button
                 onClick={() => toggleBookmark()}
-                className={`flex  gap-2 transition ${question.bookmarked
-                  ? "text-yellow-400"
+                className={`flex  gap-2 transition cursor-pointer ${question.bookmarked
+                  ? "text-gray-400"
                   : "hover:text-white"
                   }`}
               >
@@ -170,7 +167,7 @@ const Question = ({ question }: Props) => {
               </button>
               <button
                 onClick={replyButton}
-                className="flex items-center gap-2 text-white/60 hover:text-white"
+                className="flex items-center gap-2 text-white/60 hover:text-white cursor-pointer"
               >
                 <CornerUpRight size={16} />
                 Reply
@@ -181,16 +178,15 @@ const Question = ({ question }: Props) => {
                   e.stopPropagation();
                   setOpen(true);
                 }}
-                className="text-white/60 hover:text-white"
+                className="text-white/60 hover:text-white cursor-pointer"
               >
                 View →
               </button>
-
             </div>
           </div>
         </div>
       </Card>
-
+      <Separator className="bg-white/10" />
       <Dialog open={open} onOpenChange={setOpen}>
         <DialogContent
           className="
@@ -216,7 +212,7 @@ const Question = ({ question }: Props) => {
 
           <Separator className="my-4 bg-white/10" />
 
-          <p className="text-sm leading-relaxed text-white/80 whitespace-pre-wrap">
+          <p className="text-sm bg-white/10 p-3 rounded-2xl leading-relaxed text-white/80 whitespace-pre-wrap">
             {question.description}
           </p>
 
@@ -227,7 +223,7 @@ const Question = ({ question }: Props) => {
                 e.stopPropagation();
                 toggleLike();
               }}
-              className={`flex items-center gap-2 ${question.isLiked
+              className={`flex items-center gap-2 cursor-pointer ${question.isLiked
                 ? "text-red-500"
                 : "text-white/60 hover:text-red-400"
                 }`}
@@ -241,7 +237,7 @@ const Question = ({ question }: Props) => {
 
             <Button
               onClick={replyButton}
-              className="bg-linear-to-r from-cyan-500 to-blue-500 hover:opacity-90"
+              className="bg-red-500/60 text-white hover:opacity-90 cursor-pointer"
             >
               Reply to Question
             </Button>

@@ -78,7 +78,7 @@ const AddArticle = () => {
           <div className="pointer-events-none absolute -top-32 -left-32 h-80 w-80 rounded-full bg-purple-500/20 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-cyan-500/20 blur-3xl" />
           <div className="relative mx-auto max-w-3xl px-4 py-10">
-            <div className="rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl p-8">
+            <div className="rounded-3xl border border-white/10 bg-black backdrop-blur-xl p-8">
               <h1 className="mb-6 text-2xl font-semibold">
                 Create Article
               </h1>
@@ -169,7 +169,7 @@ const AddArticle = () => {
                     disabled={isPending}
                     className="
                       h-11 w-full rounded-xl
-                      bg-linear-to-r from-purple-500 to-cyan-500
+                      bg-red-500/60
                       font-semibold text-white
                       hover:opacity-90
                     "

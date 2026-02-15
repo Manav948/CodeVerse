@@ -111,10 +111,7 @@ const SnippetCard = ({ snippet }: Props) => {
           rounded-2xl
           bg-black/60
           backdrop-blur-xl
-          p-6
-          transition-all duration-300
-          hover:border-cyan-400/30
-          border border-white/5
+          p-6 border-none
         "
       >
         <div className="space-y-4">
@@ -160,7 +157,7 @@ const SnippetCard = ({ snippet }: Props) => {
               <button
                 disabled={isPending}
                 onClick={() => toggleLike()}
-                className={`flex items-center gap-1 transition-all duration-200 
+                className={`flex items-center gap-1 transition-all duration-200 cursor-pointer
                   ${snippet.isLiked ? "text-red-500 scale-105" : "hover:text-white text-white"}
                 ${isPending ? "opacity-50 cursor-not-allowed" : ""}
   `}
@@ -174,8 +171,8 @@ const SnippetCard = ({ snippet }: Props) => {
               </button>
               <button
                 onClick={() => toggleBookmark()}
-                className={`flex items-center gap-1 transition-all duration-200 text-white ${snippet.bookmarked
-                  ? "text-yellow-400"
+                className={`flex items-center gap-1 transition-all duration-200 text-white cursor-pointer ${snippet.bookmarked
+                  ? "text-gray-300"
                   : "hover:text-white"
                   }`}
               >
@@ -188,7 +185,7 @@ const SnippetCard = ({ snippet }: Props) => {
 
               <button
                 onClick={() => setOpen(true)}
-                className="text-white/60 hover:text-white"
+                className="text-white/60 hover:text-white cursor-pointer"
               >
                 View →
               </button>
@@ -230,7 +227,7 @@ const SnippetCard = ({ snippet }: Props) => {
 
           <Button
             onClick={copyButton}
-            className="mt-4 bg-linear-to-r from-cyan-500 to-blue-500 hover:opacity-90"
+            className="mt-4 bg-red-500/60 text-white hover:opacity-90"
           >
             Copy Snippet
           </Button>

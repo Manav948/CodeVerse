@@ -2,48 +2,70 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Crown, Lock } from "lucide-react";
+import { Crown, Lock, Sparkles, Users, MessageSquare } from "lucide-react";
+import { motion } from "framer-motion";
 
 const Community = () => {
   return (
-    <div className="min-h-[70vh] flex items-center justify-center px-6 relative p-8">
-      
-      <div className="pointer-events-none absolute -top-20 -left-20 h-96 w-96 rounded-full bg-purple-500/20 blur-3xl" />
-      <div className="pointer-events-none absolute -bottom-20 -right-20 h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl" />
+    <div className="relative min-h-[80vh] flex items-center justify-center px-6 overflow-hidden bg-black">
 
-      <Card className="relative w-full max-w-xl bg-black/60 backdrop-blur-xl border border-white/10 p-10 rounded-3xl text-center space-y-6 shadow-2xl">
+      <motion.div
+        initial={{ opacity: 0, y: 40 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative w-full max-w-2xl"
+      >
+        <Card className="relative overflow-hidden rounded-3xl bg-black backdrop-blur-2xl border border-white/10 p-10 text-center shadow-[0_0_60px_rgba(168,85,247,0.15)]">
 
-        <div className="flex justify-center">
-          <div className="flex items-center justify-center bg-linear-to-br from-purple-500 to-cyan-500 mt-5 rounded-xl">
-            <Crown className="text-white" size={48} />
-          </div>
-        </div>
+          <div className="absolute inset-0 rounded-3xl border border-purple-500/20 pointer-events-none" />
 
-        <h2 className="text-2xl font-semibold text-white">
-          Community Access Locked
-        </h2>
-
-        <p className="text-sm text-white/60 leading-relaxed">
-          This feature is available exclusively for 
-          <span className="text-white font-medium"> CodeVerse Special Members</span>.
-          Upgrade your membership to join private discussions, exclusive rooms, 
-          and collaborate with top developers.
-        </p>
-
-        <div className="inline-flex items-center text-xs bg-white/10 text-white/70 px-4 py-2 rounded-full border border-white/10">
-          <Lock size={14} />
-          Special Members Only
-        </div>
-
-        <div className="pt-4">
-          <Button
-            className="bg-linear-to-r from-purple-500 to-cyan-500 text-white font-semibold rounded-xl px-6 h-11 hover:opacity-90"
+          <motion.div
+            animate={{ y: [0, -6, 0] }}
+            transition={{ repeat: Infinity, duration: 3 }}
+            className="flex justify-center mb-6"
           >
-            Upgrade to Premium
-          </Button>
-        </div>
+            <div className="flex items-center justify-center h-20 w-20 rounded-2xl bg-linear-to-br from-purple-500 via-pink-500 to-cyan-500 shadow-xl shadow-purple-500/40">
+              <Crown className="text-white" size={40} />
+            </div>
+          </motion.div>
 
-      </Card>
+          <h2 className="text-3xl font-bold bg-linear-to-r from-purple-400 via-pink-400 to-cyan-400 bg-clip-text text-transparent">
+            Community Access Locked
+          </h2>
+
+          <p className="mt-4 text-white/60 leading-relaxed max-w-md mx-auto">
+            Unlock private developer rooms, premium discussions, exclusive
+            code reviews, and collaborate with top engineers inside
+            <span className="text-white font-semibold"> CodeVerse Pro</span>.
+          </p>
+          <div className="mt-8 space-y-3 text-sm text-white/70">
+            <div className="flex items-center justify-center gap-2">
+              <Users size={16} className="text-purple-400" />
+              Private Developer Rooms
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <MessageSquare size={16} className="text-pink-400" />
+              Exclusive Discussions
+            </div>
+            <div className="flex items-center justify-center gap-2">
+              <Sparkles size={16} className="text-cyan-400" />
+              Premium Learning Resources
+            </div>
+          </div>
+
+          <div className="mt-6 inline-flex items-center gap-2 bg-white/10 text-white/80 px-4 py-2 rounded-full border border-white/10 text-xs">
+            <Lock size={14} />
+            Special Members Only
+          </div>
+
+          <div className="mt-8">
+            <Button className="relative overflow-hidden rounded-xl h-12 px-8 font-semibold text-white bg-linear-to-r from-purple-500 via-pink-500 to-cyan-500 hover:opacity-95 transition-all duration-300 shadow-lg shadow-purple-500/30">
+              Upgrade to Premium
+            </Button>
+          </div>
+
+        </Card>
+      </motion.div>
     </div>
   );
 };

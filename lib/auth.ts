@@ -81,7 +81,7 @@ export const authOptions: NextAuthOptions = {
             return true;
         },
 
-        async jwt({ token, user }) {
+        async jwt({ token, user, trigger, session }) {
             if (user) {
                 token.id = (user as any).id;
                 token.email = user.email;
@@ -89,21 +89,24 @@ export const authOptions: NextAuthOptions = {
                 token.picture = user.image;
                 token.username = (user as any).username;
             }
-
-            if (token.email && !token.username) {
+            if (trigger === "update" && session) {
                 const dbUser = await db.user.findUnique({
-                    where: { email: token.email },
+                    where: {
+                        id: token.id as string
+                    },
                     select: {
                         id: true,
+                        name: true,
                         username: true,
                         image: true,
-                    },
-                });
-
+                        email: true
+                    }
+                })
                 if (dbUser) {
-                    token.id = dbUser.id;
-                    token.username = dbUser.username;
-                    token.picture = dbUser.image ?? token.picture;
+                    token.name = session.name ?? dbUser.name,
+                    token.picture = session.image ?? dbUser.image,
+                    token.username = session.username ?? dbUser.username
+                    token.email = session.email ?? dbUser.email
                 }
             }
 

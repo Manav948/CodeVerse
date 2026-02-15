@@ -89,7 +89,7 @@ const Settings = () => {
               />
             ) : (
               <div
-                className={`flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br ${gradient} text-xl font-semibold text-white`}
+                className={`flex h-16 w-16 items-center justify-center rounded-full bg-linear-to-br ${gradient} text-xl font-semibold text-white`}
               >
                 {firstLetter}
               </div>

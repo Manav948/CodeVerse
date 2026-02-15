@@ -48,7 +48,9 @@ const EditProfileModal = ({ open, setOpen, user }: Props) => {
       await axios.post("/api/user/updateImage", { imageUrl });
 
       await update({
-        ...user,
+        name: user.name,
+        username: user.name,
+        email: user.email,
         image: imageUrl,
       });
 

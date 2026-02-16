@@ -2,8 +2,10 @@
 import Image from "next/image";
 import { Separator } from "../ui/separator";
 import { EllipsisVertical } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type ArticleUser = {
+  id?:string | null
   username?: string | null;
   name?: string | null;
   image?: string | null;
@@ -28,22 +30,25 @@ function getAvatarGradient(seed?: string) {
 }
 
 const ArticleHeader = ({ user }: { user?: ArticleUser }) => {
+  const router = useRouter()
   const username = user?.username ?? "user";
   const displayName = user?.name ?? username;
   const firstLetter = username.charAt(0).toUpperCase();
   const gradient = getAvatarGradient(username);
-
+  const handleProfileClick = () => {
+    router.push(`/profile/${user?.id}`);
+  };
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 cursor-pointer" onClick={handleProfileClick}>
           {user?.image ? (
             <Image
               src={user.image}
               alt={username}
               width={40}
               height={40}
-              className="rounded-full object-cover border border-white/10"
+              className="rounded-full object-cover border border-white/10 cursor-pointer"
             />
           ) : (
             <div

@@ -2,8 +2,10 @@
 import Image from "next/image";
 import { Separator } from "../ui/separator";
 import { EllipsisVertical } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 type SnippetUser = {
+  id?: string | null
   username?: string | null;
   name?: string | null;
   image?: string | null;
@@ -28,15 +30,19 @@ function getAvatarGradient(seed?: string) {
 }
 
 const SnippetHeader = ({ user }: { user?: SnippetUser }) => {
+  const router = useRouter()
   const username = user?.username ?? "user";
   const displayName = user?.name ?? username;
   const firstLetter = username.charAt(0).toUpperCase();
   const gradient = getAvatarGradient(username);
+  const handleProfileClick = () => {
+    router.push(`/profile/${user?.id}`);
+  };
 
   return (
     <div className="flex flex-col gap-3">
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-4">
+        <div className="flex items-center gap-4 cursor-pointer" onClick={handleProfileClick}>
           {user?.image ? (
             <Image
               src={user.image}

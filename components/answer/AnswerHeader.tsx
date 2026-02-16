@@ -6,6 +6,7 @@ import { EllipsisVertical } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 type PostUser = {
+  id ?:string | null
   username?: string | null;
   name?: string | null;
   image?: string | null;
@@ -38,7 +39,7 @@ const AnswerHeader = ({ user }: { user?: PostUser }) => {
   const gradient = getAvatarGradient(username);
 
   const handleProfileClick = () => {
-    router.push(`/profile/${username}`);
+    router.push(`/profile/${user?.id}`);
   };
 
   return (

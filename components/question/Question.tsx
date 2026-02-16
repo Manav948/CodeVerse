@@ -131,14 +131,14 @@ const Question = ({ question }: Props) => {
               {new Date(question.created_at).toLocaleDateString()}
             </span>
 
-            <div className="flex items-center gap-6 text-sm">
+            <div className="flex items-center gap-3 text-sm">
               <button
                 disabled={isPending}
                 onClick={(e) => {
                   e.stopPropagation();
                   toggleLike();
                 }}
-                className={`flex items-center gap-2 transition-all duration-200 cursor-pointer
+                className={`flex items-center gap-1 transition-all duration-200 cursor-pointer
                   ${question.isLiked
                     ? "text-red-500"
                     : "text-white/60 hover:text-red-400"
@@ -154,7 +154,7 @@ const Question = ({ question }: Props) => {
               </button>
               <button
                 onClick={() => toggleBookmark()}
-                className={`flex  gap-2 transition cursor-pointer ${question.bookmarked
+                className={`flex  gap-1 transition cursor-pointer pr-1 ${question.bookmarked
                   ? "text-gray-400"
                   : "hover:text-white"
                   }`}
@@ -167,7 +167,7 @@ const Question = ({ question }: Props) => {
               </button>
               <button
                 onClick={replyButton}
-                className="flex items-center gap-2 text-white/60 hover:text-white cursor-pointer"
+                className="flex items-center gap-1 pr-1 text-white/60 hover:text-white cursor-pointer"
               >
                 <CornerUpRight size={16} />
                 Reply

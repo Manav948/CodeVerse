@@ -13,7 +13,7 @@ const SnippetContainer = () => {
         </aside>
 
         <main className="flex-1 overflow-y-auto relative">
-          <div className="relative mx-auto max-w-4xl px-6 py-8">
+          <div className="relative mx-auto max-w-4xl py-8">
             <AllSnippet />
           </div>
         </main>

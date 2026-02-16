@@ -144,7 +144,7 @@ const EditProfileModal = ({ open, setOpen, user }: Props) => {
               className="w-full"
             />
           )}
-          <label className="w-full cursor-pointer rounded-lg border border-white/10 bg-white/5 px-4 py-3 text-center text-sm hover:bg-white/10 transition">
+          <label className="w-full cursor-pointer rounded-lg border border-white/10 bg-red-500/60 text-white px-4 py-3 text-center text-sm hover:bg-white/10 transition">
             Choose New Image
             <input
               type="file"

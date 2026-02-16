@@ -152,8 +152,11 @@ const SnippetCard = ({ snippet }: Props) => {
                 </Badge>
               ))}
             </div>
-            <div className="flex items-center gap-5 text-sm">
+            <div className="flex items-center gap-8 text-sm mt-1.5">
 
+              <span className="text-white">
+                {new Date(snippet.created_at).toLocaleDateString()}
+              </span>
               <button
                 disabled={isPending}
                 onClick={() => toggleLike()}
@@ -207,12 +210,14 @@ const SnippetCard = ({ snippet }: Props) => {
             backdrop-blur-xl
           "
         >
-          <DialogHeader className="space-y-4 mt-15">
+          <DialogHeader className="mt-15">
             <SnippetHeader user={snippet.user} />
-
             <h2 className="text-2xl font-semibold">
               {snippet.title}
             </h2>
+            <span className="">
+              {snippet.description}
+            </span>
 
             <p className="text-xs text-white/40">
               {new Date(snippet.created_at).toLocaleString()}

@@ -160,7 +160,7 @@ const Article = ({ article }: Props) => {
               {new Date(article.created_at).toLocaleDateString()}
             </span>
 
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-4">
               <button
                 disabled={isPending}
                 onClick={() => toggleLike()}

@@ -69,12 +69,12 @@ const AddSnippet = () => {
 
           <div className="pointer-events-none absolute -top-40 -left-40 h-96 w-96 rounded-full bg-purple-500/20 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-40 -right-40 h-96 w-96 rounded-full bg-cyan-500/20 blur-3xl" />
-          <div className="relative mx-auto max-w-3xl p-8">
+          <div className="relative mx-auto max-w-3xl p-5">
             <div
               className="
                 rounded-3xl border border-white/10
                 bg-black backdrop-blur-xl
-                p-8
+                p-5
               "
             >
               <h1 className="mb-6 text-2xl font-semibold">

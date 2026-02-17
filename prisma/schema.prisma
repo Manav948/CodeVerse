@@ -71,6 +71,7 @@ model User {
   questionLikes  QuestionLike[]
   articleLikes   ArticleLikes[]
   snippetLikes   SnippetLike[]
+  tasks          Task[]
 }
 
 enum SnippetVisibility {
@@ -131,6 +132,7 @@ model Tag {
   snippets SnippetTag[]
   posts    PostTag[]
   article  ArticleTag[]
+  taskTags TaskTag[]
 }
 
 model SnippetTag {
@@ -273,7 +275,7 @@ model BookMark {
   @@unique([userId, postId])
   @@unique([userId, snippetId])
   @@unique([userId, questionId])
-  @@unique([userId,articleId])
+  @@unique([userId, articleId])
 }
 
 model Article {
@@ -304,4 +306,42 @@ model ArticleLikes {
   createdAt DateTime @default(now())
 
   @@unique([articleId, userId])
+}
+
+model Task {
+  id         String       @id @default(cuid())
+  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  title      String
+  taskTags        TaskTag[]
+  content    String
+  status     TaskStatus   @default(PENDING)
+  priority   TaskPriority @default(MEDIUM)
+  created_at DateTime     @default(now())
+  updated_at DateTime     @updatedAt
+
+  @@index([userId])
+  @@index([created_at])
+}
+
+model TaskTag {
+  id     String @id @default(cuid())
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId String
+  tag    Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  tagId  String
+
+  @@unique([taskId, tagId])
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
 }

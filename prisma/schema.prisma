@@ -72,6 +72,7 @@ model User {
   articleLikes   ArticleLikes[]
   snippetLikes   SnippetLike[]
   tasks          Task[]
+  notifications  Notification[]
 }
 
 enum SnippetVisibility {
@@ -309,19 +310,43 @@ model ArticleLikes {
 }
 
 model Task {
-  id         String       @id @default(cuid())
-  user       User         @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId     String
-  title      String
-  taskTags        TaskTag[]
-  content    String
-  status     TaskStatus   @default(PENDING)
-  priority   TaskPriority @default(MEDIUM)
-  created_at DateTime     @default(now())
-  updated_at DateTime     @updatedAt
+  id             String         @id @default(cuid())
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String
+  title          String
+  content        String
+  dueDate        DateTime?
+  isStudent      Boolean
+  githubRepo     String?
+  githubUserName String?
+  taskTags       TaskTag[]
+  status         TaskStatus     @default(PENDING)
+  priority       TaskPriority   @default(MEDIUM)
+  created_at     DateTime       @default(now())
+  updated_at     DateTime       @updatedAt
+  activities     TaskActivity[]
 
   @@index([userId])
   @@index([created_at])
+}
+
+model TaskActivity {
+  id     String @id @default(cuid())
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId String
+
+  type ActivityType
+  date DateTime     @default(now())
+
+  @@index([taskId])
+  @@index([date])
+}
+
+enum ActivityType {
+  GITHUB_COMMIT
+  TASK_COMPLETED
+  REMINDER_SENT
+  MANUAL_PROGRESS
 }
 
 model TaskTag {
@@ -344,4 +369,15 @@ enum TaskPriority {
   LOW
   MEDIUM
   HIGH
+}
+
+model Notification {
+  id         String   @id @default(cuid())
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  message    String
+  idRead     Boolean  @default(false)
+  created_at DateTime @default(now())
+
+  @@index([userId])
 }

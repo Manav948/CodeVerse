@@ -7,7 +7,7 @@ export const taskCreateSchema = z.object({
     isStudent: z.boolean(),
     githubRepo: z.string().optional(),
     githubUserName: z.string().optional(),
-    priority: z.enum(["LOW", "MEDIUM", "HIGH"]).default("MEDIUM"),
+    priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
 })
     .superRefine((data, ctx) => {
         // If student → require GitHub fields

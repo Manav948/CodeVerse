@@ -24,7 +24,7 @@ const OptionSidebar = ({ active }: Props) => {
           <Button
             className="w-full justify-start gap-2"
             onClick={() =>
-              router.push("/dashboard/tasks/new")
+              router.push("/task/new")
             }
           >
             <Plus size={16} />

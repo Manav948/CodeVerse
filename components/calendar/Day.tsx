@@ -14,8 +14,6 @@ interface Props {
 const Day = ({ day, monthIndex, calendarItems }: Props) => {
   const isToday = day.isSame(dayjs(), "day");
   const isCurrentMonth = day.month() === monthIndex;
-
-  // ✅ Memoize filtered tasks for performance
   const tasksForDay = useMemo(() => {
     return calendarItems.filter(
       (task) =>
@@ -27,12 +25,11 @@ const Day = ({ day, monthIndex, calendarItems }: Props) => {
   return (
     <div
       className={cn(
-        "min-h-[120px] p-2 border border-border transition-colors",
+        "min-h-30 p-2 border border-white/10 transition-colors",
         !isCurrentMonth && "opacity-30 bg-muted/20",
         isToday && "bg-primary/5"
       )}
     >
-      {/* Date number */}
       <div className="flex justify-end">
         <span
           className={cn(
@@ -45,7 +42,6 @@ const Day = ({ day, monthIndex, calendarItems }: Props) => {
         </span>
       </div>
 
-      {/* Tasks */}
       <div className="mt-2 space-y-1">
         {tasksForDay.map((task) => {
           const priorityColor =

@@ -19,7 +19,6 @@ const CalendarGrid = ({
 }: Props) => {
   return (
     <div className="flex flex-col gap-3">
-      {/* Weekday labels */}
       <div className="grid grid-cols-7 text-xs font-semibold text-muted-foreground">
         {DAYS.map((d) => (
           <div key={d} className="py-2 text-center">
@@ -28,11 +27,10 @@ const CalendarGrid = ({
         ))}
       </div>
 
-      {/* Calendar days */}
-      <div className="grid grid-cols-7 border border-border rounded-xl overflow-hidden">
+      <div className="grid grid-cols-7 border border-white/10 rounded-md overflow-hidden">
         {currMonth.flat().map((day) => (
           <Day
-            key={day.format("YYYY-MM-DD")} // ✅ stable key
+            key={day.format("YYYY-MM-DD")} 
             day={day}
             monthIndex={monthIndex}
             calendarItems={calendarItems}

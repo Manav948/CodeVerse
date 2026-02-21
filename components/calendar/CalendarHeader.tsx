@@ -34,7 +34,7 @@ const CalendarHeader = ({
           variant="outline"
           onClick={() => onChangeMonthHandler("prev")}
         >
-          <ChevronLeft className="h-4 w-4" />
+          <ChevronLeft className="h-4 w-4 text-black" />
         </Button>
 
         <Button
@@ -42,7 +42,7 @@ const CalendarHeader = ({
           variant="secondary"
           onClick={onResetMonthHandler}
         >
-          <RotateCcw className="mr-1 h-4 w-4" />
+          <RotateCcw className="mr-1 h-4 w-4 text-black" />
           Today
         </Button>
 
@@ -51,7 +51,7 @@ const CalendarHeader = ({
           variant="outline"
           onClick={() => onChangeMonthHandler("next")}
         >
-          <ChevronRight className="h-4 w-4" />
+          <ChevronRight className="h-4 w-4 text-black" />
         </Button>
       </div>
     </div>

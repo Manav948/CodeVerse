@@ -58,7 +58,7 @@ export async function POST(request: NextRequest, { params }: Props) {
 
         return NextResponse.json(updatedAnswer, { status: 200 });
     } catch (error) {
-        console.error("Error updating post:", error);
+        console.error("Error updating Answer:", error);
         return NextResponse.json("Internal Server Error", { status: 500 });
     }
 }

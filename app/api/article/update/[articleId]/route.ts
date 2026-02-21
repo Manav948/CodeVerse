@@ -32,11 +32,11 @@ export async function POST(request: NextRequest, { params }: Props) {
             }
         })
         if (!updateArticle) {
-            return NextResponse.json({ message: "Snippet not found" }, { status: 404 })
+            return NextResponse.json({ message: "Article not found" }, { status: 404 })
         }
         return NextResponse.json(updateArticle, { status: 200 })
     } catch (error) {
-        console.error("Error updating snippet:", error)
+        console.error("Error updating Article:", error)
         return NextResponse.json({ message: "Internal Server Error" }, { status: 500 })
     }
 }

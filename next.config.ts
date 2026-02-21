@@ -7,4 +7,7 @@ const nextConfig: NextConfig = {
   },
 };
 
-export default nextConfig;
+const path = require("path");
+const withNextIntl = require("next-intl/plugin")("./i18n.ts");
+
+export default withNextIntl(nextConfig);

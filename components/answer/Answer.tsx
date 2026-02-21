@@ -61,7 +61,7 @@ const AddAnswer = ({ questionId }: Props) => {
         className="
           rounded-2xl
           border border-white/10
-          bg-white/5
+          bg-black
           backdrop-blur-xl
           p-6
           space-y-6
@@ -81,7 +81,7 @@ const AddAnswer = ({ questionId }: Props) => {
               name="description"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel className="text-sm text-white/70">
+                  <FormLabel className="text-sm text-white">
                     Your Answer
                   </FormLabel>
                   <FormControl>

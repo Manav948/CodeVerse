@@ -56,7 +56,7 @@ export async function GET() {
         return NextResponse.json(transformedSnippets, { status: 200 })
     }
     catch (error) {
-        console.log("Error While fetching Snippet", error)
+        console.log("Error While fetching Post", error)
         return NextResponse.json("Internal Server Error", { status: 500 })
     }
 }

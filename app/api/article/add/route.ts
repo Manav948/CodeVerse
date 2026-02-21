@@ -82,7 +82,7 @@ export async function POST(request: Request) {
 
         return NextResponse.json(article, { status: 201 });
     } catch (error) {
-        console.error("Error creating post:", error);
+        console.error("Error creating Article:", error);
         return NextResponse.json(
             { message: "Internal Server Error" },
             { status: 500 }

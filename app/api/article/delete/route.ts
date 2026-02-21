@@ -43,7 +43,7 @@ export async function DELETE(request: Request) {
         })
         return NextResponse.json("OK", { status: 200 })
     } catch (error) {
-        console.log("Error in delete post : ", error)
+        console.log("Error in delete Article : ", error)
         return new NextResponse("internal server error", { status: 500 })
     }
 }

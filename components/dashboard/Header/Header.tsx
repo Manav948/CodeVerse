@@ -58,12 +58,6 @@ const Header = () => {
               </span>
             </Button>
           )}
-          <Button 
-          className="h-10 rounded-xl bg-red-500/60 text-white px-3 md:px-3 flex items-center gap-2"
-          onClick={() => router.push("/task")}>
-            <Plus size={18} />
-            Add Task
-          </Button>
           <button className="relative rounded-xl p-2 text-white/70 hover:bg-white/10">
             <Bell size={20} />
             <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-red-500" />

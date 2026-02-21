@@ -6,8 +6,10 @@ import {
   LayoutDashboard,
   CalendarDaysIcon,
   CheckSquare,
+  MousePointerSquareDashedIcon,
 } from "lucide-react";
 import { ActiveSection } from "./SidebarContainer";
+import { usePathname, useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 interface Props {
@@ -16,11 +18,14 @@ interface Props {
 }
 
 const Sidebar = ({ active, setActive }: Props) => {
+  const pathname = usePathname();
+  const router = useRouter();
   const items = [
     { key: "home", icon: HomeIcon },
     { key: "tasks", icon: CheckSquare },
     { key: "calendar", icon: CalendarDaysIcon },
     { key: "dashboard", icon: LayoutDashboard },
+    { key: "Media", icon: MousePointerSquareDashedIcon }
   ] as const;
 
   return (
@@ -30,11 +35,22 @@ const Sidebar = ({ active, setActive }: Props) => {
           key={key}
           variant="ghost"
           size="icon"
-          onClick={() => setActive(key)}
+          onClick={() => {
+            if (key === "home" && pathname === "/task/new") {
+              router.push("/task");
+            }
+            if (key === "Media" && pathname === "/task") {
+              router.push("/dashboard");
+            }
+            if (key === "calendar") {
+              router.push("/calendar");
+            }
+            setActive(key as ActiveSection);
+          }}
           className={cn(
             "rounded-xl transition-all",
             active === key &&
-              "bg-red-500/60 text-white"
+            "bg-red-500/60 text-white"
           )}
         >
           <Icon size={18} />

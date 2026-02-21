@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { usePathname } from "next/navigation";
 import Sidebar from "./Sidebar";
 import OptionSidebar from "./OptionSidebar";
 import { motion } from "framer-motion";
@@ -15,10 +16,13 @@ const SidebarContainer = () => {
     const [active, setActive] =
         useState<ActiveSection>("home");
 
+    const pathname = usePathname();
+    const isNewTask = pathname === "/task/new";
+
     const showOptionSidebar =
-        active === "tasks" ||
-        active === "calendar" ||
-        active === "dashboard";
+        !isNewTask &&
+        (active === "tasks" ||
+            active === "dashboard");
 
     return (
         <div className="flex h-screen">

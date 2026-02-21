@@ -7,6 +7,7 @@ import {
   FileText,
   Users,
   Bookmark,
+  CheckSquare2,
 } from "lucide-react";
 
 const options = [
@@ -16,6 +17,7 @@ const options = [
   { label: "Articles", href: "/article", icon: FileText },
   { label: "Community", href: "/community", icon: Users },
   { label: "Bookmarks", href: "/bookmark", icon: Bookmark },
+  { label: "Tasks", href: "/task", icon: CheckSquare2},
 ];
 
 const OptionSidebar = () => {

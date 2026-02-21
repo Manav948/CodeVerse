@@ -1,22 +1,44 @@
-"use client"
-import { taskCreateSchema, TaskCreateSchema } from '@/schema/taskCreateSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { useMutation } from '@tanstack/react-query'
-import axios from 'axios'
-import { useRouter } from 'next/navigation'
-import React from 'react'
-import { useForm } from 'react-hook-form'
-import toast from 'react-hot-toast'
-import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '../../ui/form'
-import { Card } from '../../ui/card'
-import { Input } from '../../ui/input'
-import { Button } from '../../ui/button'
-import { Switch } from '../../ui/switch'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../../ui/select'
-import { Textarea } from '../../ui/textarea'
+"use client";
+
+import { taskCreateSchema, TaskCreateSchema } from "@/schema/taskCreateSchema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import React from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { motion, AnimatePresence } from "framer-motion";
+
+import {
+    Form,
+    FormControl,
+    FormField,
+    FormItem,
+    FormLabel,
+    FormMessage,
+} from "../../ui/form";
+import { Card } from "../../ui/card";
+import { Input } from "../../ui/input";
+import { Button } from "../../ui/button";
+import { Switch } from "../../ui/switch";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "../../ui/select";
+import { Textarea } from "../../ui/textarea";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { CalendarIcon } from "lucide-react";
+import { Calendar } from "@/components/ui/calendar";
+import { format } from "date-fns";
+import { TaskMetaFields } from "../TaskMetaFields";
 
 const AddTask = () => {
-    const router = useRouter()
+    const router = useRouter();
+
     const form = useForm<TaskCreateSchema>({
         resolver: zodResolver(taskCreateSchema),
         defaultValues: {
@@ -27,125 +49,105 @@ const AddTask = () => {
             priority: "MEDIUM",
             githubRepo: "",
             githubUserName: "",
-        }
-    })
+        },
+    });
 
     const { mutate: addTask, isPending } = useMutation({
         mutationFn: async (data: TaskCreateSchema) => {
-            const res = await axios.post("/api/task/add", data)
-            return res.data
+            const formattedData = {
+                ...data,
+                dueDate: data.dueDate
+                    ? new Date(data.dueDate).toISOString()
+                    : null,
+            };
+
+            const res = await axios.post("/api/task/add", formattedData);
+            return res.data;
         },
-        onSuccess: (data) => {
-            toast.success("Task added successfully!")
-            form.reset()
-            router.push("/task")
+        onSuccess: () => {
+            toast.success("Task created successfully");
+            form.reset();
+            router.push("/task");
         },
-        onError: () => {
-            toast.error("Failed to add task. Please try again.")
-        }
-    })
+        onError: (error: any) => {
+            toast.error(
+                error?.response?.data?.message || "Failed to create task"
+            );
+        },
+    });
 
     const onSubmit = (data: TaskCreateSchema) => {
-        addTask(data)
-    }
+        addTask(data);
+    };
 
-    const isStudent = form.watch("isStudent")
+    const isStudent = form.watch("isStudent");
+
     return (
-        <div className='max-w-3xl mx-auto py-8'>
-            <Card className='p-8 bg-black text-white border border-white/10 rounded-2xl space-y-6'>
-                <h2 className='text-2xl font-semibold text-white'>
-                    Create new Task
-                </h2>
-                <Form {...form}>
-                    <form onSubmit={form.handleSubmit(onSubmit)}>
-                        <FormField control={form.control} name='title' render={({ field }) => (
-                            <FormItem>
-                                <FormLabel>Title</FormLabel>
-                                <FormControl>
-                                    <Input placeholder='Enter Task Title' {...field} className='mb-5' />
-                                </FormControl>
-                                <FormMessage />
-                            </FormItem>
-                        )}
-                        />
+        <div className="max-w-2xl mx-auto ">
+            <Card className="p-10 bg-black border border-white/10  shadow-2xl space-y-8 text-white">
 
+                <div className="space-y-2">
+                    <h2 className="text-3xl font-bold tracking-tight text-white">
+                        Create New Task
+                    </h2>
+                    <p className="text-sm text-white/50">
+                        Organize your work efficiently and track GitHub progress if needed.
+                    </p>
+                </div>
+
+                <Form {...form}>
+                    <form
+                        onSubmit={form.handleSubmit(onSubmit)}
+                        className="space-y-6"
+                    >
+                        <FormField
+                            control={form.control}
+                            name="title"
+                            render={({ field }) => (
+                                <FormItem>
+                                    <FormLabel>Task Title</FormLabel>
+                                    <FormControl>
+                                        <Input
+                                            placeholder="Build authentication system"
+                                            {...field}
+                                            className="bg-black/40 border-white/10 focus:ring-1 focus:ring-red-500"
+                                        />
+                                    </FormControl>
+                                    <FormMessage />
+                                </FormItem>
+                            )}
+                        />
                         <FormField
                             control={form.control}
                             name="content"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Content</FormLabel>
+                                    <FormLabel>Description</FormLabel>
                                     <FormControl>
                                         <Textarea
-                                            placeholder="Describe your task..."
-                                            className='mb-5'
+                                            placeholder="Describe your task in detail..."
                                             rows={4}
                                             {...field}
+                                            className="bg-black/40 border-white/10 focus:ring-1 focus:ring-red-500"
                                         />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
-                        <FormField
-                            control={form.control}
-                            name="dueDate"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Due Date</FormLabel>
-                                    <FormControl>
-                                        <Input
-                                            type="datetime-local"
-                                            className='mb-5'
-                                            {...field}
-                                        />
-                                    </FormControl>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
-
-                        <FormField
-                            control={form.control}
-                            name="priority"
-                            render={({ field }) => (
-                                <FormItem>
-                                    <FormLabel>Priority</FormLabel>
-                                    <Select
-                                        onValueChange={field.onChange}
-                                        defaultValue={field.value}
-                                        
-                                    >
-                                        <FormControl>
-                                            <SelectTrigger>
-                                                <SelectValue placeholder="Select priority"  />
-                                            </SelectTrigger>
-                                        </FormControl>
-                                        <SelectContent>
-                                            <SelectItem value="LOW">
-                                                Low
-                                            </SelectItem>
-                                            <SelectItem value="MEDIUM">
-                                                Medium
-                                            </SelectItem>
-                                            <SelectItem value="HIGH">
-                                                High
-                                            </SelectItem>
-                                        </SelectContent>
-                                    </Select>
-                                    <FormMessage />
-                                </FormItem>
-                            )}
-                        />
+                        <TaskMetaFields control={form.control} />
                         <FormField
                             control={form.control}
                             name="isStudent"
                             render={({ field }) => (
-                                <FormItem className="flex items-center justify-between rounded-lg border border-white/10 p-4 mt-4 mb-5">
+                                <FormItem className="flex items-center justify-between rounded-xl border border-white/10 p-5 bg-black/40">
                                     <div>
-                                        <FormLabel>
-                                            Is this a GitHub-tracked task?
+                                        <FormLabel className="text-base">
+                                            Track with GitHub
                                         </FormLabel>
+                                        <p className="text-xs text-white/50">
+                                            Enable to monitor repository activity.
+                                        </p>
                                     </div>
                                     <FormControl>
                                         <Switch
@@ -156,58 +158,66 @@ const AddTask = () => {
                                 </FormItem>
                             )}
                         />
-                        {isStudent && (
-                            <>
-                                <FormField
-                                    control={form.control}
-                                    name="githubRepo"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>GitHub Repo URL</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder="https://github.com/username/repo"
-                                                    {...field}
-                                                    className='mb-5'
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
 
-                                <FormField
-                                    control={form.control}
-                                    name="githubUserName"
-                                    render={({ field }) => (
-                                        <FormItem>
-                                            <FormLabel>GitHub Username</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder="username"
-                                                    className='mb-5'
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
-                            </>
-                        )}
+                        <AnimatePresence>
+                            {isStudent && (
+                                <motion.div
+                                    initial={{ opacity: 0, y: -10 }}
+                                    animate={{ opacity: 1, y: 0 }}
+                                    exit={{ opacity: 0, y: -10 }}
+                                    transition={{ duration: 0.2 }}
+                                    className="space-y-5"
+                                >
+                                    <FormField
+                                        control={form.control}
+                                        name="githubRepo"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>GitHub Repository URL</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        placeholder="https://github.com/username/repo"
+                                                        {...field}
+                                                        className="bg-black/40 border-white/10"
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
 
+                                    <FormField
+                                        control={form.control}
+                                        name="githubUserName"
+                                        render={({ field }) => (
+                                            <FormItem>
+                                                <FormLabel>GitHub Username</FormLabel>
+                                                <FormControl>
+                                                    <Input
+                                                        placeholder="username"
+                                                        {...field}
+                                                        className="bg-black/40 border-white/10"
+                                                    />
+                                                </FormControl>
+                                                <FormMessage />
+                                            </FormItem>
+                                        )}
+                                    />
+                                </motion.div>
+                            )}
+                        </AnimatePresence>
                         <Button
                             type="submit"
                             disabled={isPending}
-                            className="w-full bg-red-500/60 text-white"
+                            className="w-full h-10 rounded-xl bg-red-500/60 hover:opacity-90 transition-all font-semibold"
                         >
-                            {isPending ? "Creating..." : "Create Task"}
+                            {isPending ? "Creating Task..." : "Create Task"}
                         </Button>
                     </form>
                 </Form>
             </Card>
         </div>
-    )
-}
+    );
+};
 
-export default AddTask
+export default AddTask;

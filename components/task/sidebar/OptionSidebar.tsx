@@ -79,12 +79,6 @@ const OptionSidebar = ({ active }: Props) => {
         </div>
       )}
 
-      {active === "calendar" && (
-        <div className="text-sm text-white/60">
-          Calendar View
-        </div>
-      )}
-
       {active === "home" && (
         <div className="text-sm text-white/60">
           Welcome Home

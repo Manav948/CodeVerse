@@ -1,11 +1,10 @@
-import AddTask from '@/components/task/add/AddTask'
-import TaskContainer from '@/components/task/TaskContainer'
+import AddTaskContainer from '@/components/task/add/AddTaskContainer'
 
 
 const page = () => {
   return (
     <div className='bg-black text-white min-h-screen'>
-        <AddTask />
+        <AddTaskContainer />
     </div>
   )
 }

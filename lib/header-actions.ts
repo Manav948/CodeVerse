@@ -1,4 +1,4 @@
-import { Plus, PenSquare, ArrowLeft } from "lucide-react";
+import { Plus, PenSquare, ArrowLeft, PlusCircleIcon } from "lucide-react";
 
 export type HeaderActionConfig = {
   label: string;
@@ -48,6 +48,22 @@ export const HeaderAction: {
       label: "Back",
       href: "/dashboard",
       icon: ArrowLeft,
+    },
+  },
+  {
+    match: (path) => path.startsWith("/task/new"),
+    action: {
+      label: "Back",
+      href: "/task",
+      icon: ArrowLeft,
+    },
+  },
+  {
+    match: (path) => path.startsWith("/task"),
+    action: {
+      label: "Add Task",
+      href: "/task/new",
+      icon: PlusCircleIcon,
     },
   },
 ];

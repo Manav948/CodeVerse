@@ -5,8 +5,8 @@ export const taskUpdateSchema = z.object({
     content: z.string().min(2),
     dueDate: z.string(),
     isStudent: z.boolean(),
-    githubRepo: z.string().nullable(),
-    githubUserName: z.string().nullable(),
+    githubRepo: z.string(),
+    githubUserName: z.string(),
     priority: z.enum(["LOW", "MEDIUM", "HIGH"]),
     status: z.enum(["PENDING", "IN_PROGRESS", "COMPLETED"])
 })

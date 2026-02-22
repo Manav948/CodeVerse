@@ -7,6 +7,38 @@ import { NextResponse } from "next/server";
 interface Props {
     params: Promise<{ taskId: string }>
 }
+export async function GET(request: Request, { params }: Props) {
+    try {
+        const session = await getServerSession(authOptions);
+        if (!session?.user.id) {
+            return NextResponse.json("User not Authenticated", { status: 401 })
+        }
+
+        const { taskId } = await params;
+
+        const task = await db.task.findFirst({
+            where: {
+                id: taskId,
+                userId: session.user.id,
+            },
+            include: {
+                activities: true,
+                taskTags: {
+                    include: { tag: true }
+                }
+            }
+        });
+
+        if (!task) {
+            return NextResponse.json("Task not Found", { status: 404 })
+        }
+
+        return NextResponse.json(task);
+    } catch (error) {
+        console.log(error)
+        return NextResponse.json("Internal Server Error", { status: 500 })
+    }
+}
 export async function PATCH(request: Request, { params }: Props) {
     try {
         const session = await getServerSession(authOptions);

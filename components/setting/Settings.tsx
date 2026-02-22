@@ -9,6 +9,7 @@ import Image from "next/image";
 import { Pencil, Plus } from "lucide-react";
 import Loader from "../ui/Loading";
 import EditProfileModal from "./EditProfileModal";
+import { useRouter } from "next/navigation";
 
 type User = {
   id: string;
@@ -38,6 +39,7 @@ function getAvatarGradient(seed?: string) {
 
 const Settings = () => {
   const [editing, setEditing] = useState(false);
+  const router = useRouter();
 
   const { data: user, isLoading } = useQuery<User>({
     queryKey: ["currentUser"],
@@ -61,6 +63,10 @@ const Settings = () => {
   const displayName = user.name ?? username;
   const firstLetter = username.charAt(0).toUpperCase();
   const gradient = getAvatarGradient(username);
+
+  const onNavigator = () => {
+    router.push(`/profile/${user.id}`)
+  }
 
   return (
     <div className="space-y-8 px-4 sm:px-6 lg:px-0">
@@ -97,7 +103,7 @@ const Settings = () => {
               </div>
             )}
 
-            <div className="flex flex-col">
+            <div className="flex flex-col cursor-pointer" onClick={onNavigator}>
               <span className="text-white font-medium text-base sm:text-lg">
                 {displayName}
               </span>

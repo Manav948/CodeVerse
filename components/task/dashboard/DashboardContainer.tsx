@@ -8,7 +8,7 @@ const DashboardContainer = () => {
     <div className="min-h-screen bg-black text-white">
       <Header />
       <div className="flex">
-        <div className="">
+        <div>
           <SidebarContainer />
         </div>
       </div>

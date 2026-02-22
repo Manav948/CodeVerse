@@ -9,20 +9,19 @@ import { Badge } from "../ui/badge";
 import dayjs from "dayjs";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
-
-type Task = {
-  id: string;
-  title: string;
-  content: string;
-  dueDate?: string;
-  status: "PENDING" | "IN_PROGRESS" | "COMPLETED";
-  priority: "LOW" | "MEDIUM" | "HIGH";
-  created_at: string;
-};
+import { Task } from "@/types/task";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { EllipsisVertical } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const AllTask = () => {
+  const router = useRouter()
   const queryClient = useQueryClient();
-
   const { data: tasks, isLoading, isError } = useQuery<Task[]>({
     queryKey: ["tasks"],
     queryFn: async () => {
@@ -31,7 +30,7 @@ const AllTask = () => {
     },
   });
 
-  const { mutate: completeTask, variables } = useMutation({
+  const {mutate : completeTask , variables} = useMutation({
     mutationFn: async (taskId: string) => {
       await axios.post(`/api/task/complete/${taskId}`);
       return taskId;
@@ -40,37 +39,57 @@ const AllTask = () => {
     onMutate: async (taskId) => {
       await queryClient.cancelQueries({ queryKey: ["tasks"] });
 
-      const previousTasks = queryClient.getQueryData<Task[]>(["tasks"]);
+      const previous = queryClient.getQueryData<Task[]>(["tasks"]);
 
       queryClient.setQueryData<Task[]>(["tasks"], (old) =>
-        old?.map((task) =>
-          task.id === taskId
-            ? { ...task, status: "COMPLETED" }
-            : task
+        old?.map((t) =>
+          t.id === taskId ? { ...t, status: "COMPLETED" } : t
         )
       );
 
-      return { previousTasks };
+      return { previous };
     },
 
     onError: (_, __, context) => {
-      if (context?.previousTasks) {
-        queryClient.setQueryData(["tasks"], context.previousTasks);
+      if (context?.previous) {
+        queryClient.setQueryData(["tasks"], context.previous);
       }
       toast.error("Failed to complete task");
     },
 
-    onSuccess: () => {
-      toast.success("Task completed");
+    onSuccess: () => toast.success("Task completed"),
+  });
+
+  // delete Task
+  const deleteMutation = useMutation({
+    mutationFn: async (taskId: string) => {
+      await axios.delete(`/api/task/delete/${taskId}`);
+      return taskId;
     },
 
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["tasks"] });
+    onMutate: async (taskId) => {
+      await queryClient.cancelQueries({ queryKey: ["tasks"] });
+
+      const previous = queryClient.getQueryData<Task[]>(["tasks"]);
+
+      queryClient.setQueryData<Task[]>(["tasks"], (old) =>
+        old?.filter((t) => t.id !== taskId)
+      );
+
+      return { previous };
     },
+
+    onError: (_, __, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["tasks"], context.previous);
+      }
+      toast.error("Failed to delete task");
+    },
+
+    onSuccess: () => toast.success("Task deleted"),
   });
 
   if (isLoading) return <Loader />;
-
   if (isError)
     return (
       <div className="text-center text-red-500 mt-10">
@@ -80,93 +99,103 @@ const AllTask = () => {
 
   if (!tasks?.length)
     return (
-      <div className="text-center text-white/50 mt-20 text-lg">
+      <div className="text-center text-white/50 mt-20">
         No tasks available
       </div>
     );
 
   return (
-    <div className="space-y-5">
+    <div className="space-y-4 overflow-y-hidden">
       {tasks.map((task) => {
         const isOverdue =
           task.dueDate &&
           dayjs(task.dueDate).isBefore(dayjs()) &&
           task.status !== "COMPLETED";
 
-        const priorityVariant =
-          task.priority === "HIGH"
-            ? "destructive"
-            : task.priority === "MEDIUM"
-            ? "secondary"
-            : "outline";
-
-        const statusColor =
-          task.status === "COMPLETED"
-            ? "bg-green-500/20 text-green-400 border-green-500/40"
-            : task.status === "IN_PROGRESS"
-            ? "bg-yellow-500/20 text-yellow-400 border-yellow-500/40"
-            : "bg-white/10 text-white/70 border-white/20";
-
         return (
           <motion.div
             key={task.id}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }}
           >
-            <Card className="p-6 bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl text-white hover:border-white/30 transition">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="text-lg font-semibold">
+            <Card className="relative p-5  bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl text-white hover:border-white/30 transition">
+              <div className="flex justify-between items-start gap-4">
+
+                <div className="min-w-0">
+                  <h3 className="text-lg font-semibold wrap-break-words">
                     {task.title}
                   </h3>
-                  <p className="text-white/60 text-sm mt-1">
+
+                  <p className="text-white/60 text-sm mt-1 wrap-break-words">
                     {task.content}
                   </p>
                 </div>
 
-                <div className="flex gap-2">
-                  <Badge variant={priorityVariant}>
-                    {task.priority}
-                  </Badge>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <button className="p-1 hover:bg-white/10 rounded-md">
+                      <EllipsisVertical size={18} />
+                    </button>
+                  </DropdownMenuTrigger>
 
-                  <Badge className={statusColor}>
-                    {task.status}
-                  </Badge>
-                </div>
-              </div>
-
-              <div className="flex justify-between items-center mt-4 text-sm">
-                <div>
-                  {task.dueDate && (
-                    <span
-                      className={
-                        isOverdue
-                          ? "text-red-400 font-medium"
-                          : "text-white/50"
-                      }
-                    >
-                      Due:{" "}
-                      {dayjs(task.dueDate).format(
-                        "DD MMM YYYY"
-                      )}
-                    </span>
-                  )}
-                </div>
-
-                {task.status !== "COMPLETED" && (
-                  <Button
-                    size="sm"
-                    disabled={variables === task.id}
-                    onClick={() => completeTask(task.id)}
-                    className="bg-red-500/60 text-white hover:opacity-90"
+                  <DropdownMenuContent
+                    align="end"
+                    className="bg-black border border-white/10 text-white"
                   >
-                    {variables === task.id
-                      ? "Updating..."
-                      : "Mark Complete"}
-                  </Button>
-                )}
+                    <DropdownMenuItem
+                    onClick={() => router.push(`/task/edit/${task.id}`)}
+                    >
+                      Update
+                    </DropdownMenuItem>
+
+                    <DropdownMenuItem
+                      className="text-red-400"
+                      onClick={() => deleteMutation.mutate(task.id)}
+                    >
+                      Delete
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
               </div>
+              <div className="flex gap-2 mt-3 flex-wrap">
+                <Badge variant="outline" className="text-white">
+                  {task.priority}
+                </Badge>
+
+                <Badge
+                  className={
+                    task.status === "COMPLETED"
+                      ? "bg-green-500/20 text-green-400 border-green-500/40"
+                      : "bg-white/10 text-white/70 border-white/20"
+                  }
+                >
+                  {task.status}
+                </Badge>
+              </div>
+
+              {task.dueDate && (
+                <div className="mt-4 text-sm flex justify-between">
+                  <span
+                    className={
+                      isOverdue
+                        ? "text-red-400 font-medium"
+                        : "text-white/50"
+                    }
+                  >
+                    Due: {dayjs(task.dueDate).format("DD MMM YYYY")}
+                  </span>
+                  {task.status !== "COMPLETED" && (
+                    <Button
+                      size="sm"
+                      className="w-full sm:w-auto bg-red-500/70 text-white hover:opacity-90"
+                      disabled={variables === task.id}
+                      onClick={() => completeTask(task.id)}
+                    >
+                      {variables === task.id ? "Updating..." : "Mark Complete"}
+                    </Button>)}
+                </div>
+              )}
             </Card>
           </motion.div>
         );

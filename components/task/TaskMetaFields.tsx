@@ -1,25 +1,30 @@
 "use client";
-
-import { Control } from "react-hook-form";
-import { TaskCreateSchema } from "@/schema/taskCreateSchema";
-import { FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import { Control, FieldValues } from "react-hook-form";
+import {FormControl,FormField,FormItem,FormLabel,FormMessage,} from "@/components/ui/form";
+import {Popover,PopoverContent,PopoverTrigger,} from "@/components/ui/popover";
 import { Calendar } from "@/components/ui/calendar";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { CalendarIcon } from "lucide-react";
 import { format } from "date-fns";
 
-interface Props {
-  control: Control<TaskCreateSchema>;
+interface Props<T extends FieldValues> {
+  control: Control<T>;
 }
 
-export const TaskMetaFields = ({ control }: Props) => {
+export function TaskMetaFields<T extends FieldValues>({
+  control,
+}: Props<T>) {
   return (
     <div className="grid md:grid-cols-2 gap-6">
-
       <FormField
         control={control}
-        name="dueDate"
+        name={"dueDate" as any}
         render={({ field }) => {
           const selectedDate = field.value
             ? new Date(field.value)
@@ -34,9 +39,7 @@ export const TaskMetaFields = ({ control }: Props) => {
                   <FormControl>
                     <button
                       type="button"
-                      className={`flex items-center justify-between w-full px-4 py-2 rounded-xl border border-white/10 bg-black text-white hover:border-white/30 transition ${
-                        !selectedDate && "text-white"
-                      }`}
+                      className="flex items-center justify-between w-full px-4 py-2 rounded-xl border border-white/10 bg-black text-white hover:border-white/30 transition"
                     >
                       {selectedDate
                         ? format(selectedDate, "PPP p")
@@ -57,7 +60,9 @@ export const TaskMetaFields = ({ control }: Props) => {
                     onSelect={(date) => {
                       if (!date) return;
 
-                      const currentTime = selectedDate || new Date();
+                      const currentTime =
+                        selectedDate || new Date();
+
                       date.setHours(
                         currentTime.getHours(),
                         currentTime.getMinutes()
@@ -86,13 +91,17 @@ export const TaskMetaFields = ({ control }: Props) => {
                         const [hours, minutes] =
                           e.target.value.split(":");
 
-                        const updated = new Date(selectedDate);
+                        const updated =
+                          new Date(selectedDate);
+
                         updated.setHours(
                           Number(hours),
                           Number(minutes)
                         );
 
-                        field.onChange(updated.toISOString());
+                        field.onChange(
+                          updated.toISOString()
+                        );
                       }}
                       className="w-full bg-black border border-white/10 rounded-xl px-3 py-2 text-white focus:ring-1 focus:ring-red-500"
                     />
@@ -106,10 +115,9 @@ export const TaskMetaFields = ({ control }: Props) => {
         }}
       />
 
-      {/* Priority Field */}
       <FormField
         control={control}
-        name="priority"
+        name={"priority" as any}
         render={({ field }) => (
           <FormItem>
             <FormLabel>Priority</FormLabel>
@@ -136,4 +144,4 @@ export const TaskMetaFields = ({ control }: Props) => {
       />
     </div>
   );
-};
+}

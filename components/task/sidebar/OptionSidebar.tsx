@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
+import ShowInSidebar from "../ShowInSidebar";
 
 interface Props {
   active: ActiveSection;
@@ -22,7 +23,7 @@ const OptionSidebar = ({ active }: Props) => {
       {active === "tasks" && (
         <div className="space-y-4">
           <Button
-            className="w-full justify-start gap-2"
+            className="w-full justify-start gap-2 bg-red-500/60 text-white"
             onClick={() =>
               router.push("/task/new")
             }
@@ -34,26 +35,7 @@ const OptionSidebar = ({ active }: Props) => {
           <Separator className="bg-white/10" />
 
           <div className="space-y-2 text-sm text-white/70">
-            <button
-              onClick={() =>
-                router.push("/dashboard/tasks")
-              }
-              className="block w-full text-left hover:text-white"
-            >
-              All Tasks
-            </button>
-
-            <button className="block w-full text-left hover:text-white">
-              Pending
-            </button>
-
-            <button className="block w-full text-left hover:text-white">
-              Completed
-            </button>
-
-            <button className="block w-full text-left hover:text-white">
-              Overdue
-            </button>
+           <ShowInSidebar />
           </div>
         </div>
       )}

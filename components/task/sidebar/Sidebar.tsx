@@ -23,7 +23,7 @@ const Sidebar = ({ active, setActive }: Props) => {
   const router = useRouter();
   const items = useMemo(
     () => [
-      { key: "home", icon: HomeIcon, route: "/task" },
+      { key: "home", icon: HomeIcon, route: "/task/dashboard" },
       { key: "tasks", icon: CheckSquare, route: "/task" },
       { key: "calendar", icon: CalendarDaysIcon, route: "/calendar" },
       { key: "dashboard", icon: LayoutDashboard, route: "/dashboard" },

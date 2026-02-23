@@ -25,8 +25,14 @@ const UpdateTaskContainer = ({ taskId }: Props) => {
     },
     enabled: !!taskId,
   });
+  if (isLoading) {
+    return (
+      <div className="text-white/60 animate-pulse flex items-center justify-center">
+        <Loader />
+      </div>
+    );
+  }
 
-  if (isLoading) return <Loader />;
   if (isError || !data)
     return <div className="text-white p-10">Task not found</div>;
 
@@ -37,7 +43,7 @@ const UpdateTaskContainer = ({ taskId }: Props) => {
       <div className="flex">
         <Sidebar active={active} setActive={setActive} />
 
-        <main className="flex-1 p-10">
+        <main className="flex-1 p-5">
           <UpdateTask task={data} />
         </main>
       </div>

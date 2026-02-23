@@ -58,6 +58,14 @@ export const HeaderAction: {
       icon: ArrowLeft,
     },
   },
+    {
+    match: (path) => path.startsWith(`/task/edit`),
+    action: {
+      label: "Back",
+      href: "/task",
+      icon: ArrowLeft,
+    },
+  },
   {
     match: (path) => path.startsWith("/task"),
     action: {

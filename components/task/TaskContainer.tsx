@@ -5,13 +5,13 @@ import AllTask from "./AllTask";
 
 const TaskContainer = () => {
   return (
-    <div className="min-h-screen bg-black text-white">
+    <div className="min-h-screen bg-black text-white overflow-hidden">
       <Header />
-      <div className="flex">
+      <div className="flex h-[calc(100vh-64px)]">
         <div className="">
           <SidebarContainer />
         </div>
-        <div className="flex-1 p-10">
+        <div className="flex-1 p-3 md:p-8">
           <AllTask />
         </div>
       </div>

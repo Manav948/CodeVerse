@@ -48,7 +48,7 @@ const ShowInSidebar = () => {
         return (
           <Button
             key={task.id}
-            onClick={() => router.push(`/task/${task.id}`)}
+            onClick={() => router.push(`/task/edit/${task.id}`)}
             variant="ghost"
             className={cn(
               "w-full justify-start rounded-lg px-3 py-2 text-sm",

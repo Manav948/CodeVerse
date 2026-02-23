@@ -16,7 +16,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { EllipsisVertical } from "lucide-react";
+import { Edit, EllipsisVertical, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 const AllTask = () => {
@@ -146,13 +146,15 @@ const AllTask = () => {
                     <DropdownMenuItem
                     onClick={() => router.push(`/task/edit/${task.id}`)}
                     >
-                      Update
+                      <Edit size={20} className="text-white"/>
+                      Edit
                     </DropdownMenuItem>
 
                     <DropdownMenuItem
                       className="text-red-400"
                       onClick={() => deleteMutation.mutate(task.id)}
                     >
+                      <Trash2 size={20} className="text-red-500" />
                       Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>

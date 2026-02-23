@@ -3,7 +3,8 @@
 import dayjs from "dayjs";
 import { useFormatter } from "next-intl";
 import { Button } from "../ui/button";
-import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
+import { ArrowLeftCircle, ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   monthIndex: number;
@@ -18,6 +19,10 @@ const CalendarHeader = ({
 }: Props) => {
   const format = useFormatter();
   const date = dayjs().month(monthIndex).toDate();
+  const router = useRouter();
+  const onBackHandler = () => {
+    router.push("/task/dashboard")
+  }
 
   return (
     <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -29,6 +34,12 @@ const CalendarHeader = ({
       </h1>
 
       <div className="flex items-center gap-2">
+        <Button
+          onClick={onBackHandler}
+          className="bg-red-500/60 text-white md:hidden">
+          <ArrowLeftCircle size={16} />
+          Back
+        </Button>
         <Button
           size="icon"
           variant="outline"

@@ -15,15 +15,15 @@ const StatusDonut = ({ data }: Props) => {
   const chartData = [
     {
       name: "Completed",
-      value: data.completedTasks,
+      value: data.completedTask,
     },
     {
       name: "Pending",
-      value: data.pendingTasks,
+      value: data.pendingTask,
     },
     {
       name: "In Progress",
-      value: data.inProgressTasks,
+      value: data.inProgressTask,
     },
   ];
 

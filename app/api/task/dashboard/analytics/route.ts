@@ -4,7 +4,7 @@ import dayjs from "dayjs";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
-export async function POST(request: Request) {
+export async function GET(request: Request) {
     try {
         const session = await getServerSession(authOptions);
         if (!session?.user.id) {

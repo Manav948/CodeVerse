@@ -17,7 +17,7 @@ const options = [
   { label: "Articles", href: "/article", icon: FileText },
   { label: "Community", href: "/community", icon: Users },
   { label: "Bookmarks", href: "/bookmark", icon: Bookmark },
-  { label: "Tasks", href: "/task", icon: CheckSquare2},
+  { label: "Tasks", href: "/task/dashboard", icon: CheckSquare2},
 ];
 
 const OptionSidebar = () => {

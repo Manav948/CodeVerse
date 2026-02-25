@@ -7,7 +7,7 @@ const TaskContainer = () => {
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
       <Header />
-      <div className="flex h-[calc(100vh-64px)]">
+      <div className="flex">
         <div className="">
           <SidebarContainer />
         </div>

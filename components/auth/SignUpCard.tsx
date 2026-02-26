@@ -36,10 +36,13 @@ const SignUpCard = () => {
       email: "",
       password: "",
     },
+    mode: "onSubmit",
   });
 
   const onSubmit = async (values: SignUpValues) => {
+    if (loading) return; 
     setLoading(true);
+
     try {
       await axios.post("/api/auth/register", values);
 
@@ -53,16 +56,25 @@ const SignUpCard = () => {
 
       if (res?.error) {
         toast.error("Login failed. Please sign in manually.");
-        router.push("/sign-in");
+        router.replace("/sign-in");
         return;
       }
 
-      router.push("/sign-in");
-    } catch (error: any) {
-      if (axios.isAxiosError(error) && error.response?.status === 409) {
-        toast.error("Email already exists");
+      // If login successful → go dashboard
+      router.replace("/dashboard");
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        const status = error.response?.status;
+
+        if (status === 409) {
+          toast.error("Email or username already exists.");
+        } else if (status === 400) {
+          toast.error("Invalid data submitted.");
+        } else {
+          toast.error("Server error. Please try again.");
+        }
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error("Unexpected error occurred.");
       }
     } finally {
       setLoading(false);
@@ -70,21 +82,23 @@ const SignUpCard = () => {
   };
 
   return (
-    <CardContent className="relative overflow-hidden rounded-3xl p-3">
-      <div className="absolute inset-0 -z-10 bg-linear-to-br from-[#0f172a] via-[#020617] to-[#020617]" />
-      <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl" />
-      <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
+    <CardContent className="relative overflow-hidden rounded-3xl p-8">
 
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          <ProviderBtns intent="signup" onLoading={setLoading} />
+        
+          <ProviderBtns
+            intent="signup"
+            onLoading={setLoading}
+            disabled={loading}
+          />
 
           <div className="relative flex items-center gap-2 py-2">
             <div className="h-px flex-1 bg-white/10" />
-            <span className="text-xs text-white/40">OR</span>
+            <span className="text-xs text-white/40 tracking-wide">OR</span>
             <div className="h-px flex-1 bg-white/10" />
           </div>
 
@@ -95,10 +109,12 @@ const SignUpCard = () => {
               <FormItem>
                 <FormControl>
                   <Input
-                    placeholder="Email"
                     type="email"
+                    placeholder="Email"
+                    disabled={loading}
+                    autoComplete="email"
                     {...field}
-                    className="h-8 bg-white/5 border-white/10 text-white placeholder:text-white/40"
+                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-cyan-400/40 focus:ring-cyan-400/20"
                   />
                 </FormControl>
                 <FormMessage />
@@ -114,8 +130,10 @@ const SignUpCard = () => {
                 <FormControl>
                   <Input
                     placeholder="Username"
+                    disabled={loading}
+                    autoComplete="username"
                     {...field}
-                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40"
+                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-purple-400/40 focus:ring-purple-400/20"
                   />
                 </FormControl>
                 <FormMessage />
@@ -132,8 +150,10 @@ const SignUpCard = () => {
                   <Input
                     type="password"
                     placeholder="Password"
+                    disabled={loading}
+                    autoComplete="new-password"
                     {...field}
-                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40"
+                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-purple-400/40 focus:ring-purple-400/20"
                   />
                 </FormControl>
                 <FormMessage />
@@ -143,21 +163,15 @@ const SignUpCard = () => {
 
           <Button
             disabled={loading}
-            className="mt-2 h-11 rounded-xl bg-linear-to-r from-purple-500 to-cyan-500 font-semibold text-white hover:opacity-90"
             type="submit"
+            className="mt-2 h-11 rounded-xl bg-red-500/60 font-semibold text-white transition-all duration-200 hover:opacity-90 disabled:opacity-60"
           >
-            {loading ? <LoadingState loadingText="Creating account" /> : "Create account"}
+            {loading ? (
+              <LoadingState loadingText="Creating account" />
+            ) : (
+              "Create account"
+            )}
           </Button>
-
-          {/* <p className="text-center text-sm text-white/60">
-            Already have an account?{" "}
-            <Link
-              href="/sign-in"
-              className="text-cyan-400 hover:underline"
-            >
-              Sign in
-            </Link>
-          </p> */}
         </form>
       </Form>
     </CardContent>

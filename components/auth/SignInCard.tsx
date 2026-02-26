@@ -4,10 +4,11 @@ import { signInSchema } from "@/schema/signInSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
+
 import { CardContent } from "../ui/card";
 import {
   Form,
@@ -19,7 +20,6 @@ import {
 import ProviderBtns from "./ProviderBtns";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import Link from "next/link";
 import { LoadingState } from "../ui/LoadingState";
 
 type SignInValues = z.infer<typeof signInSchema>;
@@ -34,10 +34,14 @@ const SignInCard = () => {
       email: "",
       password: "",
     },
+    mode: "onSubmit",
   });
 
   const onSubmit = async (values: SignInValues) => {
+    if (loading) return;
+
     setLoading(true);
+
     try {
       const res = await signIn("credentials", {
         email: values.email,
@@ -46,17 +50,22 @@ const SignInCard = () => {
       });
 
       if (!res) {
-        throw new Error("No response from server");
-      }
-
-      if (res.error) {
-        toast.error("Invalid email or password");
+        toast.error("Server did not respond.");
         return;
       }
 
-      toast.success("Signed in successfully");
-      router.push("/dashboard"); // or "/"
-      router.refresh();
+      if (res.error) {
+        toast.error("Invalid email or password.");
+        return;
+      }
+
+      if (res.ok) {
+        toast.success("Signed in successfully.");
+        router.replace("/dashboard");
+        return;
+      }
+
+      toast.error("Unexpected authentication response.");
     } catch (error) {
       console.error("Sign-in failed:", error);
       toast.error("Something went wrong. Please try again.");
@@ -67,26 +76,23 @@ const SignInCard = () => {
 
   return (
     <CardContent className="relative overflow-hidden rounded-3xl p-8">
-      {/* Gradient background */}
-      <div className="absolute inset-0 -z-10 bg-linear-to-br from-[#0f172a] via-[#020617] to-[#020617]" />
-      <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-purple-500/20 blur-3xl" />
-      <div className="absolute -bottom-24 -right-24 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
-
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
           className="flex flex-col gap-4"
         >
-          {/* OAuth */}
-          <ProviderBtns intent="signin" onLoading={setLoading} />
+          <ProviderBtns
+            intent="signin"
+            onLoading={setLoading}
+            disabled={loading}
+          />
 
           <div className="relative flex items-center gap-2 py-2">
             <div className="h-px flex-1 bg-white/10" />
-            <span className="text-xs text-white/40">OR</span>
+            <span className="text-xs text-white/40 tracking-wide">OR</span>
             <div className="h-px flex-1 bg-white/10" />
           </div>
 
-          {/* Email */}
           <FormField
             control={form.control}
             name="email"
@@ -94,10 +100,12 @@ const SignInCard = () => {
               <FormItem>
                 <FormControl>
                   <Input
-                    placeholder="Email"
                     type="email"
+                    placeholder="Email"
+                    disabled={loading}
+                    autoComplete="email"
                     {...field}
-                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40"
+                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-cyan-400/40 focus:ring-cyan-400/20"
                   />
                 </FormControl>
                 <FormMessage />
@@ -105,7 +113,6 @@ const SignInCard = () => {
             )}
           />
 
-          {/* Password */}
           <FormField
             control={form.control}
             name="password"
@@ -115,8 +122,10 @@ const SignInCard = () => {
                   <Input
                     type="password"
                     placeholder="Password"
+                    disabled={loading}
+                    autoComplete="current-password"
                     {...field}
-                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40"
+                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-purple-400/40 focus:ring-purple-400/20"
                   />
                 </FormControl>
                 <FormMessage />
@@ -124,11 +133,10 @@ const SignInCard = () => {
             )}
           />
 
-          {/* Submit */}
           <Button
-            disabled={loading}
-            className="mt-2 h-11 rounded-xl bg-linear-to-r from-purple-500 to-cyan-500 font-semibold text-white hover:opacity-90"
             type="submit"
+            disabled={loading}
+            className="mt-2 h-11 rounded-xl bg-red-500/60 font-semibold text-white transition-all duration-200 hover:opacity-90 disabled:opacity-60"
           >
             {loading ? (
               <LoadingState loadingText="Signing in" />
@@ -136,13 +144,6 @@ const SignInCard = () => {
               "Sign in"
             )}
           </Button>
-
-          {/* <p className="text-center text-sm text-white/60">
-            Don’t have an account?{" "}
-            <Link href="/sign-up" className="text-cyan-400 hover:underline">
-              Create one
-            </Link>
-          </p> */}
         </form>
       </Form>
     </CardContent>

@@ -69,6 +69,23 @@ export async function GET(request: Request) {
             const date = dayjs().subtract(i, "day").format("YYYY-MM-DD");
             last7DaysCompletion.push(activityByDate[date] || 0)
         }
+
+        let currentStreak = 0;
+        for (let i = 0; ; i++) {
+            const date = dayjs().subtract(i, "day").format("YYYY-MM-DD");
+            if (activityByDate[date]) {
+                currentStreak++;
+            }
+            else {
+                break;
+            }   
+        }
+
+        const completionScore = completionRate * 0.6;
+        const overduePenalty = totalTask === 0 ? 0 : Math.min((overdueTasks / totalTask) * 20, 20)
+        const activiDatsLast7 = last7DaysCompletion.filter((d) => d > 0).length
+        const consistencyScore = (activiDatsLast7 / 7) * 20;
+        const productivityScore = Math.round(completionScore + consistencyScore - overduePenalty)
         return NextResponse.json({
             totalTask,
             completedTask,
@@ -77,7 +94,9 @@ export async function GET(request: Request) {
             overdueTasks,
             completionRate,
             activityByDate,
-            last7DaysCompletion
+            last7DaysCompletion,
+            currentStreak,
+            productivityScore
         })
     } catch (error) {
         console.log(error)

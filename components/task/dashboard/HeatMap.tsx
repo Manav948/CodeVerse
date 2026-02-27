@@ -70,7 +70,7 @@ const ActivityHeatmap = ({ activityByDate }: Props) => {
   });
 
   return (
-    <div className="bg-black p-6 rounded-lg text-sm"> 
+    <div className="bg-black p-6 rounded-lg text-sm border border-white/10"> 
       <div className="flex ml-10 mb-3 text-xs text-gray-400">
         {weeks.map((_, i) => {
           const month = monthLabels.find(m => m.index === i);

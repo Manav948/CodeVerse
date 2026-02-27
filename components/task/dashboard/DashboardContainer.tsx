@@ -3,6 +3,7 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
+
 import Loader from "@/components/ui/Loading";
 import ActivityChart from "./ActivityChart";
 import StatusDonut from "./Status";
@@ -12,6 +13,10 @@ import TaskArchitecturePanel from "./TaskArchitecturePanel";
 import Header from "@/components/dashboard/Header/Header";
 import Sidebar from "../sidebar/Sidebar";
 import { ActiveSection } from "../sidebar/SidebarContainer";
+import ProductivityScoreCard from "./ProductivityScoreCard";
+
+const surface =
+  "bg-black backdrop-blur-md";
 
 const DashboardContainer = () => {
   const [active, setActive] =
@@ -29,7 +34,7 @@ const DashboardContainer = () => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <Loader />
       </div>
     );
@@ -37,55 +42,69 @@ const DashboardContainer = () => {
 
   if (isError || !data) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center text-red-400">
-        Error loading dashboard
+      <div className="flex min-h-screen items-center justify-center bg-black text-red-400">
+        Failed to load dashboard data
       </div>
     );
   }
 
   return (
-    <div className="h-screen bg-black text-white flex overflow-hidden">
-      <aside className="flex shrink-0">
+    <div className="flex min-h-screen bg-black text-white">
+      <aside className="lg:flex flex">
         <Sidebar active={active} setActive={setActive} />
       </aside>
 
-      <div className="flex-1 flex flex-col">
-        <header className="h-16 flex items-center shrink-0">
+      <div className="flex flex-1 flex-col">
+        <header className="backdrop-blur-md">
           <Header />
         </header>
 
         <main className="flex-1 overflow-y-auto">
-          <div className="max-w-350 mx-auto px-8 py-10 space-y-16">
-
+          <div className="mx-auto w-full max-w-7xl px-6 py-10 space-y-14">
             <section className="space-y-6">
-              <h2 className="text-md tracking-wider text-white font-medium">
-                OVERVIEW
-              </h2>
+              <div className="flex items-center justify-between">
+                <h2 className="text-sm font-semibold tracking-wider text-white/60 uppercase">
+                  Overview
+                </h2>
+              </div>
 
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-6">
-                <StatCard title="Total Tasks" value={data.totalTask} />
-                <StatCard title="Completed" value={data.completedTask} />
-                <StatCard title="Pending" value={data.pendingTask} />
-                <StatCard title="Overdue" value={data.overdueTasks} />
-                <StatCard
-                  title="Completion Rate"
-                  value={`${data.completionRate}%`}
-                />
+              <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+
+                <div className="xl:col-span-4">
+                  <ProductivityScoreCard
+                    score={data.productivityScore}
+                    streak={data.currentStreak}
+                  />
+                </div>
+
+                <div className="xl:col-span-8 grid grid-cols-2 md:grid-cols-3 gap-6">
+                  <StatCard title="Total Tasks" value={data.totalTask} />
+                  <StatCard title="Completed" value={data.completedTask} />
+                  <StatCard title="Pending" value={data.pendingTask} />
+                  <StatCard title="Overdue" value={data.overdueTasks} />
+                  <StatCard
+                    title="Completion Rate"
+                    value={`${data.completionRate}%`}
+                  />
+                </div>
+
               </div>
             </section>
 
             <section className="space-y-6">
-              <h2 className="text-md tracking-wider text-white/ font-medium">
-                ACTIVITY & WORKFLOW
+              <h2 className="text-sm font-semibold tracking-wider text-white/60 uppercase">
+                Activity & Workflow
               </h2>
 
-              <div className="grid grid-cols-12 gap-10 items-start">
-
-                <div className="col-span-12 xl:col-span-8 rounded-3xl border border-white/5 bg-black/40 backdrop-blur-xl p-6">
-                  <ActivityHeatmap activityByDate={data.activityByDate} />
+              <div className="grid grid-cols-1 xl:grid-cols-12 gap-6">
+                <div className={`xl:col-span-8 p-6 ${surface}`}>
+                  <ActivityHeatmap
+                    activityByDate={data.activityByDate}
+                  />
                 </div>
 
-                <div className="col-span-12 xl:col-span-4 rounded-3xl border border-white/5 bg-black/40 backdrop-blur-xl shadow-[0_0_40px_rgba(99,102,241,0.08)]">
+
+                <div className={`xl:col-span-4 p-6 ${surface}`}>
                   <TaskArchitecturePanel />
                 </div>
 
@@ -93,16 +112,18 @@ const DashboardContainer = () => {
             </section>
 
             <section className="space-y-6">
-              <h2 className="text-md tracking-wider text-white font-medium">
-                PERFORMANCE ANALYTICS
+              <h2 className="text-sm font-semibold tracking-wider text-white/60 uppercase">
+                Performance Analytics
               </h2>
 
-              <div className="grid lg:grid-cols-2 gap-8">
-                <div className="rounded-3xl border border-white/5 bg-black/40 backdrop-blur-xl">
-                  <ActivityChart data={data.last7DaysCompletion} />
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div className={`p-6 ${surface}`}>
+                  <ActivityChart
+                    data={data.last7DaysCompletion}
+                  />
                 </div>
 
-                <div className="rounded-3xl border border-white/5 bg-black/40 backdrop-blur-xl">
+                <div className={`p-6 ${surface}`}>
                   <StatusDonut data={data} />
                 </div>
               </div>

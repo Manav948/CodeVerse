@@ -161,7 +161,7 @@ const QuestionSection = ({ questions }: any) => {
 
             <Card
                 key={question.id}
-                className="bg-black/60 p-6 border-none "
+                className="bg-black/60     p-6 border-none "
             >
                 <h3 className="text-white font-semibold text-lg">
                     {question.title}

@@ -1,19 +1,36 @@
 "use client";
 
-import { Bell, Plus, Search } from "lucide-react";
+import { Bell, Search } from "lucide-react";
 import { Button } from "../../ui/button";
 import User from "./User";
 import SidebarMobile from "@/components/sidebar/SidebarMobile";
 import { usePathname, useRouter } from "next/navigation";
 import { HeaderAction } from "@/lib/header-actions";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Notification from "@/components/notification/Notification";
+import clsx from "clsx";
 
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
+  const [open, setOpen] = useState(false);
 
   const matched = HeaderAction.find((item) =>
     item.match(pathname)
   );
+
+  const { data } = useQuery({
+    queryKey: ["notification"],
+    queryFn: async () => {
+      const res = await axios.get("/api/notification/get");
+      return res.data;
+    },
+  });
+
+  const unreadCount =
+    data?.filter((n: any) => !n.isRead).length || 0;
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/40 backdrop-blur-xl">
@@ -42,15 +59,11 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-3 relative">
           {matched && (
             <Button
               onClick={() => router.push(matched.action.href)}
-              className="
-                h-10 rounded-xl
-                bg-red-500/60 text-white
-                px-3 md:px-3 flex items-center gap-2
-              "
+              className="h-10 rounded-xl bg-red-500/60 text-white px-3 flex items-center gap-2"
             >
               <matched.action.icon size={16} />
               <span className="hidden md:inline">
@@ -58,12 +71,33 @@ const Header = () => {
               </span>
             </Button>
           )}
-          <button className="relative rounded-xl p-2 text-white/70 hover:bg-white/10">
+
+          <button
+            onClick={() => setOpen(!open)}
+            className="relative rounded-xl p-2 text-white/70 hover:bg-white/10 transition"
+          >
             <Bell size={20} />
-            <span className="absolute right-1 top-1 h-2 w-2 rounded-full bg-red-500" />
+
+            {unreadCount > 0 && (
+              <span
+                className={clsx(
+                  "absolute -top-1 -right-1 min-w-4.5 h-4.5",
+                  "flex items-center justify-center text-[10px]",
+                  "rounded-full bg-red-500 text-white font-semibold"
+                )}
+              >
+                {unreadCount}
+              </span>
+            )}
           </button>
 
           <User />
+
+          {open && (
+            <div className="absolute right-0 top-14 w-96 max-h-125 overflow-y-auto rounded-2xl border border-white/10 bg-black/90 backdrop-blur-xl shadow-2xl z-50">
+              <Notification />
+            </div>
+          )}
         </div>
       </div>
     </header>

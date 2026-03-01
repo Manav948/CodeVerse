@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto"
-import { error } from "console";
 import { db } from "@/lib/db";
 export async function POST(req: NextRequest) {
     try {

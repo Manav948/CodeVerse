@@ -1,5 +1,6 @@
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
+import { CreateNotification } from "@/types/notification"
 import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
 
@@ -13,14 +14,14 @@ export async function POST(request: Request, { params }: Props) {
             return NextResponse.json("User not Authenticated", { status: 401 })
         }
         const userId = session.user.id
-        const {articleId} = await params
+        const { articleId } = await params
 
         const existingLikes = await db.articleLikes.findUnique({
             where: {
                 articleId_userId: {
                     userId,
                     articleId
-                    
+
                 }
             }
         })
@@ -39,8 +40,15 @@ export async function POST(request: Request, { params }: Props) {
             data: {
                 userId,
                 articleId
-                
+
             }
+        })
+
+        await CreateNotification({
+            userId,
+            type: "LIKE",
+            title: "Liked article",
+            message: `${session.user.username} Liked a Article`,
         })
         return NextResponse.json({ liked: true })
     } catch (error) {

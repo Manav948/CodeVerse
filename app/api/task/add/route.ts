@@ -1,13 +1,14 @@
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { taskCreateSchema } from "@/schema/taskCreateSchema";
+import { CreateNotification } from "@/types/notification";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
 export async function POST(request: Request) {
     try {
-        const sesstion = await getServerSession(authOptions)
-        if (!sesstion?.user.id) {
+        const session = await getServerSession(authOptions)
+        if (!session?.user.id) {
             return NextResponse.json("User Not Authenticated", { status: 401 })
         }
         const body = await request.json()
@@ -18,7 +19,7 @@ export async function POST(request: Request) {
         const data = parsed.data
         const task = await db.task.create({
             data: {
-                userId: sesstion.user.id,
+                userId: session.user.id,
                 title: data.title,
                 content: data.content,
                 dueDate: data.dueDate ? new Date(data.dueDate) : null,
@@ -27,6 +28,14 @@ export async function POST(request: Request) {
                 githubUserName: data.githubUserName,
                 priority: data.priority
             }
+        })
+        await CreateNotification({
+            userId: session.user.id,
+            type: "TASK_REMINDER",
+            title: "New Task Created",
+            message: `${session.user.id} Created new Task`,
+            entityId: task.id,
+            entityType: "TASK"
         })
         return NextResponse.json(task, { status: 201 })
     } catch (error) {

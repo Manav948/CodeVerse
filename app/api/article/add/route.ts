@@ -1,6 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { addArticleSchema } from "@/schema/addArticleSchema";
+import { CreateNotification } from "@/types/notification";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -69,6 +70,15 @@ export async function POST(request: Request) {
                     },
                 },
             });
+
+            await CreateNotification({
+                userId,
+                type : "NEW_ARTICLE",
+                title : "New Article Published",
+                message : `${session.user.username} published new Article`,
+                entityId: article.id,
+                entityType :"ARTICLE"
+            })
 
             await tx.user.update({
                 where: { id: userId },

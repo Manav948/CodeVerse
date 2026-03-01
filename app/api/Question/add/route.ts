@@ -1,6 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { addQuestion } from "@/schema/addQuestion";
+import { CreateNotification } from "@/types/notification";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -19,9 +20,9 @@ export async function POST(request: Request) {
         if (!result.success) {
             return NextResponse.json("Invalid request body - failed to parse JSON", { status: 400 })
         }
-        const { title,description } = result.data
+        const { title, description } = result.data
 
-        const question= await db.question.create({
+        const question = await db.question.create({
             data: {
                 title,
                 description,
@@ -37,6 +38,16 @@ export async function POST(request: Request) {
                 }
             }
         })
+
+        await CreateNotification({
+            userId,
+            type: "NEW_QUESTION",
+            title: "New Question Published",
+            message: `${session.user.username} generate new Question`,
+            entityId: question.id,
+            entityType: "QUESTION"
+        })
+
         await db.user.update({
             where: {
                 id: userId

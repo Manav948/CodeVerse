@@ -1,6 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { addSnippetSchema } from "@/schema/addSnippetSchema";
+import { CreateNotification } from "@/types/notification";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -57,6 +58,14 @@ export async function POST(request: Request) {
                     }
                 }
             }
+        })
+        await CreateNotification({
+            userId,
+            type: "NEW_SNIPPET",
+            title: "New Snippet Published",
+            message: `${session.user.username} published new Snippet`,
+            entityId: snippet.id,
+            entityType: "SNIPPET"
         })
         await db.user.update({
             where: {

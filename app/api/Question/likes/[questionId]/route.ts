@@ -1,5 +1,6 @@
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
+import { CreateNotification } from "@/types/notification"
 import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
 
@@ -41,6 +42,12 @@ export async function POST(request: Request, { params }: Props) {
                 questionId
 
             }
+        })
+        await CreateNotification({
+            userId,
+            type: "LIKE",
+            title: "Liked Question",
+            message: `${session.user.username} Liked a Question`,
         })
         return NextResponse.json({ liked: true })
     } catch (error) {

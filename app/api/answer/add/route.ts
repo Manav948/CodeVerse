@@ -1,6 +1,7 @@
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { addAnswerSchema } from "@/schema/addAnswerSchema";
+import { CreateNotification } from "@/types/notification";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -53,6 +54,15 @@ export async function POST(request: Request) {
           },
         },
       });
+
+      await CreateNotification({
+        userId,
+        type: "NEW_ANSWER",
+        title: "New Answer Published",
+        message: `${session.user.username} give the answer of this ${question}`,
+        entityId: answer.id,
+        entityType: "ANSWER"
+      })
 
       await tx.user.update({
         where: { id: userId },

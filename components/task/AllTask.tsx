@@ -30,7 +30,7 @@ const AllTask = () => {
     },
   });
 
-  const {mutate : completeTask , variables} = useMutation({
+  const { mutate: completeTask, variables } = useMutation({
     mutationFn: async (taskId: string) => {
       await axios.post(`/api/task/complete/${taskId}`);
       return taskId;
@@ -119,11 +119,12 @@ const AllTask = () => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.2 }}
           >
-            <Card className="relative p-5  bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl text-white hover:border-white/30 transition">
-              <div className="flex justify-between items-start gap-4">
+            <Card className="relative p-4 sm:p-5 bg-black/60 backdrop-blur-xl border border-white/10 rounded-2xl text-white hover:border-white/30 transition">
 
-                <div className="min-w-0">
-                  <h3 className="text-lg font-semibold wrap-break-words">
+              <div className="flex justify-between items-start gap-3">
+
+                <div className="min-w-0 flex-1">
+                  <h3 className="text-base sm:text-lg font-semibold wrap-break-words">
                     {task.title}
                   </h3>
 
@@ -134,7 +135,7 @@ const AllTask = () => {
 
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <button className="p-1 hover:bg-white/10 rounded-md">
+                    <button className="p-1 hover:bg-white/10 rounded-md shrink-0">
                       <EllipsisVertical size={18} />
                     </button>
                   </DropdownMenuTrigger>
@@ -144,9 +145,9 @@ const AllTask = () => {
                     className="bg-black border border-white/10 text-white"
                   >
                     <DropdownMenuItem
-                    onClick={() => router.push(`/task/edit/${task.id}`)}
+                      onClick={() => router.push(`/task/edit/${task.id}`)}
                     >
-                      <Edit size={20} className="text-white"/>
+                      <Edit size={16} className="mr-2" />
                       Edit
                     </DropdownMenuItem>
 
@@ -154,39 +155,41 @@ const AllTask = () => {
                       className="text-red-400"
                       onClick={() => deleteMutation.mutate(task.id)}
                     >
-                      <Trash2 size={20} className="text-red-500" />
+                      <Trash2 size={16} className="mr-2 text-red-500" />
                       Delete
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
+
+              {/* Badges */}
               <div className="flex gap-2 mt-3 flex-wrap">
-                <Badge variant="outline" className="text-white">
+                <Badge variant="outline" className="text-white text-xs">
                   {task.priority}
                 </Badge>
 
                 <Badge
-                  className={
-                    task.status === "COMPLETED"
+                  className={`text-xs ${task.status === "COMPLETED"
                       ? "bg-green-500/20 text-green-400 border-green-500/40"
                       : "bg-white/10 text-white/70 border-white/20"
-                  }
+                    }`}
                 >
                   {task.status}
                 </Badge>
               </div>
 
               {task.dueDate && (
-                <div className="mt-4 text-sm flex justify-between">
+                <div className="mt-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
+
                   <span
-                    className={
-                      isOverdue
+                    className={`text-sm ${isOverdue
                         ? "text-red-400 font-medium"
                         : "text-white/50"
-                    }
+                      }`}
                   >
                     Due: {dayjs(task.dueDate).format("DD MMM YYYY")}
                   </span>
+
                   {task.status !== "COMPLETED" && (
                     <Button
                       size="sm"
@@ -194,8 +197,11 @@ const AllTask = () => {
                       disabled={variables === task.id}
                       onClick={() => completeTask(task.id)}
                     >
-                      {variables === task.id ? "Updating..." : "Mark Complete"}
-                    </Button>)}
+                      {variables === task.id
+                        ? "Updating..."
+                        : "Mark Complete"}
+                    </Button>
+                  )}
                 </div>
               )}
             </Card>

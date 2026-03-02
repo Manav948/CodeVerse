@@ -15,7 +15,7 @@ const CommunityContainer = () => {
                     </aside>
 
                     <main className="flex-1 overflow-y-auto relative">
-                        <div className="relative mx-auto max-w-4xl py-8">
+                        <div className="relative mx-auto max-w-4xl sm:py-8 sm:px-6">
                             <Community />
                         </div>
                     </main>

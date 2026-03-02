@@ -69,13 +69,13 @@ const Settings = () => {
   }
 
   return (
-    <div className="space-y-8 px-4 sm:px-6 lg:px-0">
+    <div className="space-y-8 px-3 sm:px-6 lg:px-0">
       <div>
         <h1 className="text-2xl sm:text-3xl font-semibold">
           Account
         </h1>
         <p className="text-white/50 text-sm mt-1">
-          Manage your account information.
+          Manage your account information And update it.
         </p>
       </div>
 

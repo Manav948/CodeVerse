@@ -27,7 +27,7 @@ const Sidebar = ({ active, setActive }: Props) => {
       { key: "tasks", icon: CheckSquare, route: "/task" },
       { key: "calendar", icon: CalendarDaysIcon, route: "/calendar" },
       { key: "dashboard", icon: LayoutDashboard, route: "/dashboard" },
-      { key: "media", icon: MousePointerSquareDashedIcon, route: "/media" },
+      // { key: "media", icon: MousePointerSquareDashedIcon, route: "/media" },
     ] as const,
     []
   );

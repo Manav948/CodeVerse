@@ -152,12 +152,12 @@ const PostCard = ({ post }: Props) => {
 
           <Separator className="bg-white/10" />
 
-          <div className="flex items-center justify-between text-xs text-white/50">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-white/50">
             <span>
-              {new Date(post.created_at).toLocaleDateString()}
+              Created at : {new Date(post.created_at).toLocaleDateString()}
             </span>
 
-            <div className="flex items-center gap-5">
+            <div className="flex items-center gap-4">
               <button
                 disabled={isPending}
                 onClick={() => toggleLike()}

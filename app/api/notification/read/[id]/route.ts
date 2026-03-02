@@ -9,7 +9,7 @@ interface Props {
 export async function PATCH(request: Request, { params }: Props) {
     try {
         const session = await getServerSession(authOptions)
-        if (session?.user.id) {
+        if (!session?.user.id) {
             return NextResponse.json("User not Authenticated", { status: 401 })
         }
         const { id } = await params

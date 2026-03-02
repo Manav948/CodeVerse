@@ -15,7 +15,7 @@ const ArticleContainer = () => {
                     </aside>
 
                     <main className="flex-1 overflow-y-auto relative">
-                        <div className="relative mx-auto max-w-4xl px-6 py-8">
+                        <div className="relative mx-auto max-w-4xl sm:px-6 sm:py-8">
                             <AllArticle />
                         </div>
                     </main>

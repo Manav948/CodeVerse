@@ -152,10 +152,10 @@ const SnippetCard = ({ snippet }: Props) => {
                 </Badge>
               ))}
             </div>
-            <div className="flex items-center gap-8 text-sm mt-1.5">
+            <div className="flex items-center  gap-5 text-sm mt-1.5">
 
               <span className="text-white">
-                {new Date(snippet.created_at).toLocaleDateString()}
+                Created at : {new Date(snippet.created_at).toLocaleDateString()}
               </span>
               <button
                 disabled={isPending}

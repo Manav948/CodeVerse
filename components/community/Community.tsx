@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 const Community = () => {
   return (
-    <div className="relative min-h-[80vh] flex items-center justify-center px-6 overflow-hidden bg-black">
+    <div className="relative min-h-[80vh] flex items-center justify-center px-3 overflow-hidden bg-black">
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}

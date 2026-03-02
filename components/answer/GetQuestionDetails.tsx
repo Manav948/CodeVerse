@@ -116,7 +116,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
   return (
     <div className="min-h-screen bg-black text-white">
-      <div className="mx-auto max-w-3xl px-6 py-10 space-y-10">
+      <div className="mx-auto max-w-3xl sm:px-6 sm:py-10 space-y-10">
 
         <Card className="border border-white/10 bg-black backdrop-blur-xl p-6 rounded-2xl space-y-5">
 
@@ -124,7 +124,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
             {data.title}
           </h2>
 
-          <p className="bg-white/10 p-5 rounded-xl text-white/80 whitespace-pre-wrap leading-relaxed">
+          <p className="bg-white/10 p-2 rounded-xl text-white/80 whitespace-pre-wrap leading-relaxed">
             {data.description}
           </p>
 
@@ -169,7 +169,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
         <Separator className="bg-white/10" />
 
-        <div className="space-y-6">
+        <div className="space-y-6 px-3">
           <h3 className="text-lg font-semibold">
             {data.answer.length} Answers
           </h3>

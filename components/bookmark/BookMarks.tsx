@@ -59,7 +59,7 @@ const BookMarks = () => {
       : data.filter((item) => item.type === activeTab);
 
   return (
-    <div className="space-y-8 mt-5">
+    <div className="space-y-8 mt-5 px-3">
       <div className="space-y-2">
         <h2 className="text-2xl font-semibold">
           Your Bookmarks

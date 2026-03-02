@@ -8,7 +8,7 @@ import { formatDistanceToNow } from "date-fns";
 import { Loader2 } from "lucide-react";
 import clsx from "clsx";
 
-const Notification = () => {
+const Notification = ({ close }: { close: () => void }) => {
   const router = useRouter();
   const queryClient = useQueryClient();
 
@@ -23,8 +23,30 @@ const Notification = () => {
   const { mutate: markAsRead } = useMutation({
     mutationFn: async (id: string) => {
       await axios.patch(`/api/notification/read/${id}`);
+      return id;
     },
-    onSuccess: () => {
+
+    onMutate: async (id) => {
+      await queryClient.cancelQueries({ queryKey: ["notification"] });
+
+      const previous = queryClient.getQueryData<any[]>(["notification"]);
+
+      queryClient.setQueryData<any[]>(["notification"], (old) =>
+        old?.map((n) =>
+          n.id === id ? { ...n, isRead: true } : n
+        )
+      );
+
+      return { previous };
+    },
+
+    onError: (_, __, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(["notification"], context.previous);
+      }
+    },
+
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["notification"] });
     },
   });
@@ -34,8 +56,12 @@ const Notification = () => {
       markAsRead(notification.id);
     }
 
+    close(); // close dropdown instantly
+
     if (notification.entityId && notification.entityType) {
-      router.push(`/${notification.entityType.toLowerCase()}/${notification.entityId}`);
+      router.push(
+        `/${notification.entityType.toLowerCase()}/${notification.entityId}`
+      );
     }
   };
 
@@ -64,35 +90,34 @@ const Notification = () => {
   }
 
   return (
-    <div className="w-full max-w-xl mx-auto space-y-4 p-6">
-      <h2 className="text-xl font-semibold text-white">Notifications</h2>
-
+    <div className="w-full space-y-3 p-4">
       {data.map((notification: any) => (
         <div
           key={notification.id}
           onClick={() => handleClick(notification)}
           className={clsx(
             "p-4 rounded-xl border cursor-pointer transition-all duration-200",
-            "bg-black/40 backdrop-blur-xl",
+            "bg-black/60 backdrop-blur-xl hover:border-white/20",
             notification.isRead
-              ? "border-white/10 hover:border-white/20"
+              ? "border-white/10"
               : "border-indigo-500/40 bg-indigo-500/10"
           )}
         >
-          <div className="flex justify-between items-start">
-            <div>
-              <h3 className="text-sm font-medium text-white">
+          <div className="flex justify-between items-start gap-3">
+            <div className="min-w-0">
+              <h3 className="text-sm font-medium text-white wrap-break-words">
                 {notification.title}
               </h3>
-              <p className="text-sm text-white/60 mt-1">
+              <p className="text-sm text-white/60 mt-1 wrap-break-words">
                 {notification.message}
               </p>
             </div>
 
-            <span className="text-xs text-white/40">
-              {formatDistanceToNow(new Date(notification.created_at), {
-                addSuffix: true,
-              })}
+            <span className="text-xs text-white/40 whitespace-nowrap">
+              {formatDistanceToNow(
+                new Date(notification.created_at),
+                { addSuffix: true }
+              )}
             </span>
           </div>
 

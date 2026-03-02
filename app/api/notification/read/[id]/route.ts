@@ -4,7 +4,7 @@ import { getServerSession } from "next-auth"
 import { NextResponse } from "next/server"
 
 interface Props {
-    params: { id: string }
+    params: Promise<{ id: string }>
 }
 export async function PATCH(request: Request, { params }: Props) {
     try {

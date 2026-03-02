@@ -84,7 +84,7 @@ const AddTask = () => {
 
     return (
         <div className="max-w-2xl mx-auto ">
-            <Card className="p-10 bg-black border border-white/10  shadow-2xl space-y-8 text-white">
+            <Card className="p-6 bg-black border  py-8 border-white/10  shadow-2xl space-y-8 text-white">
 
                 <div className="space-y-2">
                     <h2 className="text-3xl font-bold tracking-tight text-white">

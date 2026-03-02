@@ -6,21 +6,33 @@ import User from "./User";
 import SidebarMobile from "@/components/sidebar/SidebarMobile";
 import { usePathname, useRouter } from "next/navigation";
 import { HeaderAction } from "@/lib/header-actions";
-import { useState, useRef, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Notification from "@/components/notification/Notification";
-import clsx from "clsx";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
 
 const Header = () => {
   const pathname = usePathname();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement | null>(null);
+  const [lastViewed, setLastViewed] = useState<number>(0);
 
   const matched = HeaderAction.find((item) =>
     item.match(pathname)
   );
+
+  // Load last viewed timestamp from localStorage
+  useEffect(() => {
+    const stored = localStorage.getItem("notification_last_viewed");
+    if (stored) {
+      setLastViewed(Number(stored));
+    }
+  }, []);
 
   const { data } = useQuery({
     queryKey: ["notification"],
@@ -30,27 +42,25 @@ const Header = () => {
     },
   });
 
-  const unreadCount =
-    data?.filter((n: any) => !n.isRead).length || 0;
+  //  Only count NEW notifications
+  const newCount =
+    data?.filter(
+      (n: any) =>
+        new Date(n.created_at).getTime() > lastViewed
+    ).length || 0;
 
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
-        setOpen(false);
-      }
-    };
+  const handleOpenChange = (value: boolean) => {
+    setOpen(value);
 
-    if (open) {
-      document.addEventListener("mousedown", handleClickOutside);
+    if (value) {
+      const now = Date.now();
+      localStorage.setItem(
+        "notification_last_viewed",
+        now.toString()
+      );
+      setLastViewed(now);
     }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [open]);
+  };
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/40 backdrop-blur-xl">
@@ -73,7 +83,7 @@ const Header = () => {
           </div>
         </div>
 
-        <div className="flex items-center gap-3 relative" ref={dropdownRef}>
+        <div className="flex items-center gap-3">
 
           {matched && (
             <Button
@@ -87,32 +97,28 @@ const Header = () => {
             </Button>
           )}
 
-          <button
-            onClick={() => setOpen((prev) => !prev)}
-            className="relative rounded-xl p-2 text-white/70 hover:bg-white/10 transition"
-          >
-            <Bell size={20} />
+          <Popover open={open} onOpenChange={handleOpenChange}>
+            <PopoverTrigger asChild>
+              <button className="relative rounded-xl p-2 text-white/70 hover:bg-white/10 transition">
+                <Bell size={20} />
 
-            {unreadCount > 0 && (
-              <span
-                className={clsx(
-                  "absolute -top-1 -right-1 min-w-4 h-4",
-                  "flex items-center justify-center text-[10px]",
-                  "rounded-full bg-red-500 text-white font-semibold px-1"
+                {newCount > 0 && (
+                  <span className="absolute -top-1 -right-1 min-w-4 h-4 flex items-center justify-center text-[10px] rounded-full bg-red-500 text-white font-semibold px-1">
+                    {newCount > 9 ? "9+" : newCount}
+                  </span>
                 )}
-              >
-                {unreadCount > 9 ? "9+" : unreadCount}
-              </span>
-            )}
-          </button>
+              </button>
+            </PopoverTrigger>
+
+            <PopoverContent
+              align="end"
+              className="w-96 p-0 border border-white/10 bg-black/95 backdrop-blur-xl"
+            >
+              <Notification close={() => setOpen(false)} />
+            </PopoverContent>
+          </Popover>
 
           <User />
-
-          {open && (
-            <div className="absolute right-0 top-14 w-80 max-h-125 overflow-y-auto rounded-2xl border border-white/10 bg-black/90 backdrop-blur-xl shadow-2xl z-50">
-              <Notification close={() => setOpen(false)} />
-            </div>
-          )}
         </div>
       </div>
     </header>

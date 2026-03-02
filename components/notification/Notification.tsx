@@ -122,7 +122,7 @@ const Notification = ({ close }: { close: () => void }) => {
           </div>
 
           {!notification.isRead && (
-            <div className="mt-2 text-xs text-indigo-400 font-medium">
+            <div className="mt-2 text-xs text-indigo-400 font-medium ">
               Unread
             </div>
           )}

@@ -147,3 +147,12 @@
 .animate-gradient {
   animation: gradient 6s ease infinite;
 }
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}

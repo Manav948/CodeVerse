@@ -1,110 +1,129 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
+import { motion } from "framer-motion";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
   DropdownMenuSeparator,
-  DropdownMenuLabel,
 } from "@/components/ui/dropdown-menu";
-import { ChevronDown, FileText, Code2, MessageSquare, CheckSquare } from "lucide-react";
+import {
+  ChevronDown,
+  FileText,
+  Code2,
+  MessageSquare,
+  CheckSquare,
+} from "lucide-react";
 
-const Header = () => {
+export default function Header() {
   const router = useRouter();
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/60 backdrop-blur-xl overflow-hidden">
+    <header className="fixed top-0 z-50 w-full">
+      <div className="absolute inset-0 -z-10 backdrop-blur-xl bg-black/40 border-b border-white/10" />
 
-      <div className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
-        <div className="absolute -top-40 left-1/2 h-96 w-96 -translate-x-1/2 rounded-full bg-purple-600/20 blur-3xl" />
-        <div className="absolute bottom-0 right-0 h-72 w-72 rounded-full bg-cyan-500/20 blur-3xl" />
-      </div>
-
-      <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-6">
-        <div className="flex items-center gap-6">
-          <div
-            onClick={() => router.push("/")}
-            className="flex items-center gap-3 cursor-pointer"
-          >
-            <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-linear-to-br from-purple-500 to-cyan-500 font-bold text-white shadow-lg">
-              CV
-            </div>
-            <span className="text-lg font-semibold tracking-tight text-white">
-              CodeVerse
-            </span>
-          </div>
-
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <button className="flex items-center gap-1 text-sm text-white hover:text-white bg-red-500/60 p-2 rounded-lg transition">
-                Products
-                <ChevronDown className="w-4 h-4" />
-              </button>
-            </DropdownMenuTrigger>
-
-            <DropdownMenuContent
-              align="start"
-              className="w-64 bg-black border border-white/10 backdrop-blur-xl text-white rounded-xl shadow-2xl"
+      <div className="mx-auto max-w-7xl px-6">
+        <div className="flex h-16 items-center justify-between">
+          {/* left div */}
+          <div className="flex items-center gap-10">
+            <div
+              onClick={() => router.push("/")}
+              className="flex items-center gap-3 cursor-pointer group"
             >
-              <DropdownMenuLabel className="text-white text-xs">
-                Explore CodeVerse
-              </DropdownMenuLabel>
+              <div className="h-9 w-9 rounded-xl flex items-center justify-center font-bold text-white shadow-lg group-hover:scale-105 transition">
+                <img src="./logo.jpg" className="rounded-full" />
+              </div>
 
-              <DropdownMenuSeparator className="bg-white/10" />
+              <span className="text-lg font-semibold tracking-tight text-white transition">
+                CodeVerse
+              </span>
+            </div>
 
-              <DropdownMenuItem
-                className="cursor-pointer gap-3 focus:bg-white"
+            <div className="hidden md:flex items-center gap-8 text-sm text-white/70">
+
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <button className="flex items-center gap-1 hover:text-white transition">
+                    Products
+                    <ChevronDown className="w-4 h-4" />
+                  </button>
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent
+                  align="start"
+                  className="w-64 rounded-xl border border-white/10 bg-black/80 backdrop-blur-xl text-white shadow-2xl"
+                >
+                  <DropdownMenuItem
+                    onClick={() => router.push("/post")}
+                    className="gap-3 cursor-pointer hover:bg-white/5"
+                  >
+                    <FileText className="w-4 h-4 text-purple-400" />
+                    Posts
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem
+                    onClick={() => router.push("/snippet")}
+                    className="gap-3 cursor-pointer hover:bg-white/5"
+                  >
+                    <Code2 className="w-4 h-4 text-cyan-400" />
+                    Snippets
+                  </DropdownMenuItem>
+
+                  <DropdownMenuItem
+                    onClick={() => router.push("/question")}
+                    className="gap-3 cursor-pointer hover:bg-white/5"
+                  >
+                    <MessageSquare className="w-4 h-4 text-pink-400" />
+                    Questions
+                  </DropdownMenuItem>
+
+                  <DropdownMenuSeparator className="bg-white/10" />
+
+                  <DropdownMenuItem
+                    onClick={() => router.push("/task")}
+                    className="gap-3 cursor-pointer hover:bg-white/5"
+                  >
+                    <CheckSquare className="w-4 h-4 text-green-400" />
+                    Tasks
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+
+              <button
+                className="hover:text-white transition"
               >
-                <FileText className="w-4 h-4 text-purple-400" />
-                Posts
-              </DropdownMenuItem>
+                About
+              </button>
 
-              <DropdownMenuItem
-                className="cursor-pointer gap-3 focus:bg-white"
+              <button
+                className="hover:text-white transition"
               >
-                <Code2 className="w-4 h-4 text-cyan-400" />
-                Snippets
-              </DropdownMenuItem>
+                Contact
+              </button>
+            </div>
+          </div>
+          {/* right div */}
+          <div className="flex items-center gap-4">
+            <button
+              onClick={() => router.push("/sign-in")}
+              className="hidden md:block text-sm text-white/70 hover:text-white transition"
+            >
+              Sign In
+            </button>
 
-              <DropdownMenuItem
-                className="cursor-pointer gap-3 focus:bg-white"
-              >
-                <MessageSquare className="w-4 h-4 text-pink-400" />
-                Questions
-              </DropdownMenuItem>
-
-              <DropdownMenuItem
-                className="cursor-pointer gap-3 focus:bg-white"
-              >
-                <CheckSquare className="w-4 h-4 text-green-400" />
-                Tasks
-              </DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
-        </div>
-
-        <div className="flex items-center gap-3">
-          <Button
-            variant="ghost"
-            onClick={() => router.push("/sign-in")}
-            className="text-white hover:bg-red-500/80 hover:text-white bg-red-500/60 "
-          >
-            Sign In
-          </Button>
-
-          <Button
-            onClick={() => router.push("/sign-up")}
-            className="rounded-lg bg-red-500/60 text-white hover:bg-red-500/80 hover:text-white"
-          >
-            Get Started
-          </Button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => router.push("/sign-up")}
+              className="px-5 py-2 rounded-xl bg-red-500/60 text-white text-sm font-medium shadow-lg shadow-red-500/60"
+            >
+              Sign Up
+            </motion.button>
+          </div>
         </div>
       </div>
     </header>
   );
-};
-
-export default Header;
+}

@@ -64,14 +64,7 @@ const Notification = ({ close }: Props) => {
     if (!notification.isRead) {
       markAsRead(notification.id);
     }
-
     close();
-
-    if (notification.entityId && notification.entityType) {
-      router.push(
-        `/${notification.entityType.toLowerCase()}/${notification.entityId}`
-      );
-    }
   };
 
   if (isLoading) {

@@ -33,7 +33,7 @@ export async function POST(request: Request) {
             userId: session.user.id,
             type: "TASK_REMINDER",
             title: "New Task Created",
-            message: `${session.user.id} Created new Task`,
+            message: `${session.user.username} Created new Task`,
             entityId: task.id,
             entityType: "TASK"
         })

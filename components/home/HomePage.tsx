@@ -5,6 +5,8 @@ import Hero from "./HomeSection";
 import FeatureBlock from "./Feature";
 import Slider from "./Slider";
 import ImageCarousel from "./Carousel";
+import GamifiedSection from "./FieldSection";
+import CommunitySection from "./CommunitySection";
 
 const HomePage = () => {
   return (
@@ -116,6 +118,11 @@ const HomePage = () => {
           </div>
         </div>
       </section>
+
+      <div>
+        <GamifiedSection />
+        <CommunitySection />
+      </div>
       <Footer />
 
     </main>

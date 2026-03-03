@@ -17,7 +17,6 @@ const SidebarContainer = () => {
         <h1
           className="
             text-lg font-bold
-            bg-linear-to-r from-purple-400 via-cyan-400 to-purple-400
             bg-size-[200%_200%]
             bg-clip-text text-transparent
             animate-gradient

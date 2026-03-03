@@ -10,19 +10,16 @@ const SidebarContainer = () => {
     >
       <div className="mb-6 flex items-center gap-2 px-2">
         <img
-          src="/logo.jpg"
+          src="/logo2.png"
           alt="Code Verse"
-          className="h-9 w-9 rounded-xl object-cover"
+          className="h-10 w-13 rounded-xl object-cover"
         />
         <h1
-          className="
-            text-lg font-bold
-            bg-size-[200%_200%]
-            bg-clip-text text-transparent
-            animate-gradient
-          "
+          className="text-2xl md:text-3xl font-bold tracking-tight bg-red-500 bg-clip-text text-transparent
+          drop-shadow-[0_0_12px_rgba(255,0,80,0.4)]
+  "
         >
-          Code Verse
+          Code<span className="text-white">Verse</span>
         </h1>
       </div>
 

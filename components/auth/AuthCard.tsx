@@ -44,7 +44,7 @@ const AuthCard = ({ mode }: Props) => {
             alt="CodeVerse logo"
             width={56}
             height={56}
-            src="/logo.jpg"
+            src="/logo2.png"
             priority
           />
 

@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
 // Define routes that require authentication
 const protectedRoutes = [
@@ -16,13 +17,14 @@ const protectedRoutes = [
   '/notification',
 ];
 
-export function middleware(request: NextRequest) {
+export async function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
-  // if the route is protected, check for a token or session cookie
-  const token = request.cookies.get('token')?.value;
-
+  // only check authentication for our protected routes
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
+    // use next-auth's helper which reads the correct session cookie
+    const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
+
     if (!token) {
       const signInUrl = request.nextUrl.clone();
       signInUrl.pathname = '/sign-in';

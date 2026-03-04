@@ -1,6 +1,9 @@
 "use client";
-import React from "react";
+
+import React, { useEffect } from "react";
+import Lenis from "lenis";
 import { motion, Variants } from "framer-motion";
+
 import Header from "./Header";
 import Footer from "./Footer";
 import Hero from "./HomeSection";
@@ -10,19 +13,45 @@ import ImageCarousel from "./Carousel";
 import GamifiedSection from "./FieldSection";
 import CommunitySection from "./CommunitySection";
 
-const fadeUp : Variants = {
+const fadeUp: Variants = {
   hidden: { opacity: 0, y: 70 },
   visible: {
     opacity: 1,
     y: 0,
-    transition: { duration: 0.7, ease: "easeOut" },
+    transition: {
+      duration: 0.7,
+      ease: "easeOut",
+    },
   },
 };
 
 const HomePage = () => {
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      smoothWheel: true,
+      wheelMultiplier: 0.9,
+      touchMultiplier: 1.1,
+    });
+
+    function raf(time: number) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+
+    requestAnimationFrame(raf);
+
+    return () => {
+      lenis.destroy();
+    };
+  }, []);
+
   return (
     <main className="relative w-full min-h-screen bg-black text-white overflow-x-hidden">
+
       <Header />
+
       <motion.div
         initial="hidden"
         animate="visible"
@@ -35,7 +64,7 @@ const HomePage = () => {
         className="mt-16"
         initial="hidden"
         whileInView="visible"
-        viewport={{ once: true }}
+        viewport={{ once: true, margin: "-120px" }}
         variants={fadeUp}
       >
         <Slider />
@@ -46,7 +75,7 @@ const HomePage = () => {
           className="max-w-6xl mx-auto text-center mb-20"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-120px" }}
           variants={fadeUp}
         >
           <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
@@ -67,7 +96,7 @@ const HomePage = () => {
           className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-120px" }}
           variants={fadeUp}
         >
           <ImageCarousel
@@ -99,7 +128,7 @@ const HomePage = () => {
           className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-120px" }}
           variants={fadeUp}
         >
           <div>
@@ -135,7 +164,7 @@ const HomePage = () => {
           className="max-w-6xl mx-auto grid md:grid-cols-2 gap-16 items-center"
           initial="hidden"
           whileInView="visible"
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-120px" }}
           variants={fadeUp}
         >
           <ImageCarousel

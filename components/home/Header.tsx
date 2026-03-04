@@ -33,7 +33,7 @@ export default function Header() {
               className="flex items-center gap-3 cursor-pointer group"
             >
               <div className="h-9 w-9 rounded-xl flex items-center justify-center font-bold text-white shadow-lg group-hover:scale-105 transition">
-                <img src="./logo.jpg" className="rounded-full" />
+                <img src="./logo2.png" className="rounded-full" />
               </div>
 
               <span className="text-lg font-semibold tracking-tight text-white transition">
@@ -56,7 +56,6 @@ export default function Header() {
                   className="w-64 rounded-xl border border-white/10 bg-black/80 backdrop-blur-xl text-white shadow-2xl"
                 >
                   <DropdownMenuItem
-                    onClick={() => router.push("/post")}
                     className="gap-3 cursor-pointer hover:bg-white/5"
                   >
                     <FileText className="w-4 h-4 text-purple-400" />
@@ -64,7 +63,6 @@ export default function Header() {
                   </DropdownMenuItem>
 
                   <DropdownMenuItem
-                    onClick={() => router.push("/snippet")}
                     className="gap-3 cursor-pointer hover:bg-white/5"
                   >
                     <Code2 className="w-4 h-4 text-cyan-400" />
@@ -72,7 +70,6 @@ export default function Header() {
                   </DropdownMenuItem>
 
                   <DropdownMenuItem
-                    onClick={() => router.push("/question")}
                     className="gap-3 cursor-pointer hover:bg-white/5"
                   >
                     <MessageSquare className="w-4 h-4 text-pink-400" />
@@ -82,7 +79,6 @@ export default function Header() {
                   <DropdownMenuSeparator className="bg-white/10" />
 
                   <DropdownMenuItem
-                    onClick={() => router.push("/task")}
                     className="gap-3 cursor-pointer hover:bg-white/5"
                   >
                     <CheckSquare className="w-4 h-4 text-green-400" />

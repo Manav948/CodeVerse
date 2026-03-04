@@ -1,36 +1,106 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚀 CodeVerse
+**CodeVerse** is a modern developer platform designed to help programmers document their learning journey, organize development tasks, and share knowledge with the community.
+It combines blogging, productivity tools, and developer utilities into a single unified ecosystem.
+---
+## ✨ Features
+* 📝 **Developer Posts**
+  Publish technical articles and share your learning journey.
+* 📦 **Snippet Library**
+  Save and organize reusable code snippets for quick access.
+* ✅ **Task Management**
+  Plan and track using webHook development tasks while building projects.
+* 🏆 **Gamified Progress**
+  Maintain streaks, earn badges, and climb the developer leaderboard.
+* 👥 **Community Activity**
+  See real-time contributions from other developers.
 
-## Getting Started
+---
+## 🛠 Tech Stack
+**Frontend**
+* Next.js (App Router)
+* TypeScript
+* Tailwind CSS
+* Framer Motion
+* Lenis (Smooth Scrolling)
+* Shadcn component
 
-First, run the development server:
+**Backend**
+* Next.js API Routes
+* Prisma ORM
+* PostgreSQL
 
+**Authentication**
+* NextAuth.js
+* OAuth (Google / GitHub)
+---
+
+## ⚡ Getting Started
+
+### 1️⃣ Clone the repository
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+https://github.com/Manav948/CodeVerse.git
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 2️⃣ Install dependencies
+```bash
+npm install
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 3️⃣ Setup environment variables
+Create a `.env` file:
+```
+DATABASE_URL=
+NEXTAUTH_SECRET=
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### 4️⃣ Run the development server
+```bash
+npm run dev
+```
+App will run on:
+```
+http://localhost:3000
+```
+---
 
-## Learn More
+## 🌍 Live Demo
 
-To learn more about Next.js, take a look at the following resources:
+Production URL:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+https://codeverse.manavvalani.in
+```
+## 📁 Project Structure
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```
+app/
+components/
+providers/
+lib/
+prisma/
+public/
+```
+## 📈 Future Improvements
 
-## Deploy on Vercel
+* AI powered code assistant
+* Developer portfolio profiles
+* Project showcase pages
+* Advanced analytics dashboard
+* Real-time collaboration tools
+---
+## 🤝 Contributing
+Contributions are welcome.
+Feel free to fork the repository and submit a pull request.
+---
+## 📜 License
+This project is licensed under the **MIT License**.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 👨‍💻 Author
+
+**Manav Valani**
+
+Building tools for developers to learn, share, and grow in public.

@@ -5,6 +5,7 @@ import { Toaster } from "react-hot-toast"
 import AuthProvider from "@/providers/authProvider";
 import { QueryProvider } from "@/providers/queryProvider";
 import { NextIntlClientProvider } from "next-intl";
+import SmoothScrollProvider from "@/providers/SmoothScrollProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -41,13 +42,15 @@ export default function RootLayout({
         suppressHydrationWarning
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <NextIntlClientProvider>
-          <AuthProvider>
-            <QueryProvider>
-              {children}
-            </QueryProvider>
-          </AuthProvider>
-        </NextIntlClientProvider>
+        <SmoothScrollProvider>
+          <NextIntlClientProvider>
+            <AuthProvider>
+              <QueryProvider>
+                {children}
+              </QueryProvider>
+            </AuthProvider>
+          </NextIntlClientProvider>
+        </SmoothScrollProvider>
       </body>
     </html>
   );

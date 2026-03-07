@@ -31,6 +31,7 @@ import { SNIPPET_LANGUAGES, LANGUAGE_LABELS } from "@/lib/snippet-languages";
 
 import Header from "../dashboard/Header/Header";
 import Sidebar from "../dashboard/Sidebar";
+import { CircleX } from "lucide-react";
 
 const AddSnippet = () => {
   const router = useRouter();
@@ -57,6 +58,10 @@ const AddSnippet = () => {
     onError: () => toast.error("Failed to create snippet"),
   });
 
+  const onClose = () => {
+    router.push("/snippet")
+  }
+
   return (
     <div className="min-h-screen bg-black text-white overflow-hidden">
       <Header />
@@ -80,7 +85,11 @@ const AddSnippet = () => {
               <h1 className="mb-6 text-2xl font-semibold">
                 Create Snippet
               </h1>
-
+              <button
+                className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-centerborder border-white/10 text-white/60 hover:text-white  transition"
+                onClick={onClose}>
+                <CircleX size={20} />
+              </button>
               <Form {...form}>
                 <form
                   onSubmit={form.handleSubmit((data) => mutate(data))}
@@ -102,7 +111,7 @@ const AddSnippet = () => {
                         <FormMessage />
                       </FormItem>
                     )}
-                  /> 
+                  />
                   <FormField
                     control={form.control}
                     name="description"

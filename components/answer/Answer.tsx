@@ -16,7 +16,8 @@ import {
 } from "../ui/form";
 import { Textarea } from "../ui/textarea";
 import { Button } from "../ui/button";
-import { Send } from "lucide-react";
+import { CircleX, Send } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 interface Props {
   questionId: string;
@@ -24,7 +25,7 @@ interface Props {
 
 const AddAnswer = ({ questionId }: Props) => {
   const queryClient = useQueryClient();
-
+  const router = useRouter()
   const form = useForm<AddAnswerSchema>({
     resolver: zodResolver(addAnswerSchema),
     defaultValues: {
@@ -54,6 +55,9 @@ const AddAnswer = ({ questionId }: Props) => {
   const onSubmit = (data: AddAnswerSchema) => {
     addAnswer(data);
   };
+  const onClose = () => {
+    router.push("/qa")
+  };
 
   return (
     <div className="mt-10">
@@ -70,7 +74,11 @@ const AddAnswer = ({ questionId }: Props) => {
         <h3 className="text-lg font-semibold text-white">
           Write Your Answer
         </h3>
-
+        <button
+          className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-centerborder border-white/10 text-white/60 hover:text-white  transition"
+          onClick={onClose}>
+          <CircleX size={20} />
+        </button>
         <Form {...form}>
           <form
             onSubmit={form.handleSubmit(onSubmit)}

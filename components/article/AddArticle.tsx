@@ -8,7 +8,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 
-import {  } from "@/schema/addPostSchema";
+import { } from "@/schema/addPostSchema";
 import { uploadImages } from "@/lib/upload";
 
 import {
@@ -28,6 +28,7 @@ import { ImageDropZone } from "../ui/Drag-Drop";
 import Header from "../dashboard/Header/Header";
 import Sidebar from "../dashboard/Sidebar";
 import { addArticleSchema, AddArticleSchema } from "@/schema/addArticleSchema";
+import { CircleX } from "lucide-react";
 
 const AddArticle = () => {
   const router = useRouter();
@@ -66,7 +67,9 @@ const AddArticle = () => {
       toast.error("Failed to create article");
     },
   });
-
+  const onClose = () => {
+      router.push("/article")
+  }
   return (
     <div className="h-screen bg-black text-white overflow-hidden">
       <Header />
@@ -79,6 +82,11 @@ const AddArticle = () => {
           <div className="pointer-events-none absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-cyan-500/20 blur-3xl" />
           <div className="relative mx-auto max-w-3xl px-4 py-10">
             <div className="rounded-3xl border border-white/10 bg-black backdrop-blur-xl p-8">
+              <button
+                className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-centerborder border-white/10 text-white/60 hover:text-white  transition"
+                onClick={onClose}>
+                <CircleX size={20} />
+              </button>
               <h1 className="mb-6 text-2xl font-semibold">
                 Create Article
               </h1>

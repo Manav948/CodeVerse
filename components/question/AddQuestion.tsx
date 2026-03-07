@@ -12,6 +12,7 @@ import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from '
 import { Input } from '../ui/input'
 import { Button } from '../ui/button'
 import { Textarea } from '../ui/textarea'
+import { CircleX } from 'lucide-react'
 
 const AddQuestions = () => {
     const router = useRouter()
@@ -39,6 +40,10 @@ const AddQuestions = () => {
     const onSubmit = (data: AddQuestion) => {
         addQuestions(data)
     }
+
+    const onClose = () => {
+        router.push("/qa")
+    }
     return (
         <div className='min-h-screen bg-black text-white overflow-hidden'>
             <Header />
@@ -54,6 +59,12 @@ const AddQuestions = () => {
                             <h1 className='mb-6 text-2xl font-semibold'>
                                 Ask a Question
                             </h1>
+
+                            <button
+                                className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-centerborder border-white/10 text-white/60 hover:text-white  transition"
+                                onClick={onClose}>
+                                <CircleX size={20} />
+                            </button>
 
                             <Form {...form}>
                                 <form

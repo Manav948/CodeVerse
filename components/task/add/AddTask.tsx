@@ -31,7 +31,7 @@ import {
 } from "../../ui/select";
 import { Textarea } from "../../ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon } from "lucide-react";
+import { CalendarIcon, CircleX } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { TaskMetaFields } from "../TaskMetaFields";
@@ -82,9 +82,13 @@ const AddTask = () => {
 
     const isStudent = form.watch("isStudent");
 
+    const onClose = () => {
+        router.push("/task")
+    };
+
     return (
         <div className="max-w-2xl mx-auto ">
-            <Card className="p-6 bg-black border  py-8 border-white/10  shadow-2xl space-y-8 text-white">
+            <Card className=" relative p-6 bg-black border  py-8 border-white/10  shadow-2xl space-y-8 text-white">
 
                 <div className="space-y-2">
                     <h2 className="text-3xl font-bold tracking-tight text-white">
@@ -93,6 +97,11 @@ const AddTask = () => {
                     <p className="text-sm text-white/50">
                         Organize your work efficiently and track GitHub progress if needed.
                     </p>
+                <button
+                    className="top-4 absolute right-4 flex items-center h-9 w-9 rounded-full justify-center  text-white/60 hover:text-white  transition"
+                    onClick={onClose}>
+                    <CircleX size={20} />
+                </button>
                 </div>
 
                 <Form {...form}>

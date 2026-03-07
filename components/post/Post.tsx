@@ -192,7 +192,7 @@ const PostCard = ({ post }: Props) => {
                 <MessageCircle size={16} /> Comment
               </button>
               <button
-                onClick={() => setOpen(true)}
+                onClick={() => router.push(`/dashboard/${post.id}`)}
                 className="hover:text-white font-medium cursor-pointer"
               >
                 View →
@@ -201,65 +201,6 @@ const PostCard = ({ post }: Props) => {
           </div>
         </div>
       </Card>
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent
-          className="
-            max-w-3xl
-            border border-white/10
-            bg-black text-white
-            backdrop-blur-xl
-          "
-        >
-          <DialogHeader className="space-y-4 mt-5">
-            <PostHeader user={post.user} />
-
-            <h2 className="text-2xl font-semibold leading-tight">
-              {post.title}
-            </h2>
-
-            <p className="text-xs text-white/40">
-              Posted on{" "}
-              {new Date(post.created_at).toLocaleString()}
-            </p>
-          </DialogHeader>
-
-          <Separator className="bg-white/10 my-4" />
-
-          <p className="text-sm leading-relaxed text-white/80 whitespace-pre-wrap">
-            {post.description}
-          </p>
-          {post.image.length > 0 && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
-              {post.image.map((img, idx) => (
-                <div
-                  key={idx}
-                  className="relative aspect-video overflow-hidden rounded-xl border border-white/10"
-                >
-                  <Image
-                    src={img}
-                    alt="Post image"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          )}
-
-          {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2 pt-4">
-              {post.tags.map((tag) => (
-                <Badge
-                  key={tag.id}
-                  className="bg-white/10 text-white/70"
-                >
-                  #{tag.name}
-                </Badge>
-              ))}
-            </div>
-          )}
-        </DialogContent>
-      </Dialog>
     </>
   );
 };

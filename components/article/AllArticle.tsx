@@ -8,7 +8,7 @@ const AllArticle = () => {
   const { data, isLoading } = useQuery({
     queryKey: ["article"],
     queryFn: async () => {
-      const res = await axios.get("/api/article/get")
+      const res = await axios.get("/api/article/getAll")
       return res.data;
     }
   })

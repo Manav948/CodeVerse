@@ -1,13 +1,25 @@
 import type { NextConfig } from "next";
+import path from "path";
+
+const withNextIntl = require("next-intl/plugin")("./i18n.ts");
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
-    domains: ["res.cloudinary.com"],
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "res.cloudinary.com",
+      },
+      {
+        protocol: "https",
+        hostname: "lh3.googleusercontent.com",
+      },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+      },
+    ],
   },
 };
-
-const path = require("path");
-const withNextIntl = require("next-intl/plugin")("./i18n.ts");
 
 export default withNextIntl(nextConfig);

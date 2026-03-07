@@ -12,9 +12,21 @@ export const authOptions: NextAuthOptions = {
         signIn: "/sign-in",
         error: "/sign-in",
     },
-
-    adapter: PrismaAdapter(db) as Adapter,
-
+    adapter: {
+        ...PrismaAdapter(db),
+        createUser: async (data: any) => {
+            const { generateFromEmail } = await import("unique-username-generator");
+            const baseUsername = data.email ? generateFromEmail(data.email, 3) : `user_${Math.random().toString(36).substring(2, 7)}`;
+            
+            // Generate a random username if standard NextAuth provider doesn't include one
+            return await db.user.create({
+                data: {
+                    ...data,
+                    username: baseUsername,
+                }
+            });
+        }
+    } as Adapter,
     session: {
         strategy: "jwt",
     },

@@ -41,7 +41,7 @@ export async function GET() {
             }
         })
         if (post.length === 0) {
-            return NextResponse.json("No Post Found For The User", { status: 404 })
+            return NextResponse.json([], { status: 200 })
         }
         const transformedSnippets = post.map((post) => ({
             ...post,

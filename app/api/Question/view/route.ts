@@ -12,24 +12,19 @@ export async function GET(req: Request) {
         }
 
         const { searchParams } = new URL(req.url);
-        const postId = searchParams.get("postId");
+        const questionId = searchParams.get("questionId");
 
-        if (!postId) {
-            return NextResponse.json({ message: "Post ID is required" }, { status: 400 });
+        if (!questionId) {
+            return NextResponse.json({ message: "question ID is required" }, { status: 400 });
         }
 
-        const post = await db.post.findUnique({
+        const question = await db.question.findUnique({
             where: {
-                id: postId,
+                id: questionId,
             },
             include: {
                 user: true,
-                tags: {
-                    include: {
-                        tag: true,
-                    },
-                },
-                postLikes: true,
+                questionLikes: true,
                 bookmark: {
                     where: {
                         userId: session.user.id,
@@ -38,19 +33,18 @@ export async function GET(req: Request) {
             },
         });
 
-        if (!post) {
+        if (!question) {
             return NextResponse.json({ message: "Post not found" }, { status: 404 });
         }
 
-        const transformedPost = {
-            ...post,
-            tags: post.tags.map(pt => pt.tag),
-            likeCount: post.postLikes.length,
-            isLiked: post.postLikes.some(like => like.userId === session.user.id),
-            bookmarked: post.bookmark.length > 0,
+        const transformedQuestion = {
+            ...question,
+            likeCount: question.questionLikes.length,
+            isLiked: question.questionLikes.some(like => like.userId === session.user.id),
+            bookmarked: question.bookmark.length > 0,
         };
 
-        return NextResponse.json(transformedPost);
+        return NextResponse.json(transformedQuestion);
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });

@@ -12,13 +12,14 @@ import { Button } from "../ui/button";
 import toast from "react-hot-toast";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 
 type Props = {
   snippet: SnippetWithExtras;
 };
 
 const SnippetCard = ({ snippet }: Props) => {
-  const [open, setOpen] = useState(false);
+  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { mutate: toggleLike, isPending } = useMutation({
@@ -187,7 +188,7 @@ const SnippetCard = ({ snippet }: Props) => {
               </button>
 
               <button
-                onClick={() => setOpen(true)}
+                onClick={() => router.push(`/snippet/${snippet.id}`)}
                 className="text-white/60 hover:text-white cursor-pointer"
               >
                 View →
@@ -199,45 +200,6 @@ const SnippetCard = ({ snippet }: Props) => {
       </Card>
 
       <Separator className="bg-white/10 my-6" />
-
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent
-          className="
-            max-w-4xl
-            border border-white/10
-            bg-black
-            text-white
-            backdrop-blur-xl
-          "
-        >
-          <DialogHeader className="mt-15">
-            <SnippetHeader user={snippet.user} />
-            <h2 className="text-2xl font-semibold">
-              {snippet.title}
-            </h2>
-            <span className="">
-              {snippet.description}
-            </span>
-
-            <p className="text-xs text-white/40">
-              {new Date(snippet.created_at).toLocaleString()}
-            </p>
-          </DialogHeader>
-
-          <Separator className="my-4 bg-white/10" />
-
-          <pre className="max-h-[60vh] overflow-auto rounded-xl bg-white/10 border border-white/10 p-5 text-sm font-mono">
-            <code>{snippet.code}</code>
-          </pre>
-
-          <Button
-            onClick={copyButton}
-            className="mt-4 bg-red-500/60 text-white hover:opacity-90"
-          >
-            Copy Snippet
-          </Button>
-        </DialogContent>
-      </Dialog>
     </>
   );
 };

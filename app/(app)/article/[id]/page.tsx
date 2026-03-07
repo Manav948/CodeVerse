@@ -7,18 +7,20 @@ import { useParams } from "next/navigation";
 import Loader from "@/components/ui/Loading";
 import Header from "@/components/dashboard/Header/Header";
 import Sidebar from "@/components/dashboard/Sidebar";
+import ViewSnippet from "@/components/snippet/ViewSnippet";
+import ViewArticle from "@/components/article/ViewArticle";
 
 export default function Page() {
   const params = useParams();
-  const postId = params?.id as string;
+  const articleId = params?.id as string;
 
-  const { data: post, isLoading } = useQuery({
-    queryKey: ["post", postId],
+  const { data: article, isLoading } = useQuery({
+    queryKey: ["article", articleId],
     queryFn: async () => {
-      const res = await axios.get(`/api/post/view?postId=${postId}`);
+      const res = await axios.get(`/api/article/view?articleId=${articleId}`);
       return res.data;
     },
-    enabled: !!postId,
+    enabled: !!articleId,
   });
 
   if (isLoading) {
@@ -29,10 +31,10 @@ export default function Page() {
     );
   }
 
-  if (!post) {
+  if (!article) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-black text-white">
-        Post not found
+        article not found
       </div>
     );
   }
@@ -47,7 +49,7 @@ export default function Page() {
         </aside>
         <main className="flex-1 overflow-y-auto">
           <div className="mx-auto max-w-3xl py-10">
-            <ViewPost post={post} />
+           <ViewArticle article={article} />
           </div>
         </main>
 

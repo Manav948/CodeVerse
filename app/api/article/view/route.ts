@@ -12,24 +12,24 @@ export async function GET(req: Request) {
         }
 
         const { searchParams } = new URL(req.url);
-        const postId = searchParams.get("postId");
+        const articleId = searchParams.get("articleId");
 
-        if (!postId) {
-            return NextResponse.json({ message: "Post ID is required" }, { status: 400 });
+        if (!articleId) {
+            return NextResponse.json({ message: "article ID is required" }, { status: 400 });
         }
 
-        const post = await db.post.findUnique({
+        const article = await db.article.findUnique({
             where: {
-                id: postId,
+                id: articleId,
             },
             include: {
                 user: true,
-                tags: {
+                articleTags: {
                     include: {
                         tag: true,
                     },
                 },
-                postLikes: true,
+                articleLikes: true,
                 bookmark: {
                     where: {
                         userId: session.user.id,
@@ -38,19 +38,19 @@ export async function GET(req: Request) {
             },
         });
 
-        if (!post) {
+        if (!article) {
             return NextResponse.json({ message: "Post not found" }, { status: 404 });
         }
 
-        const transformedPost = {
-            ...post,
-            tags: post.tags.map(pt => pt.tag),
-            likeCount: post.postLikes.length,
-            isLiked: post.postLikes.some(like => like.userId === session.user.id),
-            bookmarked: post.bookmark.length > 0,
+        const transformedArticle = {
+            ...article,
+            tags: article.articleTags.map(pt => pt.tag),
+            likeCount: article.articleLikes.length,
+            isLiked: article.articleLikes.some(like => like.userId === session.user.id),
+            bookmarked: article.bookmark.length > 0,
         };
 
-        return NextResponse.json(transformedPost);
+        return NextResponse.json(transformedArticle);
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });

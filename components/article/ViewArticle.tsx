@@ -1,63 +1,62 @@
 "use client";
 
 import React from "react";
-import PostHeader from "./PostHeader";
-import { PostWithExtras } from "@/types/post";
+import { ArticleWithExtras } from "@/types/article";
+import ArticleHeader from "./ArticleHeader";
 import { Separator } from "../ui/separator";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
-import { CircleX } from "lucide-react";
 import { useRouter } from "next/navigation";
+import { CircleX } from "lucide-react";
 
 type Props = {
-  post: PostWithExtras;
+  article: ArticleWithExtras;
 };
 
-
-const ViewPost = ({ post }: Props) => {
+const ViewArticle = ({ article }: Props) => {
   const router = useRouter()
-    const onClose = () => {
-    router.push("/dashboard")
+  const onClose = () => {
+    router.push("/article")
   }
   return (
     <div className="flex justify-center px-4">
       <div
-        className=" relative w-full max-w-3xl rounded-2xl border border-white/10 bg-black text-white
+        className="w-full max-w-3xl rounded-2xl border border-white/10 bg-black text-white
         backdrop-blur-xl p-6 space-y-6"
       >
-      <button
-        className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-center text-white/60 hover:text-white  transition"
-        onClick={onClose}>
-        <CircleX size={20} />
-      </button>
+        <button
+          className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-center text-white/60 hover:text-white  transition"
+          onClick={onClose}>
+          <CircleX size={20} />
+        </button>
         <div className="space-y-4 mt-10">
-          <PostHeader user={post.user} />
+          <ArticleHeader user={article.user} />
 
           <h1 className="text-2xl sm:text-3xl font-semibold leading-tight">
-            {post.title}
+            {article.title}
           </h1>
 
           <p className="text-xs text-white/40">
-            Posted on {new Date(post.created_at).toLocaleString()}
+            Posted on {new Date(article.created_at).toLocaleString()}
           </p>
         </div>
 
         <Separator className="bg-white/10" />
-
         <p className="text-sm sm:text-base leading-relaxed text-white/80 whitespace-pre-wrap">
-          {post.description}
+          {article.description}
         </p>
 
-        {post.image?.length > 0 && (
+
+        {article.image?.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {post.image.map((img, idx) => (
+            {article.image.map((img: string, idx: number) => (
               <div
                 key={idx}
                 className="relative aspect-video overflow-hidden rounded-xl border border-white/10"
               >
                 <Image
                   src={img}
-                  alt="Post image"
+                  alt="Article image"
                   fill
                   className="object-cover"
                 />
@@ -65,10 +64,9 @@ const ViewPost = ({ post }: Props) => {
             ))}
           </div>
         )}
-
-        {post.tags?.length > 0 && (
+        {article.articleTags?.length > 0 && (
           <div className="flex flex-wrap gap-2 pt-2">
-            {post.tags.map((tag) => (
+            {article.articleTags.map((tag: any) => (
               <Badge
                 key={tag.id}
                 className="bg-white/10 text-white/70 hover:bg-white/20"
@@ -83,4 +81,4 @@ const ViewPost = ({ post }: Props) => {
   );
 };
 
-export default ViewPost;
+export default ViewArticle;

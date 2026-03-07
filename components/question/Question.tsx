@@ -174,10 +174,7 @@ const Question = ({ question }: Props) => {
               </button>
 
               <button
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setOpen(true);
-                }}
+                onClick={() => router.push(`/qa/question/${question.id}`)}
                 className="text-white/60 hover:text-white cursor-pointer"
               >
                 View →
@@ -187,71 +184,6 @@ const Question = ({ question }: Props) => {
         </div>
       </Card>
       <Separator className="bg-white/10" />
-      <Dialog open={open} onOpenChange={setOpen}>
-        <DialogContent
-          className="
-            max-w-4xl
-            border border-white/10
-            bg-black
-            text-white
-            backdrop-blur-xl
-          "
-        >
-          <DialogHeader className="space-y-4">
-            <QuestionHeader user={question.user} />
-
-            <h2 className="text-2xl font-semibold">
-              {question.title}
-            </h2>
-
-            <p className="text-xs text-white/40">
-              Posted on{" "}
-              {new Date(question.created_at).toLocaleString()}
-            </p>
-          </DialogHeader>
-
-          <Separator className="my-4 bg-white/10" />
-
-          <p className="text-sm bg-white/10 p-3 rounded-2xl leading-relaxed text-white/80 whitespace-pre-wrap">
-            {question.description}
-          </p>
-
-          <div className="flex items-center gap-6 mt-6">
-
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                toggleLike();
-              }}
-              className={`flex items-center gap-2 cursor-pointer ${question.isLiked
-                ? "text-red-500"
-                : "text-white/60 hover:text-red-400"
-                }`}
-            >
-              <Heart
-                size={18}
-                fill={question.isLiked ? "currentColor" : "none"}
-              />
-              {question.likeCount}
-            </button>
-
-            <Button
-              onClick={replyButton}
-              className="bg-red-500/60 text-white hover:opacity-90 cursor-pointer"
-            >
-              Reply to Question
-            </Button>
-
-            <Button
-              variant="secondary"
-              onClick={copyButton}
-            >
-              Copy Question
-            </Button>
-
-          </div>
-        </DialogContent>
-      </Dialog>
     </>
   );
 };

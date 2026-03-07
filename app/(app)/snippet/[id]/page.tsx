@@ -7,18 +7,19 @@ import { useParams } from "next/navigation";
 import Loader from "@/components/ui/Loading";
 import Header from "@/components/dashboard/Header/Header";
 import Sidebar from "@/components/dashboard/Sidebar";
+import ViewSnippet from "@/components/snippet/ViewSnippet";
 
 export default function Page() {
   const params = useParams();
-  const postId = params?.id as string;
+  const snippetId = params?.id as string;
 
-  const { data: post, isLoading } = useQuery({
-    queryKey: ["post", postId],
+  const { data: snippet, isLoading } = useQuery({
+    queryKey: ["snippet", snippetId],
     queryFn: async () => {
-      const res = await axios.get(`/api/post/view?postId=${postId}`);
+      const res = await axios.get(`/api/snippet/view?postId=${snippetId}`);
       return res.data;
     },
-    enabled: !!postId,
+    enabled: !!snippetId,
   });
 
   if (isLoading) {
@@ -29,10 +30,10 @@ export default function Page() {
     );
   }
 
-  if (!post) {
+  if (!snippet) {
     return (
       <div className="flex items-center justify-center min-h-screen bg-black text-white">
-        Post not found
+        Snippet not found
       </div>
     );
   }
@@ -47,7 +48,7 @@ export default function Page() {
         </aside>
         <main className="flex-1 overflow-y-auto">
           <div className="mx-auto max-w-3xl py-10">
-            <ViewPost post={post} />
+           <ViewSnippet snippet={snippet} />
           </div>
         </main>
 

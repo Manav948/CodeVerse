@@ -12,15 +12,15 @@ export async function GET(req: Request) {
         }
 
         const { searchParams } = new URL(req.url);
-        const postId = searchParams.get("postId");
+        const snippetId = searchParams.get("postId");
 
-        if (!postId) {
-            return NextResponse.json({ message: "Post ID is required" }, { status: 400 });
+        if (!snippetId) {
+            return NextResponse.json({ message: "Snippet ID is required" }, { status: 400 });
         }
 
-        const post = await db.post.findUnique({
+        const snippet = await db.snippet.findUnique({
             where: {
-                id: postId,
+                id: snippetId,
             },
             include: {
                 user: true,
@@ -29,7 +29,7 @@ export async function GET(req: Request) {
                         tag: true,
                     },
                 },
-                postLikes: true,
+                snippetLikes: true,
                 bookmark: {
                     where: {
                         userId: session.user.id,
@@ -38,19 +38,19 @@ export async function GET(req: Request) {
             },
         });
 
-        if (!post) {
-            return NextResponse.json({ message: "Post not found" }, { status: 404 });
+        if (!snippet) {
+            return NextResponse.json({ message: "snippet not found" }, { status: 404 });
         }
 
-        const transformedPost = {
-            ...post,
-            tags: post.tags.map(pt => pt.tag),
-            likeCount: post.postLikes.length,
-            isLiked: post.postLikes.some(like => like.userId === session.user.id),
-            bookmarked: post.bookmark.length > 0,
+        const transformedSnippet = {
+            ...snippet,
+            tags: snippet.tags.map(pt => pt.tag),
+            likeCount: snippet.snippetLikes.length,
+            isLiked: snippet.snippetLikes.some(like => like.userId === session.user.id),
+            bookmarked: snippet.bookmark.length > 0,
         };
 
-        return NextResponse.json(transformedPost);
+        return NextResponse.json(transformedSnippet);
     } catch (error) {
         console.log(error);
         return NextResponse.json({ message: "Internal Server Error" }, { status: 500 });

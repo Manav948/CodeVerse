@@ -12,12 +12,14 @@ import ArticleHeader from "./ArticleHeader";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 type Props = {
   article: ArticleWithExtras;
 };
 
 const Article = ({ article }: Props) => {
+  const router = useRouter();
   const queryClient = useQueryClient()
   const { mutate: toggleLike, isPending } = useMutation({
     mutationFn: async () => {
@@ -92,7 +94,6 @@ const Article = ({ article }: Props) => {
     },
   });
 
-  console.log(article)
   return (
     <>
       <Card
@@ -194,6 +195,7 @@ const Article = ({ article }: Props) => {
                 <MessageCircle size={16} /> Comment
               </button>
               <button
+                onClick ={() => router.push(`/article/${article.id}`)}
                 className="hover:text-white font-medium cursor-pointer"
               >
                 View →

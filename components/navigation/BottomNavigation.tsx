@@ -23,11 +23,11 @@ export default function BottomNavigation() {
 
   const navItems = [
     { icon: Home, path: "/dashboard", label: "Home" },
-    { icon: Code2, path: "/snippet", label: "snippet" },
+    { icon: Code2, path: "/snippet", label: "Snippet" },
     { icon: MessageCircleMoreIcon, path: "/qa", label: "Q&A" },
-    { icon: Bookmark, path: "/bookmark", label: "bookmark" },
-    { icon: FileText, path: "/article", label: "article" },
-    { icon: CheckSquare2, path: "/task/dashboard", label: "task" },
+    { icon: Bookmark, path: "/bookmark", label: "Save" },
+    { icon: FileText, path: "/article", label: "Article" },
+    { icon: CheckSquare2, path: "/task/dashboard", label: "Task" },
   ];
 
   const actionItems = [
@@ -56,7 +56,7 @@ export default function BottomNavigation() {
                 <motion.button
                   key={i}
                   whileTap={{ scale: 0.9 }}
-                  whileHover={{ scale: 1.1 }}
+                  whileHover={{ scale: 1.05 }}
                   onClick={() => {
                     router.push(item.path);
                     setOpen(false);
@@ -64,7 +64,7 @@ export default function BottomNavigation() {
                   className="flex flex-col items-center gap-1 text-white text-xs"
                 >
                   <div className="p-3 rounded-xl bg-red-500/20">
-                    <item.icon size={20} />
+                    <item.icon size={18} />
                   </div>
                   {item.label}
                 </motion.button>
@@ -75,47 +75,49 @@ export default function BottomNavigation() {
       </AnimatePresence>
 
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
-        <div className="mx-auto max-w-md px-4 pb-6">
-          <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-black/80 backdrop-blur-xl px-6 py-3 shadow-xl">
-            
-            {leftItems.map((item, i) => (
-              <button
-                key={i}
-                onClick={() => router.push(item.path)}
-                className={`flex flex-col items-center text-xs ${
-                  pathname === item.path ? "text-red-500" : "text-white/60"
-                }`}
-              >
-                <item.icon size={22} />
-                {item.label}
-              </button>
-            ))}
+        <div className="mx-auto max-w-md px-3 pb-5">
+          <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-black/80 backdrop-blur-xl px-4 py-2 shadow-xl">
+
+            <div className="flex items-center gap-2">
+              {leftItems.map((item, i) => (
+                <button
+                  key={i}
+                  onClick={() => router.push(item.path)}
+                  className={`flex w-12 flex-col items-center text-[10px] ${pathname === item.path ? "text-red-500" : "text-white/60"
+                    }`}
+                >
+                  <item.icon size={20} />
+                  {item.label}
+                </button>
+              ))}
+            </div>
 
             <motion.button
               whileTap={{ scale: 0.9 }}
               onClick={() => setOpen(!open)}
-              className="relative -mt-10 flex h-14 w-14 items-center justify-center rounded-full bg-red-500 text-white shadow-lg"
+              className="relative -mt-8 flex h-14 w-14 items-center justify-center rounded-full bg-red-500 text-white shadow-lg"
             >
               <motion.div
                 animate={{ rotate: open ? 45 : 0 }}
                 transition={{ duration: 0.2 }}
               >
-                <Plus size={28} />
+                <Plus size={26} />
               </motion.div>
             </motion.button>
 
-            {rightItems.map((item, i) => (
-              <button
-                key={i}
-                onClick={() => router.push(item.path)}
-                className={`flex flex-col items-center text-xs ${
-                  pathname === item.path ? "text-red-500" : "text-white/60"
-                }`}
-              >
-                <item.icon size={22} />
-                {item.label}
-              </button>
-            ))}
+            <div className="flex items-center gap-2">
+              {rightItems.map((item, i) => (
+                <button
+                  key={i}
+                  onClick={() => router.push(item.path)}
+                  className={`flex w-12 flex-col items-center text-[10px] ${pathname === item.path ? "text-red-500" : "text-white/60"
+                    }`}
+                >
+                  <item.icon size={20} />
+                  {item.label}
+                </button>
+              ))}
+            </div>
 
           </div>
         </div>

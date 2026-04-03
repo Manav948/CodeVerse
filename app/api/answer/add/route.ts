@@ -60,7 +60,7 @@ export async function POST(request: Request) {
         type: "NEW_ANSWER",
         title: "New Answer Published",
         message: `${session.user.username} give the answer of this ${question}`,
-        entityId: answer.id,
+        entityId: question.id,
         entityType: "ANSWER"
       })
 

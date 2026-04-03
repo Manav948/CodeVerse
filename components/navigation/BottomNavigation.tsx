@@ -11,6 +11,8 @@ import {
   CheckSquare,
   PenSquare,
   FilePlus,
+  MessageCircleMoreIcon,
+  CheckSquare2,
 } from "lucide-react";
 import { useRouter, usePathname } from "next/navigation";
 
@@ -22,8 +24,10 @@ export default function BottomNavigation() {
   const navItems = [
     { icon: Home, path: "/dashboard", label: "Home" },
     { icon: Code2, path: "/snippet", label: "snippet" },
+    { icon: MessageCircleMoreIcon, path: "/qa", label: "Q&A" },
     { icon: Bookmark, path: "/bookmark", label: "bookmark" },
     { icon: FileText, path: "/article", label: "article" },
+    { icon: CheckSquare2, path: "/task/dashboard", label: "task" },
   ];
 
   const actionItems = [
@@ -32,6 +36,10 @@ export default function BottomNavigation() {
     { icon: FilePlus, label: "Article", path: "/article/new" },
     { icon: PenSquare, label: "Post", path: "/post/new" },
   ];
+
+  const mid = Math.ceil(navItems.length / 2);
+  const leftItems = navItems.slice(0, mid);
+  const rightItems = navItems.slice(mid);
 
   return (
     <>
@@ -65,10 +73,12 @@ export default function BottomNavigation() {
           </motion.div>
         )}
       </AnimatePresence>
+
       <div className="fixed bottom-0 left-0 right-0 z-50 md:hidden">
         <div className="mx-auto max-w-md px-4 pb-6">
           <div className="flex items-center justify-between rounded-3xl border border-white/10 bg-black/80 backdrop-blur-xl px-6 py-3 shadow-xl">
-            {navItems.slice(0, 2).map((item, i) => (
+            
+            {leftItems.map((item, i) => (
               <button
                 key={i}
                 onClick={() => router.push(item.path)}
@@ -94,7 +104,7 @@ export default function BottomNavigation() {
               </motion.div>
             </motion.button>
 
-            {navItems.slice(2).map((item, i) => (
+            {rightItems.map((item, i) => (
               <button
                 key={i}
                 onClick={() => router.push(item.path)}
@@ -106,6 +116,7 @@ export default function BottomNavigation() {
                 {item.label}
               </button>
             ))}
+
           </div>
         </div>
       </div>

@@ -24,10 +24,8 @@ export default function BottomNavigation() {
   const navItems = [
     { icon: Home, path: "/dashboard", label: "Home" },
     { icon: Code2, path: "/snippet", label: "Snippet" },
-    { icon: MessageCircleMoreIcon, path: "/qa", label: "Q&A" },
     { icon: Bookmark, path: "/bookmark", label: "Save" },
     { icon: FileText, path: "/article", label: "Article" },
-    { icon: CheckSquare2, path: "/task/dashboard", label: "Task" },
   ];
 
   const actionItems = [

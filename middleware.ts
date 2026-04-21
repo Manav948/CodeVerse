@@ -23,12 +23,7 @@ export async function middleware(request: NextRequest) {
   // only check authentication for our protected routes
   if (protectedRoutes.some((route) => pathname.startsWith(route))) {
     // use next-auth's helper which reads the correct session cookie
-    const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || "anonymous";
-    const { success } = await rateLimit.limit(ip);
 
-    if (!success) {
-      return NextResponse.json("Too many requests", { status: 429 })
-    }
     const token = await getToken({ req: request, secret: process.env.NEXTAUTH_SECRET });
 
     if (!token) {

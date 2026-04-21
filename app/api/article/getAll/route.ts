@@ -1,5 +1,6 @@
 import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
+import { readLimiter } from "@/lib/rateLimit";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -15,6 +16,18 @@ export async function GET() {
     }
 
     const userId = session.user.id;
+
+    const { success, reset } = await readLimiter.limit(userId);
+    if (!success) {
+      const retryAfterSeconds = Math.ceil((reset - Date.now()) / 1000);
+      return NextResponse.json(
+        { message: "Too many requests. Please try again later." },
+        {
+          status: 429,
+          headers: { "Retry-After": String(retryAfterSeconds) },
+        }
+      );
+    }
 
     const articles = await db.article.findMany({
       include: {

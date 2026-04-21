@@ -1,7 +1,16 @@
-import {Ratelimit} from "@upstash/ratelimit";
-import {Redis} from "@upstash/redis";
+import { Ratelimit } from "@upstash/ratelimit";
+import { Redis } from "@upstash/redis";
 
-export const rateLimit = new Ratelimit({
-    redis : Redis.fromEnv(),
-    limiter : Ratelimit.slidingWindow(5, "1 m")
-})
+const redis = Redis.fromEnv();
+
+export const readLimiter = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(30, "1 m"),
+    prefix: "rl:read",
+});
+
+export const writeLimiter = new Ratelimit({
+    redis,
+    limiter: Ratelimit.slidingWindow(10, "1 m"),
+    prefix: "rl:write",
+});

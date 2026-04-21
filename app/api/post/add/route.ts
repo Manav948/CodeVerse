@@ -2,6 +2,7 @@ import { authOptions } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { addPostSchema } from "@/schema/addPostSchema";
 import { CreateNotification } from "@/types/notification";
+import { writeLimiter } from "@/lib/rateLimit";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
@@ -13,6 +14,20 @@ export async function POST(request: Request) {
             return NextResponse.json(
                 { message: "User not authenticated" },
                 { status: 401 }
+            );
+        }
+
+        const userId = session.user.id;
+
+        const { success, reset } = await writeLimiter.limit(userId);
+        if (!success) {
+            const retryAfterSeconds = Math.ceil((reset - Date.now()) / 1000);
+            return NextResponse.json(
+                { message: "Too many requests. Please try again later." },
+                {
+                    status: 429,
+                    headers: { "Retry-After": String(retryAfterSeconds) },
+                }
             );
         }
 
@@ -30,7 +45,6 @@ export async function POST(request: Request) {
         }
 
         const { title, description, tags = [], image = [], links = [] } = parsed.data;
-        const userId = session.user.id;
 
         const post = await db.$transaction(async (tx) => {
             const tagRecords = await Promise.all(

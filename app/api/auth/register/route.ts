@@ -2,15 +2,22 @@ import { db } from "@/lib/db";
 import { signUpSchema } from "@/schema/signUpSchema";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
-import {rateLimit} from "@/lib/rateLimit"
+import { writeLimiter } from "@/lib/rateLimit"
 
 export async function POST(request: Request) {
     try {
         const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || "anonymous";
 
-        const {success} = await rateLimit.limit(ip);
-        if(!success) {
-            return NextResponse.json("Too many requests", { status: 429 })
+        const { success, reset } = await writeLimiter.limit(`register:${ip}`);
+        if (!success) {
+            const retryAfterSeconds = Math.ceil((reset - Date.now()) / 1000);
+            return NextResponse.json(
+                { message: "Too many requests. Please try again later." },
+                {
+                    status: 429,
+                    headers: { "Retry-After": String(retryAfterSeconds) },
+                }
+            )
         }
 
         const body: unknown = await request.json();

@@ -29,6 +29,7 @@ export const authOptions: NextAuthOptions = {
     } as Adapter,
     session: {
         strategy: "jwt",
+        maxAge : 60 * 15,
     },
 
     providers: [

@@ -2,15 +2,25 @@ import { db } from "@/lib/db";
 import { signUpSchema } from "@/schema/signUpSchema";
 import bcrypt from "bcryptjs";
 import { NextResponse } from "next/server";
+import {rateLimit} from "@/lib/rateLimit"
 
 export async function POST(request: Request) {
-    const body: unknown = await request.json();
-    const result = signUpSchema.safeParse(body)
-    if (!result.success) {
-        return NextResponse.json("Missing Field , Wrong Data", { status: 400 })
-    }
-    const { email, password, username } = result.data
     try {
+        const ip = request.headers.get("x-forwarded-for")?.split(",")[0] || "anonymous";
+
+        const {success} = await rateLimit.limit(ip);
+        if(!success) {
+            return NextResponse.json("Too many requests", { status: 429 })
+        }
+
+        const body: unknown = await request.json();
+        const result = signUpSchema.safeParse(body)
+
+        if (!result.success) {
+            return NextResponse.json("Missing Field , Wrong Data", { status: 400 })
+        }
+        
+        const { email, password, username } = result.data
         const existingUsername = await db.user.findUnique({
             where: {
                 username,

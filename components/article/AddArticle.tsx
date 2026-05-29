@@ -68,7 +68,7 @@ const AddArticle = () => {
     },
   });
   const onClose = () => {
-      router.push("/article")
+    router.push("/article")
   }
   return (
     <div className="h-screen bg-black text-white overflow-hidden">

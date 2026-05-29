@@ -4,7 +4,7 @@ import { Separator } from "../ui/separator";
 import { Badge } from "../ui/badge";
 import { SnippetWithExtras } from "@/types/snippet";
 import PostHeader from "../post/PostHeader";
-import { Copy, Check, CircleX } from "lucide-react";
+import { Copy, Check, CircleX, FileCode } from "lucide-react";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -18,84 +18,84 @@ const ViewSnippet = ({ snippet }: Props) => {
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(snippet.code);
-
     setCopied(true);
-
     setTimeout(() => {
       setCopied(false);
     }, 2000);
-    toast.success("Snippet copied")
+    toast.success("Snippet copied");
   };
-  const router = useRouter()
+
+  const router = useRouter();
   const onClose = () => {
-    router.push("/snippet")
-  }
+    router.push("/snippet");
+  };
 
   return (
-    <div className="flex justify-center px-4">
-      <div
-        className="w-full max-w-3xl rounded-2xl border border-white/10 bg-black text-white
-        backdrop-blur-xl p-6 space-y-4"
-      >
-        <button
-          className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-center text-white/60 hover:text-white  transition"
-          onClick={onClose}>
-          <CircleX size={20} />
-        </button>
-        <div className="space-y-4 mt-10">
-          <PostHeader user={snippet.user} />
+    <div className="flex justify-center px-4 py-6">
+      <div className="relative w-full max-w-2xl rounded-xl border border-white/[0.06] bg-[#0d0d0e] text-white p-6 sm:p-8 space-y-5 shadow-xl">
 
-          <h1 className="text-2xl sm:text-3xl font-semibold leading-tight">
+      
+        <button
+          className="absolute top-4 right-4 flex items-center justify-center h-8 w-8 rounded-full bg-white/[0.04] border border-white/[0.06] text-white/40 hover:text-white hover:bg-white/[0.08] transition-all"
+          onClick={onClose}
+        >
+          <CircleX size={16} />
+        </button>
+
+     
+        <div className="mt-2">
+          <PostHeader user={snippet.user} />
+        </div>
+
+        <div className="h-px bg-white/[0.05]" />
+
+        
+        <div className="space-y-1.5">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight leading-snug text-white">
             {snippet.title}
           </h1>
-
-          <p className="text-xs text-white/40">
+          <p className="text-[11.5px] text-white/30 tabular-nums">
             Posted on {new Date(snippet.created_at).toLocaleString()}
           </p>
         </div>
 
-        <Separator className="bg-white/10" />
-
-        <p className="text-sm sm:text-base leading-relaxed text-white/80 whitespace-pre-wrap">
+        <p className="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/75 whitespace-pre-wrap">
           {snippet.description}
         </p>
 
-        <div className="rounded-xl overflow-hidden border border-white/10 bg-[#0f0f0f]">
-          <div className="flex items-center justify-between px-4 py-2 border-b border-white/10 bg-black/40">
 
+        <div className="rounded-lg overflow-hidden border border-white/[0.06] bg-[#070708]">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.05] bg-white/[0.01]">
             <div className="flex items-center gap-2">
-              <span className="w-3 h-3 rounded-full bg-red-500" />
-              <span className="w-3 h-3 rounded-full bg-yellow-500" />
-              <span className="w-3 h-3 rounded-full bg-green-500" />
+              <FileCode size={13} className="text-white/30" />
+              <span className="text-[11px] font-mono text-white/40 font-medium">
+                {snippet.language ?? "code"}
+              </span>
             </div>
             <button
               onClick={handleCopy}
-              className="
-              flex items-center gap-2
-              text-xs
-              text-white/70
-              hover:text-white
-              transition
-              "
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-[11px] text-white/50 hover:text-white transition-all active:scale-95"
             >
-              {copied ? <Check size={16} /> : <Copy size={16} />}
-              {copied ? "Copied" : "Copy"}
+              {copied ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
+              <span>{copied ? "Copied!" : "Copy"}</span>
             </button>
           </div>
-          <pre className="p-5 text-sm overflow-x-auto font-mono text-white/90 bg-white/10">
+  
+          <pre className="p-5 text-[12px] overflow-x-auto font-mono text-white/80 leading-relaxed bg-white/10">
             <code>{snippet.code}</code>
           </pre>
         </div>
 
+
         {snippet.tags?.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-1.5 pt-1">
             {snippet.tags.map((tag) => (
-              <Badge
+              <span
                 key={tag.id}
-                className="bg-white/10 text-white/70 hover:bg-white/20"
+                className="inline-flex text-[11px] font-medium text-white/45 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded-md hover:bg-white/[0.07] transition-colors cursor-default"
               >
                 #{tag.name}
-              </Badge>
+              </span>
             ))}
           </div>
         )}

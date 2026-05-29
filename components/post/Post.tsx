@@ -21,11 +21,12 @@ import toast from "react-hot-toast";
 type Props = {
   post: PostWithExtras;
 };
+
 const PostCard = ({ post }: Props) => {
   const [open, setOpen] = useState(false);
   const queryClient = useQueryClient();
   const router = useRouter();
-  console.log(post)
+  console.log(post);
 
   const { mutate: toggleLike, isPending } = useMutation({
     mutationFn: async () => {
@@ -92,110 +93,130 @@ const PostCard = ({ post }: Props) => {
 
   return (
     <>
-      <Card
-        className="
-          relative overflow-hidden
-          rounded-2xl
-          bg-black/60
-          backdrop-blur-xl
-          transition
-          hover:border-cyan-400/30
-          mb-5 border-none
-        "
-      >
-        <div className="relative p-5 space-y-4">
+      <Card className="relative overflow-hidden rounded-xl border border-white/[0.06] bg-[#0d0d0e] hover:bg-[#111113] hover:border-white/[0.11] transition-all duration-200 mb-3 shadow-sm">
+        <div className="p-5 space-y-3.5">
+
           <PostHeader user={post.user} />
 
-          <h3 className="text-lg font-semibold leading-snug text-white">
+        
+          <div className="h-px bg-white/[0.05]" />
+
+        
+          <h3 className="text-[15px] font-semibold leading-snug tracking-tight text-white/95">
             {post.title}
           </h3>
 
-          <p className="text-sm text-white/70 leading-relaxed line-clamp-3">
+       
+          <p className="text-[13px] text-white/55 leading-relaxed line-clamp-3">
             {post.description}
           </p>
 
+       
           {post.image.length > 0 && (
-            <div className="grid grid-cols-2 gap-2">
-              {post.image.slice(0, 4).map((img, idx) => (
-                <div
-                  key={idx}
-                  className="relative aspect-video overflow-hidden rounded-xl border border-white/10"
-                >
-                  <Image
-                    src={img}
-                    alt="Post image"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
+            <div
+              className={`grid gap-1.5 rounded-lg overflow-hidden border border-white/[0.06] bg-[#070708] w-full aspect-[16/9] max-h-[180px] sm:max-h-[220px] ${
+                post.image.length === 1
+                  ? "grid-cols-1"
+                  : post.image.length === 2
+                  ? "grid-cols-2"
+                  : "grid-cols-2 grid-rows-2"
+              }`}
+            >
+              {post.image.slice(0, 4).map((img, idx) => {
+                let cellClass = "relative overflow-hidden bg-white/[0.02]";
+                if (post.image.length === 3) {
+                  if (idx === 0) {
+                    cellClass += " row-span-2 col-span-1";
+                  } else {
+                    cellClass += " row-span-1 col-span-1";
+                  }
+                }
+                return (
+                  <div key={idx} className={cellClass}>
+                    <Image
+                      src={img}
+                      alt="Post image"
+                      fill
+                      className="object-cover hover:scale-[1.02] transition-transform duration-300"
+                    />
+                  </div>
+                );
+              })}
             </div>
           )}
 
+         
           {post.tags.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {post.tags.slice(0, 3).map((tag) => (
-                <Badge
+                <span
                   key={tag.id}
-                  className="bg-white/10 text-white/70"
+                  className="inline-flex text-[11px] font-medium text-white/45 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded-md"
                 >
                   #{tag.name}
-                </Badge>
+                </span>
               ))}
               {post.tags.length > 3 && (
-                <span className="text-xs text-white/40">
+                <span className="text-[11px] text-white/30 self-center">
                   +{post.tags.length - 3} more
                 </span>
               )}
             </div>
           )}
 
-          <Separator className="bg-white/10" />
-
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-white/50">
-            <span>
-              Created at : {new Date(post.created_at).toLocaleDateString()}
+        
+          <div className="pt-1 flex items-center justify-between text-[12px] text-white/30">
+            <span className="tabular-nums">
+              {new Date(post.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
             </span>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1">
+             
               <button
                 disabled={isPending}
                 onClick={() => toggleLike()}
-                className={`flex items-center gap-1 transition-all duration-200 cursor-pointer
-                  ${post.isLiked ? "text-red-500 scale-105" : "hover:text-white"}
-                ${isPending ? "opacity-50 cursor-not-allowed" : ""}
-  `}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/like
+                  ${post.isLiked ? "text-red-500" : "text-white/35 hover:text-red-400"}
+                  ${isPending ? "opacity-40 cursor-not-allowed" : ""}
+                `}
               >
-                <Heart
-                  size={16}
-                  fill={post.isLiked ? "currentColor" : "none"}
-                  className="transition-all duration-200 cursor-pointer"
-                />
-                <span>{post.likeCount}</span>
+                <div className="p-0.5 rounded-full group-hover/like:bg-red-500/10 transition-colors">
+                  <Heart
+                    size={14}
+                    fill={post.isLiked ? "currentColor" : "none"}
+                    className="transition-transform duration-150"
+                  />
+                </div>
+                <span className="tabular-nums font-medium">{post.likeCount}</span>
               </button>
 
+           
               <button
                 onClick={() => toggleBookmark()}
-                className={`flex  gap-2 transition cursor-pointer ${post.bookmarked
-                  ? "text-gray-400"
-                  : "hover:text-black"
-                  }`}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/bm
+                  ${post.bookmarked ? "text-amber-400" : "text-white/35 hover:text-amber-400"}
+                `}
               >
-                <Bookmark
-                  size={18}
-                  fill={post.bookmarked ? "currentColor" : "none"}
-                />
-                <span>BookMark</span>
+                <div className="p-0.5 rounded-full group-hover/bm:bg-amber-400/10 transition-colors">
+                  <Bookmark size={14} fill={post.bookmarked ? "currentColor" : "none"} />
+                </div>
+                <span className="font-medium">Save</span>
               </button>
 
-              <button className="flex items-center gap-1 hover:text-white cursor-pointer">
-                <MessageCircle size={16} /> Comment
+              
+              <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/70 transition-all cursor-pointer group/cmt">
+                <div className="p-0.5 rounded-full group-hover/cmt:bg-white/[0.06] transition-colors">
+                  <MessageCircle size={14} />
+                </div>
+                <span className="font-medium">Comment</span>
               </button>
+
               <button
                 onClick={() => router.push(`/dashboard/${post.id}`)}
-                className="hover:text-white font-medium cursor-pointer"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/80 transition-all cursor-pointer font-medium"
               >
-                View →
+                View
+                <span className="text-white/20">→</span>
               </button>
             </div>
           </div>

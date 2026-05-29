@@ -4,7 +4,7 @@ import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
-import { Loader2 } from "lucide-react";
+import { Loader2, Bell, CheckCheck } from "lucide-react";
 import clsx from "clsx";
 
 interface Props {
@@ -22,7 +22,6 @@ interface NotificationType {
 }
 
 const Notification = ({ close }: Props) => {
-  const router = useRouter();
   const queryClient = useQueryClient();
 
   const { data, isLoading, isError } = useQuery<NotificationType[]>({
@@ -45,9 +44,7 @@ const Notification = ({ close }: Props) => {
       const previous = queryClient.getQueryData<NotificationType[]>(["notification"]);
 
       queryClient.setQueryData<NotificationType[]>(["notification"], (old) =>
-        old?.map((n) =>
-          n.id === id ? { ...n, isRead: true } : n
-        )
+        old?.map((n) => (n.id === id ? { ...n, isRead: true } : n))
       );
 
       return { previous };
@@ -67,74 +64,140 @@ const Notification = ({ close }: Props) => {
     close();
   };
 
+  const unreadCount = data?.filter((n) => !n.isRead).length ?? 0;
+
+
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center p-6">
-        <Loader2 className="animate-spin text-white/50" />
+      <div className="flex items-center justify-center py-9 px-6">
+        <Loader2 size={18} className="animate-spin text-white/20" />
       </div>
     );
   }
 
   if (isError) {
     return (
-      <div className="p-6 text-center text-red-500">
+      <p className="py-6 px-4 text-center text-[13px] text-red-500/70 font-medium">
         Failed to load notifications
-      </div>
+      </p>
     );
   }
 
   if (!data || data.length === 0) {
     return (
-      <div className="p-8 text-center text-white/50">
-        No notifications yet
+      <div className="flex flex-col items-center justify-center gap-2.5 py-11 px-6 text-center">
+        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.07]">
+          <Bell size={18} className="text-white/30" />
+        </div>
+        <p className="text-[13px] text-white/40 font-medium m-0">No notifications</p>
+        <p className="text-[12px] text-white/20 m-0">You&apos;re all caught up</p>
       </div>
     );
   }
 
   return (
-    <div className="w-full">
-      <div className="px-4 py-3 border-b border-white/10">
-        <h2 className="text-sm font-semibold text-white">
-          Notifications
-        </h2>
+    <div className="w-full select-none">
+ 
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+        <div className="flex items-center gap-2">
+          <h2 className="text-[13px] font-semibold text-white/90 tracking-tight m-0">
+            Notifications
+          </h2>
+          {unreadCount > 0 && (
+            <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] font-semibold text-red-400 tracking-wide">
+              {unreadCount > 9 ? "9+" : unreadCount}
+            </span>
+          )}
+        </div>
+        {unreadCount === 0 && (
+          <CheckCheck size={14} className="text-white/20" />
+        )}
       </div>
 
-      <div className="max-h-105 overflow-y-auto p-3 space-y-2">
-        {data.map((notification) => (
-          <div
+      
+      <div className="max-h-[400px] overflow-y-auto p-1.5 space-y-0.5">
+        {data.map((notification, idx) => (
+          <NotificationItem
             key={notification.id}
+            notification={notification}
             onClick={() => handleClick(notification)}
+            isLast={idx === data.length - 1}
+          />
+        ))}
+      </div>
+
+      {/* ── Footer ── */}
+      <div className="py-2.5 px-4 border-t border-white/[0.06] flex items-center justify-center">
+        <span className="text-[10px] text-white/25 tracking-wider font-semibold uppercase">
+          Recent activity
+        </span>
+      </div>
+    </div>
+  );
+};
+
+/* ─────────────────────────────────────────
+   NotificationItem — isolated sub-component
+   ───────────────────────────────────────── */
+interface ItemProps {
+  notification: NotificationType;
+  onClick: () => void;
+  isLast: boolean;
+}
+
+const NotificationItem = ({ notification, onClick, isLast }: ItemProps) => {
+  const timeLabel = formatDistanceToNow(new Date(notification.created_at), {
+    addSuffix: true,
+  });
+
+  return (
+    <div
+      onClick={onClick}
+      role="button"
+      tabIndex={0}
+      onKeyDown={(e) => e.key === "Enter" && onClick()}
+      className={clsx(
+        "relative flex items-start gap-2.5 p-3 rounded-lg cursor-pointer transition-all duration-150 outline-none",
+        isLast ? "mb-0" : "mb-[2px]",
+        notification.isRead
+          ? "bg-transparent border border-transparent hover:bg-white/[0.03]"
+          : "bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04]"
+      )}
+    >
+      {/* Unread indicator dot */}
+      <div
+        className={clsx(
+          "flex-shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full transition-all duration-200",
+          notification.isRead
+            ? "bg-white/10"
+            : "bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.25)]"
+        )}
+      />
+
+      {/* Content */}
+      <div className="flex-1 min-w-0">
+        <div className="flex justify-between items-start gap-2">
+          <h3
             className={clsx(
-              "relative p-4 rounded-xl border transition-all duration-200 cursor-pointer group",
-              "bg-black/60 backdrop-blur-xl",
+              "m-0 text-[13px] tracking-tight leading-normal break-words",
               notification.isRead
-                ? "border-white/10 hover:border-white/20"
-                : "border-indigo-500/40 bg-black"
+                ? "font-medium text-white/60"
+                : "font-semibold text-white/90"
             )}
           >
-            {!notification.isRead && (
-              <span className="absolute top-4 left-2 h-2 w-2 rounded-full bg-red-500" />
-            )}
+            {notification.title}
+          </h3>
 
-            <div className="flex justify-between items-start gap-3 pl-3">
-              <div className="min-w-0">
-                <h3 className="text-sm font-medium text-white wrap-break-words">
-                  {notification.title}
-                </h3>
-                <p className="text-sm text-white/60 mt-1 wrap-break-words">
-                  {notification.message}
-                </p>
-              </div>
+          <span className="flex-shrink-0 text-[11px] font-medium text-white/25 pt-0.5">
+            {timeLabel}
+          </span>
+        </div>
 
-              <span className="text-xs text-white/40 whitespace-nowrap">
-                {formatDistanceToNow(
-                  new Date(notification.created_at),
-                  { addSuffix: true }
-                )}
-              </span>
-            </div>
-          </div>
-        ))}
+        {notification.message && (
+          <p className="mt-1 mb-0 text-[12px] text-white/40 leading-relaxed break-words">
+            {notification.message}
+          </p>
+        )}
       </div>
     </div>
   );

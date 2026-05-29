@@ -13,68 +13,89 @@ type Props = {
   post: PostWithExtras;
 };
 
-
 const ViewPost = ({ post }: Props) => {
-  const router = useRouter()
-    const onClose = () => {
-    router.push("/dashboard")
-  }
-  return (
-    <div className="flex justify-center px-4">
-      <div
-        className=" relative w-full max-w-3xl rounded-2xl border border-white/10 bg-black text-white
-        backdrop-blur-xl p-6 space-y-6"
-      >
-      <button
-        className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-center text-white/60 hover:text-white  transition"
-        onClick={onClose}>
-        <CircleX size={20} />
-      </button>
-        <div className="space-y-4 mt-10">
-          <PostHeader user={post.user} />
+  const router = useRouter();
+  const onClose = () => {
+    router.push("/dashboard");
+  };
 
-          <h1 className="text-2xl sm:text-3xl font-semibold leading-tight">
+  return (
+    <div className="flex justify-center px-4 py-6">
+      <div className="relative w-full max-w-2xl rounded-xl border border-white/[0.06] bg-[#0d0d0e] text-white p-6 sm:p-8 space-y-5 shadow-xl">
+
+ 
+        <button
+          className="absolute top-4 right-4 flex items-center justify-center h-8 w-8 rounded-full bg-white/[0.04] border border-white/[0.06] text-white/40 hover:text-white hover:bg-white/[0.08] transition-all"
+          onClick={onClose}
+        >
+          <CircleX size={16} />
+        </button>
+
+        <div className="mt-2">
+          <PostHeader user={post.user} />
+        </div>
+
+       
+        <div className="h-px bg-white/[0.05]" />
+
+     
+        <div className="space-y-1.5">
+          <h1 className="text-xl sm:text-2xl font-bold tracking-tight leading-snug text-white">
             {post.title}
           </h1>
-
-          <p className="text-xs text-white/40">
+          <p className="text-[11.5px] text-white/30 tabular-nums">
             Posted on {new Date(post.created_at).toLocaleString()}
           </p>
         </div>
 
-        <Separator className="bg-white/10" />
-
-        <p className="text-sm sm:text-base leading-relaxed text-white/80 whitespace-pre-wrap">
+     
+        <p className="text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/75 whitespace-pre-wrap">
           {post.description}
         </p>
 
         {post.image?.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {post.image.map((img, idx) => (
-              <div
-                key={idx}
-                className="relative aspect-video overflow-hidden rounded-xl border border-white/10"
-              >
-                <Image
-                  src={img}
-                  alt="Post image"
-                  fill
-                  className="object-cover"
-                />
-              </div>
-            ))}
+          <div
+            className={`grid gap-1.5 rounded-lg overflow-hidden border border-white/[0.06] bg-[#070708] w-full aspect-[16/10] max-h-[340px] sm:max-h-[380px] ${
+              post.image.length === 1
+                ? "grid-cols-1"
+                : post.image.length === 2
+                ? "grid-cols-2"
+                : "grid-cols-2 grid-rows-2"
+            }`}
+          >
+            {post.image.slice(0, 4).map((img, idx) => {
+              let cellClass = "relative overflow-hidden bg-white/[0.02]";
+              if (post.image.length === 3) {
+                if (idx === 0) {
+                  cellClass += " row-span-2 col-span-1";
+                } else {
+                  cellClass += " row-span-1 col-span-1";
+                }
+              }
+              return (
+                <div key={idx} className={cellClass}>
+                  <Image
+                    src={img}
+                    alt="Post image"
+                    fill
+                    className="object-cover hover:scale-[1.02] transition-transform duration-300"
+                  />
+                </div>
+              );
+            })}
           </div>
         )}
 
+       
         {post.tags?.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-2">
+          <div className="flex flex-wrap gap-1.5 pt-1">
             {post.tags.map((tag) => (
-              <Badge
+              <span
                 key={tag.id}
-                className="bg-white/10 text-white/70 hover:bg-white/20"
+                className="inline-flex text-[11px] font-medium text-white/45 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded-md hover:bg-white/[0.07] transition-colors cursor-default"
               >
                 #{tag.name}
-              </Badge>
+              </span>
             ))}
           </div>
         )}

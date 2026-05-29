@@ -1,15 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { PostWithExtras } from "@/types/post";
 import Image from "next/image";
 import { Card } from "../ui/card";
-import { Badge } from "../ui/badge";
-import { Separator } from "../ui/separator";
 import { Bookmark, Heart, MessageCircle } from "lucide-react";
 import { ArticleWithExtras } from "@/types/article";
 import ArticleHeader from "./ArticleHeader";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { PostWithExtras } from "@/types/post";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
@@ -20,33 +18,28 @@ type Props = {
 
 const Article = ({ article }: Props) => {
   const router = useRouter();
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
+
   const { mutate: toggleLike, isPending } = useMutation({
     mutationFn: async () => {
       await axios.post(`/api/article/likes/${article.id}`);
     },
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["article"] });
-
       const previousPosts = queryClient.getQueryData<PostWithExtras[]>(["article"]);
-
       queryClient.setQueryData<PostWithExtras[]>(["article"], (old) =>
         old?.map((p) =>
           p.id === article.id
             ? {
               ...p,
               isLiked: !p.isLiked,
-              likeCount: p.isLiked
-                ? p.likeCount - 1
-                : p.likeCount + 1,
+              likeCount: p.isLiked ? p.likeCount - 1 : p.likeCount + 1,
             }
             : p
         ) || []
       );
-
       return { previousPosts };
     },
-
     onError: (err, variables, context) => {
       if (context?.previousPosts) {
         queryClient.setQueryData(["article"], context.previousPosts);
@@ -61,34 +54,24 @@ const Article = ({ article }: Props) => {
     mutationFn: async () => {
       await axios.post(`/api/article/bookmark/${article.id}`);
     },
-
     onMutate: async () => {
       await queryClient.cancelQueries({ queryKey: ["article"] });
-
-      const previousArticle =
-        queryClient.getQueryData<ArticleWithExtras[]>(["article"]);
-
+      const previousArticle = queryClient.getQueryData<ArticleWithExtras[]>(["article"]);
       queryClient.setQueryData<ArticleWithExtras[]>(["article"], (old) =>
         old?.map((s) =>
-          s.id === article.id
-            ? { ...s, bookmarked: !s.bookmarked }
-            : s
+          s.id === article.id ? { ...s, bookmarked: !s.bookmarked } : s
         ) || []
       );
-
       return { previousArticle };
     },
-
     onError: (_err, _vars, context) => {
       if (context?.previousArticle) {
         queryClient.setQueryData(["article"], context.previousArticle);
       }
     },
-
     onSettled: () => {
       queryClient.invalidateQueries({ queryKey: ["article"] });
     },
-
     onSuccess: () => {
       toast.success("Bookmark Successfully");
     },
@@ -96,115 +79,132 @@ const Article = ({ article }: Props) => {
 
   return (
     <>
-      <Card
-        className="
-          relative overflow-hidden
-          rounded-2xl
-          bg-black/60
-          backdrop-blur-xl
-          transition
-          hover:border-cyan-400/30
-          mb-5 border-none
-        "
-      >
-        <div className="relative p-5 space-y-4">
+      <Card className="relative overflow-hidden rounded-xl border border-white/[0.06] bg-[#0d0d0e] hover:bg-[#111113] hover:border-white/[0.11] transition-all duration-200 mb-3 shadow-sm">
+        <div className="p-5 space-y-3.5">
+
           <ArticleHeader user={article.user} />
 
-          <h3 className="text-lg font-semibold leading-snug text-white">
+          <div className="h-px bg-white/[0.05]" />
+
+          {/* Title */}
+          <h3 className="text-[15px] font-semibold leading-snug tracking-tight text-white/95">
             {article.title}
           </h3>
 
-          <p className="text-sm text-white/70 leading-relaxed line-clamp-3">
+          {/* Description */}
+          <p className="text-[13px] text-white/55 leading-relaxed line-clamp-3">
             {article.description}
           </p>
 
+          {/* Images */}
           {article.image.length > 0 && (
-            <div className="grid grid-cols-2 gap-2">
-              {article.image.slice(0, 4).map((img, idx) => (
-                <div
-                  key={idx}
-                  className="relative aspect-video overflow-hidden rounded-xl border border-white/10"
-                >
-                  <Image
-                    src={img}
-                    alt="Post image"
-                    fill
-                    className="object-cover"
-                  />
-                </div>
-              ))}
+            <div
+              className={`grid gap-1.5 rounded-lg overflow-hidden border border-white/[0.06] bg-[#070708] w-full aspect-[16/9] max-h-[180px] sm:max-h-[220px] ${
+                article.image.length === 1
+                  ? "grid-cols-1"
+                  : article.image.length === 2
+                  ? "grid-cols-2"
+                  : "grid-cols-2 grid-rows-2"
+              }`}
+            >
+              {article.image.slice(0, 4).map((img, idx) => {
+                let cellClass = "relative overflow-hidden bg-white/[0.02]";
+                if (article.image.length === 3) {
+                  if (idx === 0) cellClass += " row-span-2 col-span-1";
+                  else cellClass += " row-span-1 col-span-1";
+                }
+                return (
+                  <div key={idx} className={cellClass}>
+                    <Image
+                      src={img}
+                      alt="Article image"
+                      fill
+                      className="object-cover hover:scale-[1.02] transition-transform duration-300"
+                    />
+                  </div>
+                );
+              })}
             </div>
           )}
 
+          {/* Tags */}
           {article.articleTags?.length > 0 && (
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {article.articleTags.slice(0, 3).map((tag) => (
-                <Badge
+                <span
                   key={tag.id}
-                  className="bg-white/10 text-white/70"
+                  className="inline-flex text-[11px] font-medium text-white/45 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded-md"
                 >
                   #{tag.name}
-                </Badge>
+                </span>
               ))}
               {article.articleTags.length > 3 && (
-                <span className="text-xs text-white/40">
+                <span className="text-[11px] text-white/30 self-center">
                   +{article.articleTags.length - 3} more
                 </span>
               )}
             </div>
           )}
 
-          <Separator className="bg-white/10" />
-
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-white/50">
-            <span>
-              Created at : {new Date(article.created_at).toLocaleDateString()}
+          {/* Footer row */}
+          <div className="pt-1 flex items-center justify-between text-[12px] text-white/30">
+            <span className="tabular-nums">
+              {new Date(article.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
             </span>
 
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1">
+              {/* Like */}
               <button
                 disabled={isPending}
                 onClick={() => toggleLike()}
-                className={`flex items-center gap-1 transition-all duration-200 cursor-pointer
-                  ${article.isLiked ? "text-red-500 scale-105" : "hover:text-white"}
-                ${isPending ? "opacity-50 cursor-not-allowed" : ""}
-  `}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/like
+                  ${article.isLiked ? "text-red-500" : "text-white/35 hover:text-red-400"}
+                  ${isPending ? "opacity-40 cursor-not-allowed" : ""}
+                `}
               >
-                <Heart
-                  size={16}
-                  fill={article.isLiked ? "currentColor" : "none"}
-                  className="transition-all duration-200"
-                />
-                <span>{article.likeCount}</span>
+                <div className="p-0.5 rounded-full group-hover/like:bg-red-500/10 transition-colors">
+                  <Heart
+                    size={14}
+                    fill={article.isLiked ? "currentColor" : "none"}
+                    className="transition-transform duration-150"
+                  />
+                </div>
+                <span className="tabular-nums font-medium">{article.likeCount}</span>
               </button>
 
+              {/* Bookmark */}
               <button
                 onClick={() => toggleBookmark()}
-                className={`flex items-center gap-2 transition cursor-pointer ${article.bookmarked
-                  ? "text-gray-400"
-                  : "hover:text-white"
-                  }`}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/bm
+                  ${article.bookmarked ? "text-amber-400" : "text-white/35 hover:text-amber-400"}
+                `}
               >
-                <Bookmark
-                  size={18}
-                  fill={article.bookmarked ? "currentColor" : "none"}
-                />
-                <span>BookMark</span>
+                <div className="p-0.5 rounded-full group-hover/bm:bg-amber-400/10 transition-colors">
+                  <Bookmark size={14} fill={article.bookmarked ? "currentColor" : "none"} />
+                </div>
+                <span className="font-medium">Save</span>
               </button>
-              <button className="flex items-center gap-1 hover:text-white cursor-pointer">
-                <MessageCircle size={16} /> Comment
+
+              {/* Comment */}
+              <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/70 transition-all cursor-pointer group/cmt">
+                <div className="p-0.5 rounded-full group-hover/cmt:bg-white/[0.06] transition-colors">
+                  <MessageCircle size={14} />
+                </div>
+                <span className="font-medium">Comment</span>
               </button>
+
+              {/* View */}
               <button
-                onClick ={() => router.push(`/article/${article.id}`)}
-                className="hover:text-white font-medium cursor-pointer"
+                onClick={() => router.push(`/article/${article.id}`)}
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/80 transition-all cursor-pointer font-medium"
               >
-                View →
+                View
+                <span className="text-white/20">→</span>
               </button>
             </div>
           </div>
         </div>
       </Card>
-
     </>
   );
 };

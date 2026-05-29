@@ -15,8 +15,7 @@ import {
   FormMessage,
 } from "../ui/form";
 import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
-import { CircleX, Send } from "lucide-react";
+import { Send } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 interface Props {
@@ -25,7 +24,8 @@ interface Props {
 
 const AddAnswer = ({ questionId }: Props) => {
   const queryClient = useQueryClient();
-  const router = useRouter()
+  const router = useRouter();
+
   const form = useForm<AddAnswerSchema>({
     resolver: zodResolver(addAnswerSchema),
     defaultValues: {
@@ -42,7 +42,6 @@ const AddAnswer = ({ questionId }: Props) => {
     onSuccess: () => {
       toast.success("Answer submitted successfully");
       form.reset({ questionId, description: "" });
-
       queryClient.invalidateQueries({
         queryKey: ["questionDetails", questionId],
       });
@@ -55,83 +54,61 @@ const AddAnswer = ({ questionId }: Props) => {
   const onSubmit = (data: AddAnswerSchema) => {
     addAnswer(data);
   };
+
   const onClose = () => {
-    router.push("/qa")
+    router.push("/qa");
   };
 
   return (
-    <div className="mt-10">
-      <div
-        className="
-          rounded-2xl
-          border border-white/10
-          bg-black
-          backdrop-blur-xl
-          p-6
-          space-y-6
-        "
-      >
-        <h3 className="text-lg font-semibold text-white">
+    <div className="rounded-xl border border-white/[0.06] bg-[#0d0d0e] p-5 space-y-4 shadow-sm">
+      <div className="flex items-center justify-between">
+        <h3 className="text-[14px] font-semibold text-white/90 tracking-tight">
           Write Your Answer
         </h3>
         <button
-          className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-centerborder border-white/10 text-white/60 hover:text-white  transition"
-          onClick={onClose}>
-          <CircleX size={20} />
+          onClick={onClose}
+          className="text-[11px] text-white/30 hover:text-white/60 transition-colors px-2 py-1 rounded-md hover:bg-white/[0.04] cursor-pointer"
+        >
+          Cancel
         </button>
-        <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6"
-          >
-            <FormField
-              control={form.control}
-              name="description"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel className="text-sm text-white">
-                    Your Answer
-                  </FormLabel>
-                  <FormControl>
-                    <Textarea
-                      {...field}
-                      placeholder="Explain your solution clearly and concisely..."
-                      className="
-                        min-h-40
-                        resize-none
-                        bg-black/40
-                        border-white/10
-                        text-white
-                        focus:ring-2
-                        focus:ring-purple-500/40
-                        focus:border-purple-400/40
-                      "
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <div className="flex justify-end">
-              <Button
-                type="submit"
-                disabled={isPending}
-                className="
-                  h-11 px-6 rounded-xl
-                  bg-red-500/60 
-                  font-semibold text-white
-                  hover:opacity-90
-                  flex items-center gap-2
-                "
-              >
-                <Send size={16} />
-                {isPending ? "Submitting..." : "Submit Answer"}
-              </Button>
-            </div>
-          </form>
-        </Form>
       </div>
+
+      <div className="h-px bg-white/[0.05]" />
+
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
+          <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel className="text-[12px] text-white/40 font-medium">
+                  Your Answer
+                </FormLabel>
+                <FormControl>
+                  <Textarea
+                    {...field}
+                    placeholder="Explain your solution clearly and concisely..."
+                    className="min-h-36 resize-none bg-[#070708] border border-white/[0.06] text-white/85 text-[13px] placeholder:text-white/20 focus:border-white/[0.14] focus:ring-0 rounded-lg"
+                  />
+                </FormControl>
+                <FormMessage className="text-[11px] text-red-400/80" />
+              </FormItem>
+            )}
+          />
+
+          <div className="flex justify-end">
+            <button
+              type="submit"
+              disabled={isPending}
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] border border-white/[0.08] text-[13px] font-medium text-white/70 hover:text-white hover:bg-white/[0.09] hover:border-white/[0.14] transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+            >
+              <Send size={13} />
+              {isPending ? "Submitting…" : "Submit Answer"}
+            </button>
+          </div>
+        </form>
+      </Form>
     </div>
   );
 };

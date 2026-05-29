@@ -1,10 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
-import { Separator } from "../ui/separator";
-import { Button } from "../ui/button";
 import { Bookmark, CornerUpRight, Heart } from "lucide-react";
 import toast from "react-hot-toast";
 import { QuestionWithExtras } from "@/types/question";
@@ -87,7 +84,6 @@ const Question = ({ question }: Props) => {
     }
   })
 
-
   const copyButton = (e: any) => {
     e.stopPropagation();
     navigator.clipboard.writeText(question.description);
@@ -101,89 +97,88 @@ const Question = ({ question }: Props) => {
 
   return (
     <>
-      <Card
-        className="
-          relative overflow-hidden
-          rounded-2xl
-          bg-black/60
-          backdrop-blur-xl
-          p-6 border-none
-          cursor-pointer
-        "
-      >
-        <div className="space-y-4">
+      <Card className="relative overflow-hidden rounded-xl border border-white/[0.06] bg-[#0d0d0e] hover:bg-[#111113] hover:border-white/[0.11] transition-all duration-200 mb-3 shadow-sm">
+        <div className="p-5 space-y-3.5">
 
           <QuestionHeader user={question.user} />
 
-          <h3 className="text-lg font-semibold text-white line-clamp-1">
+          <div className="h-px bg-white/[0.05]" />
+
+          {/* Title */}
+          <h3 className="text-[15px] font-semibold leading-snug tracking-tight text-white/95">
             {question.title}
           </h3>
 
-          <p className="text-sm text-white/60 line-clamp-2">
+          {/* Description */}
+          <p className="text-[13px] text-white/55 leading-relaxed line-clamp-2">
             {question.description}
           </p>
 
-          <Separator className="bg-white/10" />
-
-          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 text-xs text-white/50">
-
-            <span>
-              Created at : {new Date(question.created_at).toLocaleDateString()}
+          {/* Footer row */}
+          <div className="pt-1 flex items-center justify-between text-[12px] text-white/30">
+            <span className="tabular-nums">
+              {new Date(question.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
             </span>
 
-            <div className="flex items-center gap-3 text-sm">
+            <div className="flex items-center gap-1">
+              {/* Like */}
               <button
                 disabled={isPending}
                 onClick={(e) => {
                   e.stopPropagation();
                   toggleLike();
                 }}
-                className={`flex items-center gap-1 transition-all duration-200 cursor-pointer
-                  ${question.isLiked
-                    ? "text-red-500"
-                    : "text-white/60 hover:text-red-400"
-                  }
-                  ${isPending ? "opacity-50" : ""}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/like
+                  ${question.isLiked ? "text-red-500" : "text-white/35 hover:text-red-400"}
+                  ${isPending ? "opacity-40 cursor-not-allowed" : ""}
                 `}
               >
-                <Heart
-                  size={18}
-                  fill={question.isLiked ? "currentColor" : "none"}
-                />
-                {question.likeCount}
-              </button>
-              <button
-                onClick={() => toggleBookmark()}
-                className={`flex  gap-1 transition cursor-pointer pr-1 ${question.bookmarked
-                  ? "text-gray-400"
-                  : "hover:text-white"
-                  }`}
-              >
-                <Bookmark
-                  size={18}
-                  fill={question.bookmarked ? "currentColor" : "none"}
-                />
-                <span>BookMark</span>
-              </button>
-              <button
-                onClick={replyButton}
-                className="flex items-center gap-1 pr-1 text-white/60 hover:text-white cursor-pointer"
-              >
-                <CornerUpRight size={16} />
-                Reply
+                <div className="p-0.5 rounded-full group-hover/like:bg-red-500/10 transition-colors">
+                  <Heart
+                    size={14}
+                    fill={question.isLiked ? "currentColor" : "none"}
+                    className="transition-transform duration-150"
+                  />
+                </div>
+                <span className="tabular-nums font-medium">{question.likeCount}</span>
               </button>
 
+              {/* Bookmark */}
+              <button
+                onClick={() => toggleBookmark()}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/bm
+                  ${question.bookmarked ? "text-amber-400" : "text-white/35 hover:text-amber-400"}
+                `}
+              >
+                <div className="p-0.5 rounded-full group-hover/bm:bg-amber-400/10 transition-colors">
+                  <Bookmark size={14} fill={question.bookmarked ? "currentColor" : "none"} />
+                </div>
+                <span className="font-medium">Save</span>
+              </button>
+
+              {/* Reply */}
+              <button
+                onClick={replyButton}
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/70 transition-all cursor-pointer group/rpl"
+              >
+                <div className="p-0.5 rounded-full group-hover/rpl:bg-white/[0.06] transition-colors">
+                  <CornerUpRight size={14} />
+                </div>
+                <span className="font-medium">Reply</span>
+              </button>
+
+              {/* View */}
               <button
                 onClick={() => router.push(`/qa/question/${question.id}`)}
-                className="text-white/60 hover:text-white cursor-pointer"
+                className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/80 transition-all cursor-pointer font-medium"
               >
-                View →
+                View
+                <span className="text-white/20">→</span>
               </button>
             </div>
           </div>
         </div>
       </Card>
-      <Separator className="bg-white/10" />
     </>
   );
 };

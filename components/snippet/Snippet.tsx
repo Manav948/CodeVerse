@@ -98,7 +98,6 @@ const SnippetCard = ({ snippet }: Props) => {
     },
   });
 
-
   const copyButton = () => {
     navigator.clipboard.writeText(snippet.code);
     toast.success("Snippet copied");
@@ -106,100 +105,105 @@ const SnippetCard = ({ snippet }: Props) => {
 
   return (
     <>
-      <Card
-        className="
-          relative overflow-hidden
-          rounded-2xl
-          bg-black/60
-          backdrop-blur-xl
-          p-6 border-none
-        "
-      >
-        <div className="space-y-4">
+      <Card className="relative overflow-hidden rounded-xl border border-white/[0.06] bg-[#0d0d0e] hover:bg-[#111113] hover:border-white/[0.11] transition-all duration-200 shadow-sm">
+        <div className="p-5 space-y-3.5">
+
           <SnippetHeader user={snippet.user} />
 
-          <h3 className="text-lg font-semibold text-white">
+          <div className="h-px bg-white/[0.05]" />
+
+          <h3 className="text-[15px] font-semibold tracking-tight text-white/95">
             {snippet.title}
           </h3>
 
-
-          <p className="text-sm text-white/60 line-clamp-2">
+          <p className="text-[13px] text-white/55 leading-relaxed line-clamp-2">
             {snippet.description}
           </p>
 
-
-          <div className="relative rounded-xl bg-white/10 border border-white/10 p-4 font-mono text-xs text-white/80 line-clamp-4">
+        
+          <div
+            onClick={copyButton}
+            className="group/code relative rounded-lg border border-white/[0.06] bg-[#070708] p-4 font-mono text-[11.5px] text-white/70 line-clamp-4 leading-relaxed cursor-pointer hover:border-white/[0.11] transition-all duration-150 overflow-hidden"
+          >
             {snippet.code}
+            <div className="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#070708] to-transparent pointer-events-none" />
             <FileCode
-              size={16}
-              className="absolute right-3 bottom-3 text-white/30"
+              size={14}
+              className="absolute right-3 bottom-3 text-white/20 group-hover/code:text-white/40 transition-colors"
             />
           </div>
 
+      
+          <div className="flex flex-wrap items-center justify-between gap-3 pt-0.5">
 
-          <div className="flex flex-wrap items-center justify-between gap-3 pt-2">
-
-            <div className="flex flex-wrap gap-2">
-              <Badge className="bg-cyan-500/10 text-cyan-400">
+         
+            <div className="flex flex-wrap gap-1.5">
+              <span className="inline-flex text-[11px] font-semibold text-cyan-400 bg-cyan-400/[0.06] border border-cyan-400/[0.12] px-2 py-0.5 rounded-md">
                 {snippet.language}
-              </Badge>
-
+              </span>
               {snippet.tags.slice(0, 3).map((tag) => (
-                <Badge
+                <span
                   key={tag.id}
-                  className="bg-white/10 text-white/70"
+                  className="inline-flex text-[11px] font-medium text-white/40 bg-white/[0.03] border border-white/[0.06] px-2 py-0.5 rounded-md"
                 >
                   #{tag.name}
-                </Badge>
+                </span>
               ))}
             </div>
-            <div className="flex items-center  gap-5 text-sm mt-1.5">
 
-              <span className="text-white">
-                Created at : {new Date(snippet.created_at).toLocaleDateString()}
+     
+            <div className="flex items-center gap-1 text-[12px] text-white/30">
+
+          
+              <span className="mr-2 tabular-nums text-white/25 text-[11.5px]">
+                {new Date(snippet.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
               </span>
+
+          
               <button
                 disabled={isPending}
                 onClick={() => toggleLike()}
-                className={`flex items-center gap-1 transition-all duration-200 cursor-pointer
-                  ${snippet.isLiked ? "text-red-500 scale-105" : "hover:text-white text-white"}
-                ${isPending ? "opacity-50 cursor-not-allowed" : ""}
-  `}
+                className={`flex items-center gap-1.5 px-2 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/like
+                  ${snippet.isLiked ? "text-red-500" : "text-white/35 hover:text-red-400"}
+                  ${isPending ? "opacity-40 cursor-not-allowed" : ""}
+                `}
               >
-                <Heart
-                  size={16}
-                  fill={snippet.isLiked ? "currentColor" : "none"}
-                  className="transition-all duration-200"
-                />
-                <span>{snippet.likeCount}</span>
+                <div className="p-0.5 rounded-full group-hover/like:bg-red-500/10 transition-colors">
+                  <Heart
+                    size={14}
+                    fill={snippet.isLiked ? "currentColor" : "none"}
+                    className="transition-transform duration-150"
+                  />
+                </div>
+                <span className="tabular-nums font-medium">{snippet.likeCount}</span>
               </button>
+
+              
               <button
                 onClick={() => toggleBookmark()}
-                className={`flex items-center gap-1 transition-all duration-200 text-white cursor-pointer ${snippet.bookmarked
-                  ? "text-gray-300"
-                  : "hover:text-white"
-                  }`}
+                className={`flex items-center gap-1.5 px-2 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/bm
+                  ${snippet.bookmarked ? "text-amber-400" : "text-white/35 hover:text-amber-400"}
+                `}
               >
-                <Bookmark
-                  size={18}
-                  fill={snippet.bookmarked ? "currentColor" : "none"}
-                />
-                <span>BookMark</span>
+                <div className="p-0.5 rounded-full group-hover/bm:bg-amber-400/10 transition-colors">
+                  <Bookmark size={14} fill={snippet.bookmarked ? "currentColor" : "none"} />
+                </div>
+                <span className="font-medium">Save</span>
               </button>
 
               <button
                 onClick={() => router.push(`/snippet/${snippet.id}`)}
-                className="text-white/60 hover:text-white cursor-pointer"
+                className="flex items-center gap-1 px-2 py-1.5 rounded-md text-white/35 hover:text-white/80 transition-all cursor-pointer font-medium"
               >
-                View →
+                View
+                <span className="text-white/20">→</span>
               </button>
-
             </div>
           </div>
         </div>
       </Card>
 
-      <Separator className="bg-white/10 my-6" />
+      <Separator className="bg-white/[0.04] my-3" />
     </>
   );
 };

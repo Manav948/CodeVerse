@@ -86,7 +86,7 @@ const AddPost = () => {
               <button
                 className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-centerborder border-white/10 text-white/60 hover:text-white  transition"
                 onClick={onClose}>
-                <CircleX  size={20}/>
+                <CircleX size={20} />
               </button>
               <h1 className="mb-6 text-2xl font-semibold">
                 Create Post

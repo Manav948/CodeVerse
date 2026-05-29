@@ -4,15 +4,13 @@ import { BookmarkItem } from "@/types/bookmark";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { useState } from "react";
-import { Card } from "../ui/card";
-import { Separator } from "../ui/separator";
 import PostCard from "../post/Post";
 import SnippetCard from "../snippet/Snippet";
 import Question from "../question/Question";
 import Article from "../article/Article";
 import Loader from "../ui/Loading";
 import NotFoundState from "../ui/notFound";
-
+import { Bookmark } from "lucide-react";
 
 const tabs = ["all", "post", "snippet", "question", "article"] as const;
 type TabType = (typeof tabs)[number];
@@ -31,7 +29,7 @@ const BookMarks = () => {
 
   if (isLoading) {
     return (
-      <div className="text-white/60 animate-pulse flex items-center justify-center">
+      <div className="flex items-center justify-center py-20">
         <Loader />
       </div>
     );
@@ -39,7 +37,7 @@ const BookMarks = () => {
 
   if (isError) {
     return (
-      <div className="text-red-500">
+      <div className="text-red-400/80 text-[13px] px-1">
         {(error as Error).message}
       </div>
     );
@@ -47,7 +45,7 @@ const BookMarks = () => {
 
   if (!data || data.length === 0) {
     return (
-      <div className="flex items-center justify-center text-white/50">
+      <div className="flex items-center justify-center py-20">
         <NotFoundState type="bookmark" />
       </div>
     );
@@ -59,71 +57,67 @@ const BookMarks = () => {
       : data.filter((item) => item.type === activeTab);
 
   return (
-    <div className="space-y-8 mt-5 px-3">
-      <div className="space-y-2">
-        <h2 className="text-2xl font-semibold">
-          Your Bookmarks
-        </h2>
-        <p className="text-white/50 text-sm mb-5">
-          All saved posts, snippets, questions and articles.
+    <div className="space-y-6 mt-4">
+
+      {/* Page header */}
+      <div className="space-y-1 px-1">
+        <div className="flex items-center gap-2.5">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/[0.04] border border-white/[0.06]">
+            <Bookmark size={13} className="text-white/50" />
+          </div>
+          <h1 className="text-[17px] font-semibold text-white/90 tracking-tight">
+            Bookmarks
+          </h1>
+        </div>
+        <p className="text-[12.5px] text-white/35 pl-9">
+          Saved posts, snippets, questions and articles.
         </p>
       </div>
-      <Card className="bg-black border border-white/10 rounded-xl p-3">
-        <nav className="flex gap-6 text-sm">
-          {tabs.map((tab) => (
-            <button
-              key={tab}
-              onClick={() => setActiveTab(tab)}
-              className={`capitalize transition ${
-                activeTab === tab
-                  ? "text-white font-semibold"
-                  : "text-white/50 hover:text-white"
+
+      {/* Tab filter bar */}
+      <div className="flex items-center gap-0.5 border border-white/[0.06] bg-[#0a0a0b] rounded-lg p-1 w-fit">
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            onClick={() => setActiveTab(tab)}
+            className={`capitalize text-[12px] font-medium px-3 py-1.5 rounded-md transition-all duration-150
+              ${activeTab === tab
+                ? "bg-white/[0.08] text-white/90 shadow-sm"
+                : "text-white/35 hover:text-white/65 hover:bg-white/[0.04]"
               }`}
-            >
-              {tab}
-            </button>
-          ))}
-        </nav>
-      </Card>
-      <div className="space-y-6 mt-5">
-        {filtered.map((item, index) => {
-          switch (item.type) {
-            case "post":
-              return (
-                <PostCard
-                  key={index}
-                  post={item.data}
-                />
-              );
+          >
+            {tab}
+          </button>
+        ))}
+      </div>
 
-            case "snippet":
-              return (
-                <SnippetCard
-                  key={index}
-                  snippet={item.data}
-                />
-              );
+      {/* Results count */}
+      <p className="text-[11.5px] text-white/25 px-1 tabular-nums">
+        {filtered.length} {filtered.length === 1 ? "item" : "items"}
+      </p>
 
-            case "question":
-              return (
-                <Question
-                  key={index}
-                  question={item.data}
-                />
-              );
-
-            case "article":
-              return (
-                <Article
-                  key={index}
-                  article={item.data}
-                />
-              );
-
-            default:
-              return null;
-          }
-        })}
+      {/* Items list */}
+      <div className="space-y-0">
+        {filtered.length === 0 ? (
+          <div className="py-16 text-center text-[13px] text-white/30">
+            No saved {activeTab === "all" ? "items" : activeTab + "s"} yet.
+          </div>
+        ) : (
+          filtered.map((item, index) => {
+            switch (item.type) {
+              case "post":
+                return <PostCard key={index} post={item.data} />;
+              case "snippet":
+                return <SnippetCard key={index} snippet={item.data} />;
+              case "question":
+                return <Question key={index} question={item.data} />;
+              case "article":
+                return <Article key={index} article={item.data} />;
+              default:
+                return null;
+            }
+          })
+        )}
       </div>
     </div>
   );

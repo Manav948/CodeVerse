@@ -6,12 +6,9 @@ import {
   useQueryClient,
 } from "@tanstack/react-query";
 import { Card } from "@/components/ui/card";
-import { Separator } from "@/components/ui/separator";
-import { Heart } from "lucide-react";
+import { Heart, Send } from "lucide-react";
 import axios from "axios";
 import { QuestionDetails } from "@/types/getQuestion";
-import { LoadingState } from "../ui/LoadingState";
-import { Button } from "../ui/button";
 import { useState, useRef } from "react";
 import AddAnswer from "./Answer";
 import AnswerHeader from "./AnswerHeader";
@@ -23,17 +20,14 @@ interface Props {
 
 const GetQuestionDetails = ({ questionId }: Props) => {
   const queryClient = useQueryClient();
-  const [showAnswerForm, setShowAnswerForm] =
-    useState(false);
+  const [showAnswerForm, setShowAnswerForm] = useState(false);
   const answerRef = useRef<HTMLDivElement>(null);
 
   const { data, isLoading, isError, error } =
     useQuery<QuestionDetails>({
       queryKey: ["questionDetails", questionId],
       queryFn: async () => {
-        const res = await axios.get(
-          `/api/Question/get/${questionId}`
-        );
+        const res = await axios.get(`/api/Question/get/${questionId}`);
         return res.data;
       },
       enabled: !!questionId,
@@ -41,32 +35,26 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
   const { mutate: toggleQuestionLike } = useMutation({
     mutationFn: async () => {
-      await axios.post(
-        `/api/Question/likes/${questionId}`
-      );
+      await axios.post(`/api/Question/likes/${questionId}`);
     },
     onMutate: async () => {
       await queryClient.cancelQueries({
         queryKey: ["questionDetails", questionId],
       });
 
-      const previous =
-        queryClient.getQueryData<QuestionDetails>([
-          "questionDetails",
-          questionId,
-        ]);
+      const previous = queryClient.getQueryData<QuestionDetails>([
+        "questionDetails",
+        questionId,
+      ]);
 
       if (previous) {
-        queryClient.setQueryData(
-          ["questionDetails", questionId],
-          {
-            ...previous,
-            isLiked: !previous.isLiked,
-            likeCount: previous.isLiked
-              ? previous.likeCount - 1
-              : previous.likeCount + 1,
-          }
-        );
+        queryClient.setQueryData(["questionDetails", questionId], {
+          ...previous,
+          isLiked: !previous.isLiked,
+          likeCount: previous.isLiked
+            ? previous.likeCount - 1
+            : previous.likeCount + 1,
+        });
       }
 
       return { previous };
@@ -88,7 +76,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
+      <div className="min-h-screen bg-[#080809] flex items-center justify-center">
         <Loader />
       </div>
     );
@@ -96,7 +84,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
   if (isError) {
     return (
-      <div className="min-h-screen bg-black text-red-500 flex items-center justify-center">
+      <div className="min-h-screen bg-[#080809] text-red-400/80 text-[13px] flex items-center justify-center">
         {(error as Error).message}
       </div>
     );
@@ -106,125 +94,115 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
   const handleAnswerClick = () => {
     setShowAnswerForm(true);
-
     setTimeout(() => {
-      answerRef.current?.scrollIntoView({
-        behavior: "smooth",
-      });
+      answerRef.current?.scrollIntoView({ behavior: "smooth" });
     }, 100);
   };
 
   return (
-    <div className="min-h-screen bg-black text-white">
-      <div className="mx-auto max-w-3xl sm:px-6 sm:py-10 space-y-10">
+    <div className="min-h-screen bg-[#080809] text-white">
+      <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8 space-y-6">
 
-        <Card className="border border-white/10 bg-black backdrop-blur-xl p-6 rounded-2xl space-y-5">
+        {/* Question card */}
+        <Card className="border border-white/[0.06] bg-[#0d0d0e] rounded-xl p-6 space-y-4 shadow-sm">
 
-          <h2 className="text-2xl text-white font-semibold">
+          <h2 className="text-[18px] sm:text-[20px] font-bold tracking-tight leading-snug text-white">
             {data.title}
           </h2>
 
-          <p className="bg-white/10 p-2 rounded-xl text-white/80 whitespace-pre-wrap leading-relaxed">
-            {data.description}
-          </p>
+          <div className="rounded-lg border border-white/[0.06] bg-[#070708] overflow-hidden">
+            <pre className="p-4 text-[12.5px] font-mono text-white/75 leading-relaxed whitespace-pre-wrap overflow-x-auto">
+              {data.description}
+            </pre>
+          </div>
 
-          <div className="flex items-center justify-between text-xs text-white/50">
-            <div className="flex items-center gap-3">
-              <span>{data.user.username}</span>
-              <span>•</span>
-              <span>
-                {new Date(
-                  data.created_at
-                ).toLocaleDateString()}
-              </span>
+          <div className="flex items-center justify-between text-[12px] text-white/30">
+            <div className="flex items-center gap-2 tabular-nums">
+              <span className="text-white/45 font-medium">@{data.user.username}</span>
+              <span className="text-white/20">·</span>
+              <span>{new Date(data.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}</span>
             </div>
 
             <button
               onClick={() => toggleQuestionLike()}
-              className={`flex items-center gap-1 transition-all duration-200 ${
-                data.isLiked
-                  ? "text-red-500 scale-105"
-                  : "hover:text-white"
-              }`}
+              className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/like
+                ${data.isLiked ? "text-red-500" : "text-white/35 hover:text-red-400"}
+              `}
             >
-              <Heart
-                size={16}
-                fill={
-                  data.isLiked
-                    ? "currentColor"
-                    : "none"
-                }
-              />
-              <span>{data.likeCount}</span>
+              <div className="p-0.5 rounded-full group-hover/like:bg-red-500/10 transition-colors">
+                <Heart
+                  size={14}
+                  fill={data.isLiked ? "currentColor" : "none"}
+                />
+              </div>
+              <span className="tabular-nums font-medium">{data.likeCount}</span>
             </button>
           </div>
 
-          <Button
+          <button
             onClick={handleAnswerClick}
-            className="bg-linear-to-r bg-red-500/60 text-white"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.05] border border-white/[0.08] text-[13px] font-medium text-white/70 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.14] transition-all duration-150 cursor-pointer"
           >
+            <Send size={13} />
             Write Answer
-          </Button>
+          </button>
         </Card>
 
-        <Separator className="bg-white/10" />
+        {/* Divider with answer count */}
+        <div className="flex items-center gap-3">
+          <div className="h-px flex-1 bg-white/[0.05]" />
+          <span className="text-[11.5px] text-white/30 tabular-nums shrink-0">
+            {data.answer.length} {data.answer.length === 1 ? "answer" : "answers"}
+          </span>
+          <div className="h-px flex-1 bg-white/[0.05]" />
+        </div>
 
-        <div className="space-y-6 px-3">
-          <h3 className="text-lg font-semibold">
-            {data.answer.length} Answers
-          </h3>
+        {/* Empty state */}
+        {data.answer.length === 0 && (
+          <div className="py-12 text-center text-[13px] text-white/25">
+            No answers yet — be the first to reply.
+          </div>
+        )}
 
-          {data.answer.length === 0 && (
-            <div className="text-white/50 text-sm">
-              No answers yet. Be the first one.
-            </div>
-          )}
-
+        {/* Answer list */}
+        <div className="space-y-3">
           {data.answer.map((ans) => (
             <Card
               key={ans.id}
-              className="bg-black border border-white/10 p-5 rounded-xl space-y-3"
+              className="border border-white/[0.06] bg-[#0d0d0e] rounded-xl p-5 space-y-3.5 shadow-sm"
             >
-              <AnswerHeader user={ans.user    } />
-              <div className="flex justify-between text-xs text-white/50">
-                <div className="flex gap-3">
-                  <span>{ans.user.username}</span>
-                  <span>•</span>
-                  <span>
-                    {new Date(
-                      ans.created_at
-                    ).toLocaleDateString()}
-                  </span>
-                </div>
+              <AnswerHeader user={ans.user} />
+
+              <div className="h-px bg-white/[0.05]" />
+
+              <p className="text-[13px] text-white/70 leading-relaxed whitespace-pre-wrap">
+                {ans.description}
+              </p>
+
+              <div className="flex items-center justify-between text-[11.5px] text-white/25 pt-0.5">
+                <span className="tabular-nums">
+                  {new Date(ans.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
+                </span>
 
                 <div
-                  className={`flex items-center gap-1 ${
-                    ans.isLiked
-                      ? "text-red-500"
-                      : "text-white/50"
+                  className={`flex items-center gap-1.5 ${
+                    ans.isLiked ? "text-red-500" : "text-white/25"
                   }`}
                 >
                   <Heart
-                    size={14}
-                    fill={
-                      ans.isLiked
-                        ? "currentColor"
-                        : "none"
-                    }
+                    size={13}
+                    fill={ans.isLiked ? "currentColor" : "none"}
                   />
-                  <span>{ans.likeCount}</span>
+                  <span className="tabular-nums">{ans.likeCount}</span>
                 </div>
               </div>
-
-              <p className="text-sm text-white/80 whitespace-pre-wrap leading-relaxed">
-                {ans.description}
-              </p>
             </Card>
           ))}
         </div>
 
+        {/* Answer form */}
         {showAnswerForm && (
-          <div ref={answerRef} className="mt-5">
+          <div ref={answerRef}>
             <AddAnswer questionId={questionId} />
           </div>
         )}

@@ -99,11 +99,11 @@ const Header = () => {
 
           <Popover open={open} onOpenChange={handleOpenChange}>
             <PopoverTrigger asChild>
-              <button className="relative rounded-xl p-2 text-white/70 hover:bg-white/10 transition">
-                <Bell size={20} />
+              <button className="relative rounded-lg p-2 text-white/50 hover:text-white/80 hover:bg-white/[0.05] transition-all duration-150">
+                <Bell size={18} />
 
                 {newCount > 0 && (
-                  <span className="absolute -top-1 -right-1 min-w-4 h-4 flex items-center justify-center text-[10px] rounded-full bg-red-500 text-white font-semibold px-1">
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] flex items-center justify-center text-[9px] rounded-full bg-red-500/80 border border-black/60 text-white font-semibold px-[3px] leading-none">
                     {newCount > 9 ? "9+" : newCount}
                   </span>
                 )}
@@ -112,7 +112,8 @@ const Header = () => {
 
             <PopoverContent
               align="end"
-              className="w-96 p-0 border border-white/10 bg-black/95 backdrop-blur-xl"
+              sideOffset={8}
+              className="w-[380px] p-0 rounded-xl border border-white/[0.08] bg-[#111111] shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-xl overflow-hidden"
             >
               <Notification close={() => setOpen(false)} />
             </PopoverContent>

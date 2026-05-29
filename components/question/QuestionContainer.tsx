@@ -7,7 +7,7 @@ const QuestionContainer = () => {
     <div className="h-screen bg-black text-white flex flex-col">
       <Header />
       <div className="flex flex-1 overflow-hidden">
-      
+
         <aside className="hidden md:block w-64 border-r border-white/10">
           <Sidebar />
         </aside>

@@ -40,18 +40,14 @@ export default function Page() {
 
   return (
     <div className="h-screen bg-black text-white flex flex-col">
-
       <Header />
       <div className="flex flex-1 overflow-hidden">
-        <aside className="hidden md:block w-64 border-r border-white/10">
-          <Sidebar />
-        </aside>
+        <Sidebar />
         <main className="flex-1 overflow-y-auto">
-          <div className="mx-auto max-w-3xl py-10">
-           <ViewSnippet snippet={snippet} />
+          <div className="mx-auto max-w-3xl py-10 px-4">
+            <ViewSnippet snippet={snippet} />
           </div>
         </main>
-
       </div>
     </div>
   );

@@ -1,32 +1,36 @@
-import OptionSidebar from "./OptionSidebar";
+"use client";
+
+import { useState } from "react";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import AppSidebar from "./AppSidebar";
+import { cn } from "@/lib/utils";
 
 const SidebarContainer = () => {
+  const [collapsed, setCollapsed] = useState(false);
+
   return (
-    <aside
-      className="
-        hidden md:block sticky top-20 h-[calc(100vh-4.2rem)] w-64 shrink-0 border-r border-white/10  p-4
-        backdrop-blur-xl
-      "
+    <div
+      className={cn(
+        "relative hidden md:flex flex-col h-full transition-all duration-300 ease-in-out",
+        collapsed ? "w-[68px]" : "w-64"
+      )}
     >
-      <div className="mb-6 flex items-center gap-2 px-2">
-        <img
-          src="/logo2.png"
-          alt="Code Verse"
-          className="h-10 w-13 rounded-xl object-cover"
-        />
-        <h1
-          className="text-2xl md:text-3xl font-bold tracking-tight bg-red-500 bg-clip-text text-transparent
-          drop-shadow-[0_0_12px_rgba(255,0,80,0.4)]
-  "
-        >
-          Code<span className="text-white">Verse</span>
-        </h1>
-      </div>
+      <AppSidebar collapsed={collapsed} />
 
-      <div className="mb-4 h-px bg-white/10" />
-
-      <OptionSidebar />
-    </aside>
+      <button
+        onClick={() => setCollapsed((v) => !v)}
+        className={cn(
+          "absolute -right-3 top-[72px] z-10 h-6 w-6 rounded-full border border-white/10 bg-[#0d0d0e] flex items-center justify-center text-white/40 hover:text-white hover:border-white/20 hover:bg-[#1a1a1c] transition-all duration-200 shadow-md shadow-black/40"
+        )}
+        aria-label={collapsed ? "Expand sidebar" : "Collapse sidebar"}
+      >
+        {collapsed ? (
+          <ChevronRight size={11} />
+        ) : (
+          <ChevronLeft size={11} />
+        )}
+      </button>
+    </div>
   );
 };
 

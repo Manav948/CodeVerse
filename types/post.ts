@@ -1,3 +1,16 @@
+export type CommentWithUser = {
+    id: string
+    commentText: string
+    created_at: Date
+    updated_at: Date
+    user: {
+        id: string
+        name: string | null
+        username: string | null
+        image: string | null
+    }
+}
+
 export type PostWithExtras = {
     id: string
     title: string
@@ -10,7 +23,7 @@ export type PostWithExtras = {
     user: {
         id: string
         name: string | null
-        username: string
+        username: string | null
         image: string | null
     }
 
@@ -21,13 +34,6 @@ export type PostWithExtras = {
     likeCount: number
     isLiked: boolean
     bookmarked : boolean
-    comments?: {
-        id: string
-        commentText: string
-        user: {
-            id: string
-            name: string | null
-            username: string
-        }
-    }[]
+    comments?: CommentWithUser[]
+    commentCount?: number
 }

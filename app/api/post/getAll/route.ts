@@ -51,6 +51,9 @@ export async function GET() {
                     select: {
                         userId: true
                     }
+                },
+                comment: {
+                    select: { id: true }
                 }
             }
         })
@@ -62,7 +65,8 @@ export async function GET() {
             tags: post.tags.map((postTag) => postTag.tag),
             likeCount: post.postLikes.length,
             isLiked: post.postLikes.some((like) => like.userId === userId),
-            bookmarked: post.bookmark.some((bookmark) => bookmark.userId === userId)
+            bookmarked: post.bookmark.some((bookmark) => bookmark.userId === userId),
+            commentCount: post.comment.length,
         }))
         return NextResponse.json(transformedSnippets, { status: 200 })
     }

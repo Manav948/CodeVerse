@@ -47,6 +47,9 @@ export async function GET() {
         bookmark: {
           select: { userId: true },
         },
+        comments: {
+          select: { id: true },
+        },
       },
       orderBy: { created_at: "desc" },
     });
@@ -61,6 +64,7 @@ export async function GET() {
       likeCount: article.articleLikes.length,
       isLiked: article.articleLikes.some((like) => like.userId === userId),
       bookmarked: article.bookmark.some((b) => b.userId === userId),
+      commentCount: article.comments.length,
     }));
 
     return NextResponse.json(transformed, {

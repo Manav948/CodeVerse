@@ -1,9 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Image from "next/image";
 import { Card } from "../ui/card";
-import { Bookmark, Heart, MessageCircle } from "lucide-react";
+import { Bookmark, Heart } from "lucide-react";
 import { ArticleWithExtras } from "@/types/article";
 import ArticleHeader from "./ArticleHeader";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -11,6 +10,7 @@ import { PostWithExtras } from "@/types/post";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import CommentDropdown from "@/components/comment/CommentDropdown";
 
 type Props = {
   article: ArticleWithExtras;
@@ -86,17 +86,15 @@ const Article = ({ article }: Props) => {
 
           <div className="h-px bg-white/[0.05]" />
 
-          {/* Title */}
           <h3 className="text-[15px] font-semibold leading-snug tracking-tight text-white/95">
             {article.title}
           </h3>
 
-          {/* Description */}
           <p className="text-[13px] text-white/55 leading-relaxed line-clamp-3">
             {article.description}
           </p>
 
-          {/* Images */}
+          
           {article.image.length > 0 && (
             <div
               className={`grid gap-1.5 rounded-lg overflow-hidden border border-white/[0.06] bg-[#070708] w-full aspect-[16/9] max-h-[180px] sm:max-h-[220px] ${
@@ -127,7 +125,7 @@ const Article = ({ article }: Props) => {
             </div>
           )}
 
-          {/* Tags */}
+       
           {article.articleTags?.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               {article.articleTags.slice(0, 3).map((tag) => (
@@ -146,14 +144,14 @@ const Article = ({ article }: Props) => {
             </div>
           )}
 
-          {/* Footer row */}
+          
           <div className="pt-1 flex items-center justify-between text-[12px] text-white/30">
             <span className="tabular-nums">
               {new Date(article.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
             </span>
 
             <div className="flex items-center gap-1">
-              {/* Like */}
+              
               <button
                 disabled={isPending}
                 onClick={() => toggleLike()}
@@ -172,7 +170,7 @@ const Article = ({ article }: Props) => {
                 <span className="tabular-nums font-medium">{article.likeCount}</span>
               </button>
 
-              {/* Bookmark */}
+              
               <button
                 onClick={() => toggleBookmark()}
                 className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/bm
@@ -185,15 +183,12 @@ const Article = ({ article }: Props) => {
                 <span className="font-medium">Save</span>
               </button>
 
-              {/* Comment */}
-              <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/70 transition-all cursor-pointer group/cmt">
-                <div className="p-0.5 rounded-full group-hover/cmt:bg-white/[0.06] transition-colors">
-                  <MessageCircle size={14} />
-                </div>
-                <span className="font-medium">Comment</span>
-              </button>
+              <CommentDropdown
+                entityId={article.id}
+                entityType="article"
+                initialCommentCount={article.commentCount ?? article.comments?.length ?? 0}
+              />
 
-              {/* View */}
               <button
                 onClick={() => router.push(`/article/${article.id}`)}
                 className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/80 transition-all cursor-pointer font-medium"

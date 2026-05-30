@@ -3,21 +3,22 @@
 import React from "react";
 import { ArticleWithExtras } from "@/types/article";
 import ArticleHeader from "./ArticleHeader";
-import { Separator } from "../ui/separator";
 import Image from "next/image";
 import { Badge } from "../ui/badge";
 import { useRouter } from "next/navigation";
 import { CircleX } from "lucide-react";
+import CommentSection from "@/components/comment/CommentSection";
 
 type Props = {
   article: ArticleWithExtras;
 };
 
 const ViewArticle = ({ article }: Props) => {
-  const router = useRouter()
+  const router = useRouter();
   const onClose = () => {
-    router.push("/article")
-  }
+    router.push("/article");
+  };
+
   return (
     <div className="flex justify-center px-4">
       <div
@@ -25,10 +26,12 @@ const ViewArticle = ({ article }: Props) => {
         backdrop-blur-xl p-6 space-y-6"
       >
         <button
-          className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-center text-white/60 hover:text-white  transition"
-          onClick={onClose}>
+          className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-center text-white/60 hover:text-white transition z-10"
+          onClick={onClose}
+        >
           <CircleX size={20} />
         </button>
+
         <div className="space-y-4 mt-10">
           <ArticleHeader user={article.user} />
 
@@ -41,12 +44,14 @@ const ViewArticle = ({ article }: Props) => {
           </p>
         </div>
 
-        <Separator className="bg-white/10" />
+        <div className="h-px bg-white/10" />
+
+
         <p className="text-sm sm:text-base leading-relaxed text-white/80 whitespace-pre-wrap">
           {article.description}
         </p>
 
-
+        
         {article.image?.length > 0 && (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {article.image.map((img: string, idx: number) => (
@@ -64,6 +69,8 @@ const ViewArticle = ({ article }: Props) => {
             ))}
           </div>
         )}
+
+       
         {article.articleTags?.length > 0 && (
           <div className="flex flex-wrap gap-2 pt-2">
             {article.articleTags.map((tag: any) => (
@@ -76,6 +83,8 @@ const ViewArticle = ({ article }: Props) => {
             ))}
           </div>
         )}
+
+        <CommentSection entityId={article.id} entityType="article" />
       </div>
     </div>
   );

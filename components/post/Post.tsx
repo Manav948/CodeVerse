@@ -4,19 +4,13 @@ import { useState } from "react";
 import { PostWithExtras } from "@/types/post";
 import Image from "next/image";
 import { Card } from "../ui/card";
-import { Badge } from "../ui/badge";
-import { Separator } from "../ui/separator";
 import PostHeader from "./PostHeader";
-import { Bookmark, Heart, MessageCircle } from "lucide-react";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-} from "../ui/dialog";
+import { Bookmark, Heart } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import CommentDropdown from "@/components/comment/CommentDropdown";
 
 type Props = {
   post: PostWithExtras;
@@ -204,12 +198,11 @@ const PostCard = ({ post }: Props) => {
               </button>
 
               
-              <button className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/70 transition-all cursor-pointer group/cmt">
-                <div className="p-0.5 rounded-full group-hover/cmt:bg-white/[0.06] transition-colors">
-                  <MessageCircle size={14} />
-                </div>
-                <span className="font-medium">Comment</span>
-              </button>
+              <CommentDropdown
+                entityId={post.id}
+                entityType="post"
+                initialCommentCount={post.commentCount ?? post.comments?.length ?? 0}
+              />
 
               <button
                 onClick={() => router.push(`/dashboard/${post.id}`)}

@@ -1,3 +1,5 @@
+import { CommentWithUser } from "./post"
+
 export type ArticleWithExtras = {
     id: string
     title: string
@@ -10,7 +12,7 @@ export type ArticleWithExtras = {
     user: {
         id: string
         name: string | null
-        username: string
+        username: string | null
         image: string | null
     }
 
@@ -22,13 +24,6 @@ export type ArticleWithExtras = {
     likeCount: number
     bookmarked : boolean
 
-    comments: {
-        id: string
-        commentText: string
-        user: {
-            id: string
-            name: string | null
-            username: string
-        }
-    }[]
+    comments?: CommentWithUser[]
+    commentCount?: number
 }

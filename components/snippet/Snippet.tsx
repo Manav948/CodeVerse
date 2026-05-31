@@ -98,19 +98,15 @@ const SnippetCard = ({ snippet }: Props) => {
     },
   });
 
-  const copyButton = () => {
-    navigator.clipboard.writeText(snippet.code);
-    toast.success("Snippet copied");
-  };
 
   return (
     <>
-      <Card className="relative overflow-hidden rounded-xl border border-white/[0.06] bg-[#0d0d0e] hover:bg-[#111113] hover:border-white/[0.11] transition-all duration-200 shadow-sm">
+      <Card className="relative overflow-hidden rounded-xl border border-white/10 bg-black transition-all duration-200 shadow-sm">
         <div className="p-5 space-y-3.5">
 
           <SnippetHeader user={snippet.user} />
 
-          <div className="h-px bg-white/[0.05]" />
+          <div className="h-px bg-white/10" />
 
           <h3 className="text-[15px] font-semibold tracking-tight text-white/95">
             {snippet.title}
@@ -122,15 +118,9 @@ const SnippetCard = ({ snippet }: Props) => {
 
         
           <div
-            onClick={copyButton}
-            className="group/code relative rounded-lg border border-white/[0.06] bg-[#070708] p-4 font-mono text-[11.5px] text-white/70 line-clamp-4 leading-relaxed cursor-pointer hover:border-white/[0.11] transition-all duration-150 overflow-hidden"
+            className="group/code relative rounded-lg border border-white/[0.06] bg-[#070708] p-4 font-mono text-[11.5px] text-white/70 leading-relaxed overflow-x-auto whitespace-pre-wrap bg-white/5"
           >
             {snippet.code}
-            <div className="absolute inset-x-0 bottom-0 h-6 bg-gradient-to-t from-[#070708] to-transparent pointer-events-none" />
-            <FileCode
-              size={14}
-              className="absolute right-3 bottom-3 text-white/20 group-hover/code:text-white/40 transition-colors"
-            />
           </div>
 
       

@@ -5,7 +5,7 @@ import { PostWithExtras } from "@/types/post";
 import Image from "next/image";
 import { Card } from "../ui/card";
 import PostHeader from "./PostHeader";
-import { Bookmark, Heart } from "lucide-react";
+import { Bookmark, EllipsisVertical, Heart } from "lucide-react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -87,37 +87,39 @@ const PostCard = ({ post }: Props) => {
 
   return (
     <>
-      <Card className="relative overflow-hidden rounded-xl border border-white/[0.06] bg-[#0d0d0e] hover:bg-[#111113] hover:border-white/[0.11] transition-all duration-200 mb-3 shadow-sm">
-        <div className="p-5 space-y-3.5">
+      <Card className="group relative overflow-hidden rounded-xl border border-white/10 bg-black transition-all duration-300 mb-4 shadow-[0_8px_30px_rgb(0,0,0,0.5)] backdrop-blur-md">
 
-          <PostHeader user={post.user} />
+        <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-        
-          <div className="h-px bg-white/[0.05]" />
+        <div className="p-5 space-y-4">
+          <div className="flex justify-between items-start">
+            <PostHeader user={post.user} />
+            <button className="flex h-7 w-7 items-center justify-center rounded-md text-white/30 hover:text-white/70 hover:bg-white/[0.06] transition-all focus:outline-none">
+              <EllipsisVertical className="h-4 w-4" />
+            </button>
+          </div>
 
-        
-          <h3 className="text-[15px] font-semibold leading-snug tracking-tight text-white/95">
+          <div className="h-px border-t border-dashed border-white/[0.06]" />
+
+          <h3 className="text-[15.5px] font-semibold leading-snug tracking-tight text-white/90 group-hover:text-white transition-colors duration-200">
             {post.title}
           </h3>
 
-       
-          <p className="text-[13px] text-white/55 leading-relaxed line-clamp-3">
+          <p className="text-[13px] text-white/50 leading-relaxed line-clamp-3 font-normal">
             {post.description}
           </p>
 
-       
           {post.image.length > 0 && (
             <div
-              className={`grid gap-1.5 rounded-lg overflow-hidden border border-white/[0.06] bg-[#070708] w-full aspect-[16/9] max-h-[180px] sm:max-h-[220px] ${
-                post.image.length === 1
+              className={`grid gap-2 rounded-lg overflow-hidden border border-white/[0.05] bg-[#050506] w-full aspect-[16/9] max-h-[180px] sm:max-h-[220px] ${post.image.length === 1
                   ? "grid-cols-1"
                   : post.image.length === 2
-                  ? "grid-cols-2"
-                  : "grid-cols-2 grid-rows-2"
-              }`}
+                    ? "grid-cols-2"
+                    : "grid-cols-2 grid-rows-2"
+                }`}
             >
               {post.image.slice(0, 4).map((img, idx) => {
-                let cellClass = "relative overflow-hidden bg-white/[0.02]";
+                let cellClass = "relative overflow-hidden bg-white/[0.01] group/img";
                 if (post.image.length === 3) {
                   if (idx === 0) {
                     cellClass += " row-span-2 col-span-1";
@@ -131,7 +133,8 @@ const PostCard = ({ post }: Props) => {
                       src={img}
                       alt="Post image"
                       fill
-                      className="object-cover hover:scale-[1.02] transition-transform duration-300"
+                      sizes="(max-width: 768px) 100vw, 50vw"
+                      className="object-cover hover:scale-[1.03] transition-transform duration-500"
                     />
                   </div>
                 );
@@ -139,65 +142,60 @@ const PostCard = ({ post }: Props) => {
             </div>
           )}
 
-         
           {post.tags.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               {post.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag.id}
-                  className="inline-flex text-[11px] font-medium text-white/45 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded-md"
+                  className="inline-flex text-[10px] font-mono text-white/45 bg-white/[0.03] border border-white/[0.05] px-2 py-0.5 rounded hover:bg-white/[0.06] hover:text-white transition-colors cursor-default"
                 >
                   #{tag.name}
                 </span>
               ))}
               {post.tags.length > 3 && (
-                <span className="text-[11px] text-white/30 self-center">
+                <span className="text-[10px] font-mono text-white/30 self-center">
                   +{post.tags.length - 3} more
                 </span>
               )}
             </div>
           )}
 
-        
-          <div className="pt-1 flex items-center justify-between text-[12px] text-white/30">
-            <span className="tabular-nums">
+          <div className="pt-1 flex items-center justify-between text-[11.5px] text-white/35">
+            <span className="font-mono tabular-nums">
               {new Date(post.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
             </span>
 
-            <div className="flex items-center gap-1">
-             
+            <div className="flex items-center gap-1.5">
               <button
                 disabled={isPending}
                 onClick={() => toggleLike()}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/like
-                  ${post.isLiked ? "text-red-500" : "text-white/35 hover:text-red-400"}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/like
+                  ${post.isLiked ? "text-rose-500 bg-rose-500/[0.03] border border-rose-500/20" : "text-white/35 hover:text-rose-400 hover:bg-rose-500/[0.04] border border-transparent"}
                   ${isPending ? "opacity-40 cursor-not-allowed" : ""}
                 `}
               >
-                <div className="p-0.5 rounded-full group-hover/like:bg-red-500/10 transition-colors">
+                <div className="p-0.5 rounded-full transition-colors">
                   <Heart
-                    size={14}
+                    size={13.5}
                     fill={post.isLiked ? "currentColor" : "none"}
                     className="transition-transform duration-150"
                   />
                 </div>
-                <span className="tabular-nums font-medium">{post.likeCount}</span>
+                <span className="tabular-nums font-mono font-medium">{post.likeCount}</span>
               </button>
 
-           
               <button
                 onClick={() => toggleBookmark()}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/bm
-                  ${post.bookmarked ? "text-amber-400" : "text-white/35 hover:text-amber-400"}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/bm
+                  ${post.bookmarked ? "text-amber-400 bg-amber-400/[0.03] border border-amber-400/20" : "text-white/35 hover:text-amber-400 hover:bg-amber-400/[0.04] border border-transparent"}
                 `}
               >
-                <div className="p-0.5 rounded-full group-hover/bm:bg-amber-400/10 transition-colors">
-                  <Bookmark size={14} fill={post.bookmarked ? "currentColor" : "none"} />
+                <div className="p-0.5 rounded-full transition-colors">
+                  <Bookmark size={13.5} fill={post.bookmarked ? "currentColor" : "none"} />
                 </div>
-                <span className="font-medium">Save</span>
+                <span className="font-mono font-medium text-[11px]">Save</span>
               </button>
 
-              
               <CommentDropdown
                 entityId={post.id}
                 entityType="post"
@@ -206,10 +204,10 @@ const PostCard = ({ post }: Props) => {
 
               <button
                 onClick={() => router.push(`/dashboard/${post.id}`)}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/80 transition-all cursor-pointer font-medium"
+                className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-white/[0.04] bg-white/[0.02] text-white/40 hover:text-white hover:bg-white/[0.06] hover:border-white/[0.08] transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 font-mono text-[11px]"
               >
                 View
-                <span className="text-white/20">→</span>
+                <span className="text-white/20 group-hover:translate-x-0.5 transition-transform duration-200">→</span>
               </button>
             </div>
           </div>

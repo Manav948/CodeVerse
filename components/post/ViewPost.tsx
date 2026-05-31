@@ -22,22 +22,20 @@ const ViewPost = ({ post }: Props) => {
     <div className="flex justify-center px-4 py-6">
       <div className="relative w-full max-w-2xl rounded-xl border border-white/[0.06] bg-[#0d0d0e] text-white p-6 sm:p-8 shadow-xl">
 
-        {/* Close Button */}
         <button
-          className="absolute top-4 right-4 flex items-center justify-center h-8 w-8 rounded-full bg-white/[0.04] border border-white/[0.06] text-white/40 hover:text-white hover:bg-white/[0.08] transition-all z-10"
+          className="absolute top-1 right-4 flex items-center justify-center h-8 w-8 rounded-full text-white/40 hover:text-white hover:bg-white/[0.08] transition-all z-10"
           onClick={onClose}
         >
           <CircleX size={16} />
         </button>
 
-        {/* Author */}
         <div className="mt-2">
           <PostHeader user={post.user} />
         </div>
 
         <div className="h-px bg-white/[0.05] my-4" />
 
-        {/* Title & Date */}
+       
         <div className="space-y-1.5">
           <h1 className="text-xl sm:text-2xl font-bold tracking-tight leading-snug text-white">
             {post.title}
@@ -47,12 +45,12 @@ const ViewPost = ({ post }: Props) => {
           </p>
         </div>
 
-        {/* Description */}
+       
         <p className="mt-4 text-[13.5px] sm:text-[14.5px] leading-relaxed text-white/75 whitespace-pre-wrap">
           {post.description}
         </p>
 
-        {/* Images */}
+     
         {post.image?.length > 0 && (
           <div
             className={`mt-4 grid gap-1.5 rounded-lg overflow-hidden border border-white/[0.06] bg-[#070708] w-full aspect-[16/10] max-h-[340px] sm:max-h-[380px] ${
@@ -86,7 +84,6 @@ const ViewPost = ({ post }: Props) => {
           </div>
         )}
 
-        {/* Tags */}
         {post.tags?.length > 0 && (
           <div className="flex flex-wrap gap-1.5 pt-4">
             {post.tags.map((tag) => (
@@ -100,7 +97,7 @@ const ViewPost = ({ post }: Props) => {
           </div>
         )}
 
-        {/* Comment Section */}
+     
         <CommentSection entityId={post.id} entityType="post" />
       </div>
     </div>

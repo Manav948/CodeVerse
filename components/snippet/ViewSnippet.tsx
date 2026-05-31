@@ -36,7 +36,7 @@ const ViewSnippet = ({ snippet }: Props) => {
 
       
         <button
-          className="absolute top-4 right-4 flex items-center justify-center h-8 w-8 rounded-full bg-white/[0.04] border border-white/[0.06] text-white/40 hover:text-white hover:bg-white/[0.08] transition-all"
+          className="absolute top-1 right-4 flex items-center justify-center h-8 w-8 rounded-full text-white/40 hover:text-white hover:bg-white/[0.08] transition-all"
           onClick={onClose}
         >
           <CircleX size={16} />
@@ -67,6 +67,12 @@ const ViewSnippet = ({ snippet }: Props) => {
         <div className="rounded-lg overflow-hidden border border-white/[0.06] bg-[#070708]">
           <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.05] bg-white/[0.01]">
             <div className="flex items-center gap-2">
+              {/* Red, Yellow, Green mock dots */}
+              <div className="flex gap-1.5 mr-2">
+                <span className="w-2.5 h-2.5 rounded-full bg-[#ef4444]/60"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#f59e0b]/60"></span>
+                <span className="w-2.5 h-2.5 rounded-full bg-[#10b981]/60"></span>
+              </div>
               <FileCode size={13} className="text-white/30" />
               <span className="text-[11px] font-mono text-white/40 font-medium">
                 {snippet.language ?? "code"}
@@ -81,8 +87,11 @@ const ViewSnippet = ({ snippet }: Props) => {
             </button>
           </div>
   
-          <pre className="p-5 text-[12px] overflow-x-auto font-mono text-white/80 leading-relaxed bg-white/10">
-            <code>{snippet.code}</code>
+          <pre
+            style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
+            className="p-5 text-[12px] overflow-x-auto text-white/80 leading-relaxed bg-white/10"
+          >
+            <code style={{ fontFamily: 'inherit' }}>{snippet.code}</code>
           </pre>
         </div>
 

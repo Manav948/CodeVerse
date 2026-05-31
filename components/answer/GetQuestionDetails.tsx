@@ -13,6 +13,7 @@ import { useState, useRef } from "react";
 import AddAnswer from "./Answer";
 import AnswerHeader from "./AnswerHeader";
 import Loader from "../ui/Loading";
+import { FormattedContent } from "../question/FormattedContent";
 
 interface Props {
   questionId: string;
@@ -100,20 +101,18 @@ const GetQuestionDetails = ({ questionId }: Props) => {
   };
 
   return (
-    <div className="min-h-screen bg-[#080809] text-white">
+    <div className="min-h-screen bg-black text-white">
       <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8 space-y-6">
 
-        {/* Question card */}
+       
         <Card className="border border-white/[0.06] bg-[#0d0d0e] rounded-xl p-6 space-y-4 shadow-sm">
 
           <h2 className="text-[18px] sm:text-[20px] font-bold tracking-tight leading-snug text-white">
             {data.title}
           </h2>
 
-          <div className="rounded-lg border border-white/[0.06] bg-[#070708] overflow-hidden">
-            <pre className="p-4 text-[12.5px] font-mono text-white/75 leading-relaxed whitespace-pre-wrap overflow-x-auto">
-              {data.description}
-            </pre>
+          <div className="py-1">
+            <FormattedContent text={data.description} />
           </div>
 
           <div className="flex items-center justify-between text-[12px] text-white/30">
@@ -175,9 +174,9 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
               <div className="h-px bg-white/[0.05]" />
 
-              <p className="text-[13px] text-white/70 leading-relaxed whitespace-pre-wrap">
-                {ans.description}
-              </p>
+              <div className="py-1">
+                <FormattedContent text={ans.description} />
+              </div>
 
               <div className="flex items-center justify-between text-[11.5px] text-white/25 pt-0.5">
                 <span className="tabular-nums">

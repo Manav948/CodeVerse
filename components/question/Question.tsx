@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Bookmark, CornerUpRight, Heart } from "lucide-react";
+import { Bookmark, CornerUpRight, EllipsisVertical, Heart } from "lucide-react";
 import toast from "react-hot-toast";
 import { QuestionWithExtras } from "@/types/question";
 import QuestionHeader from "./QuestionHeader";
@@ -97,83 +97,86 @@ const Question = ({ question }: Props) => {
 
   return (
     <>
-      <Card className="relative overflow-hidden rounded-xl border border-white/[0.06] bg-[#0d0d0e] hover:bg-[#111113] hover:border-white/[0.11] transition-all duration-200 mb-3 shadow-sm">
-        <div className="p-5 space-y-3.5">
+      <Card className="group relative overflow-hidden rounded-xl border border-white/[0.05] bg-[#0a0a0c]/85 transition-all duration-300 mb-4 shadow-[0_8px_30px_rgb(0,0,0,0.5)] backdrop-blur-md">
+   
+        <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-          <QuestionHeader user={question.user} />
+        <div className="p-5 space-y-4">
+          <div className="flex justify-between items-start">
+            <QuestionHeader user={question.user} />
+            <button className="flex h-7 w-7 items-center justify-center rounded-md text-white/30 hover:text-white/70 hover:bg-white/[0.06] transition-all focus:outline-none">
+              <EllipsisVertical className="h-4 w-4" />
+            </button>
+          </div>
 
-          <div className="h-px bg-white/[0.05]" />
+          <div className="h-px border-t border-dashed border-white/[0.06]" />
 
-          {/* Title */}
-          <h3 className="text-[15px] font-semibold leading-snug tracking-tight text-white/95">
+          <h3 className="text-[15.5px] font-semibold leading-snug tracking-tight text-white/90 group-hover:text-white transition-colors duration-200">
             {question.title}
           </h3>
 
-          {/* Description */}
-          <p className="text-[13px] text-white/55 leading-relaxed line-clamp-2">
-            {question.description}
+          <p className="text-[13px] text-white/50 leading-relaxed line-clamp-2 font-normal">
+            {question.description
+              ?.replace(/```[a-zA-Z0-9]*\n?/g, "")
+              .replace(/`|[*]{3,5}/g, "")
+              .trim()}
           </p>
 
-          {/* Footer row */}
-          <div className="pt-1 flex items-center justify-between text-[12px] text-white/30">
-            <span className="tabular-nums">
+          <div className="pt-1 flex items-center justify-between text-[11.5px] text-white/35">
+            <span className="font-mono tabular-nums">
               {new Date(question.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
             </span>
 
-            <div className="flex items-center gap-1">
-              {/* Like */}
+            <div className="flex items-center gap-1.5">
               <button
                 disabled={isPending}
                 onClick={(e) => {
                   e.stopPropagation();
                   toggleLike();
                 }}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/like
-                  ${question.isLiked ? "text-red-500" : "text-white/35 hover:text-red-400"}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/like
+                  ${question.isLiked ? "text-rose-500 bg-rose-500/[0.03] border border-rose-500/20" : "text-white/35 hover:text-rose-400 hover:bg-rose-500/[0.04] border border-transparent"}
                   ${isPending ? "opacity-40 cursor-not-allowed" : ""}
                 `}
               >
-                <div className="p-0.5 rounded-full group-hover/like:bg-red-500/10 transition-colors">
+                <div className="p-0.5 rounded-full transition-colors">
                   <Heart
-                    size={14}
+                    size={13.5}
                     fill={question.isLiked ? "currentColor" : "none"}
                     className="transition-transform duration-150"
                   />
                 </div>
-                <span className="tabular-nums font-medium">{question.likeCount}</span>
+                <span className="tabular-nums font-mono font-medium">{question.likeCount}</span>
               </button>
 
-              {/* Bookmark */}
               <button
                 onClick={() => toggleBookmark()}
-                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-150 cursor-pointer group/bm
-                  ${question.bookmarked ? "text-amber-400" : "text-white/35 hover:text-amber-400"}
+                className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/bm
+                  ${question.bookmarked ? "text-amber-400 bg-amber-400/[0.03] border border-amber-400/20" : "text-white/35 hover:text-amber-400 hover:bg-amber-400/[0.04] border border-transparent"}
                 `}
               >
-                <div className="p-0.5 rounded-full group-hover/bm:bg-amber-400/10 transition-colors">
-                  <Bookmark size={14} fill={question.bookmarked ? "currentColor" : "none"} />
+                <div className="p-0.5 rounded-full transition-colors">
+                  <Bookmark size={13.5} fill={question.bookmarked ? "currentColor" : "none"} />
                 </div>
-                <span className="font-medium">Save</span>
+                <span className="font-mono font-medium text-[11px]">Save</span>
               </button>
 
-              {/* Reply */}
               <button
                 onClick={replyButton}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/70 transition-all cursor-pointer group/rpl"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/70 hover:bg-white/[0.04] transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/rpl"
               >
-                <div className="p-0.5 rounded-full group-hover/rpl:bg-white/[0.06] transition-colors">
-                  <CornerUpRight size={14} />
+                <div className="p-0.5 rounded-full transition-colors">
+                  <CornerUpRight size={13.5} />
                 </div>
-                <span className="font-medium">Reply</span>
+                <span className="font-mono font-medium text-[11px]">Reply</span>
               </button>
 
-              {/* View */}
               <button
                 onClick={() => router.push(`/qa/question/${question.id}`)}
-                className="flex items-center gap-1 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/80 transition-all cursor-pointer font-medium"
+                className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-white/[0.04] bg-white/[0.02] text-white/40 hover:text-white hover:bg-white/[0.06] hover:border-white/[0.08] transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 font-mono text-[11px]"
               >
                 View
-                <span className="text-white/20">→</span>
+                <span className="text-white/20 group-hover:translate-x-0.5 transition-transform duration-200">→</span>
               </button>
             </div>
           </div>

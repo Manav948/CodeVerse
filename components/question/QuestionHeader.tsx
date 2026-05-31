@@ -70,10 +70,6 @@ const QuestionHeader = ({ user }: { user?: QuestionUser }) => {
           </span>
         </div>
       </div>
-
-      <button className="flex h-7 w-7 items-center justify-center rounded-md text-white/30 hover:text-white/70 hover:bg-white/[0.06] transition-all focus:outline-none">
-        <EllipsisVertical className="h-4 w-4" />
-      </button>
     </div>
   );
 };

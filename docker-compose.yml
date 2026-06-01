@@ -1,0 +1,45 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: codeverse-app
+    ports:
+      - "3000:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgresql://nextjs:nextjspass@db:5432/codeverse
+      - NEXTAUTH_SECRET=please-change-this-to-a-secure-secret-key-at-least-32-chars
+      - NEXTAUTH_URL=http://localhost:3000
+      - GOOGLE_CLIENT_ID=${GOOGLE_CLIENT_ID:-}
+      - GOOGLE_CLIENT_SECRET=${GOOGLE_CLIENT_SECRET:-}
+      - GITHUB_ID=${GITHUB_ID:-}
+      - GITHUB_SECRET=${GITHUB_SECRET:-}
+      # Upstash Redis variables can be set here if needed
+      # - UPSTASH_REDIS_REST_URL=${UPSTASH_REDIS_REST_URL:-}
+      # - UPSTASH_REDIS_REST_TOKEN=${UPSTASH_REDIS_REST_TOKEN:-}
+    restart: always
+
+  db:
+    image: postgres:16-alpine
+    container_name: codeverse-db
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=nextjs
+      - POSTGRES_PASSWORD=nextjspass
+      - POSTGRES_DB=codeverse
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U nextjs -d codeverse"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 5s
+    restart: always
+
+volumes:
+  postgres_data:

@@ -4,6 +4,7 @@ import path from "path";
 const withNextIntl = require("next-intl/plugin")("./i18n.ts");
 
 const nextConfig: NextConfig = {
+  output: "standalone",
   images: {
     remotePatterns: [
       {

@@ -9,6 +9,9 @@ export default defineConfig({
     path: "prisma/migrations",
   },
   datasource: {
-    url: process.env["DATABASE_URL"],
+    // Use the direct (non-pooled) URL for migrations; runtime queries use
+    // the PgBouncer transaction-mode URL set in DATABASE_URL via db.ts
+    url: process.env["DIRECT_URL"] ?? process.env["DATABASE_URL"],
   },
 });
+

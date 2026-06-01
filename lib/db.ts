@@ -6,19 +6,22 @@ declare global {
   var prisma: PrismaClient | undefined;
 }
 
-const adapter = new PrismaPg({
-  connectionString: process.env.DATABASE_URL!,
-});
+function createPrismaClient() {
+  const adapter = new PrismaPg({
+    connectionString: process.env.DATABASE_URL!,
+  });
 
-export const db =
-  global.prisma ??
-  new PrismaClient({
+  return new PrismaClient({
     adapter,
     log: process.env.NODE_ENV === "development"
       ? ["error", "warn"]
       : ["error"],
   });
+}
+
+export const db = global.prisma ?? createPrismaClient();
 
 if (process.env.NODE_ENV !== "production") {
   global.prisma = db;
 }
+

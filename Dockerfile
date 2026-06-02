@@ -37,15 +37,20 @@ RUN npm run build
 FROM base AS runner
 WORKDIR /app
 
+# Install Prisma globally to make sure the migrations CLI has all its dependencies (like valibot) self-contained
+RUN npm install -g prisma@7.3.0
+
 # Set production environment variables
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 ENV NEXT_TELEMETRY_DISABLED=1
+ENV PRISMA_CLI_DISABLE_TELEMETRY=1
+ENV CHECKPOINT_DISABLE=1
 
-# Create a non-root system user and group for security
+# Create a non-root system user and group with a home directory for security
 RUN groupadd --system --gid 1001 nodejs && \
-    useradd --system --uid 1001 nextjs
+    useradd --system --uid 1001 --create-home --home-dir /home/nextjs nextjs
 
 # Set up directory for Next.js cache with proper permissions
 RUN mkdir .next && chown nextjs:nodejs .next
@@ -61,9 +66,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/prisma ./prisma
 COPY --from=builder --chown=nextjs:nodejs /app/lib/generated/prisma ./lib/generated/prisma
 
-# Copy Prisma CLI and engines for running migrations in production
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
+
 
 # Copy translation messages for next-intl localizations
 COPY --from=builder --chown=nextjs:nodejs /app/messages ./messages

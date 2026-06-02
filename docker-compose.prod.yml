@@ -37,7 +37,7 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: codeverse-db-migrate-prod
-    command: node node_modules/prisma/build/index.js migrate deploy
+    command: prisma migrate deploy
     environment:
       - DATABASE_URL=${DATABASE_URL}
     logging:

@@ -25,9 +25,9 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
+          port: ${{ secrets.SSH_PORT}}
           source: "docker-compose.prod.yml"
-          target: ${{ secrets.DEPLOY_PATH || '~/code-verse' }}
+          target: "/home/ubuntu/codeverse"
 
       - name: Deploy and Restart via SSH
         uses: appleboy/ssh-action@v1.0.3
@@ -35,19 +35,18 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
+          port: ${{ secrets.SSH_PORT}}
           script: |
-            # Navigate to deploy directory
-            cd ${{ secrets.DEPLOY_PATH || '~/code-verse' }}
+            mkdir -p /home/ubuntu/codeverse
+            cd /home/ubuntu/codeverse
 
-            # Log in to GitHub Container Registry on the remote VPS
-            # Note: GHCR_PULL_TOKEN should be a GitHub PAT with 'read:packages' permission
-            echo "${{ secrets.GHCR_PULL_TOKEN || secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            # Log in to Docker Hub on the remote VPS
+            echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
-            # Pull the latest Docker images from GHCR
+            # Pull the latest Docker images from Docker Hub
             docker compose -f docker-compose.prod.yml pull
 
-            # Start/recreate the production containers
+            # Start/recreate the production containers (Prisma migrations run automatically first)
             docker compose -f docker-compose.prod.yml up -d --remove-orphans
 
             # Clean up old unused images to save disk space on the host

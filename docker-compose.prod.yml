@@ -1,5 +1,6 @@
 services:
   app:
+    image: ${DOCKER_USERNAME:-manav948}/codeverse:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -31,6 +32,7 @@ services:
         max-file: "3"
 
   db-migrate:
+    image: ${DOCKER_USERNAME:-manav948}/codeverse:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -51,7 +53,7 @@ services:
     image: postgres:16-alpine
     container_name: codeverse-db-prod
     restart: always
-    # Bind to 127.0.0.1:5432 to allow local management from the host while blocking public internet traffic
+    # Bind to localhost 127.0.0.1 to avoid exposing the database port publicly to the open internet
     ports:
       - "127.0.0.1:5432:5432"
     environment:

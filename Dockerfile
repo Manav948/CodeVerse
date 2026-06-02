@@ -63,7 +63,7 @@ COPY --from=builder --chown=nextjs:nodejs /app/lib/generated/prisma ./lib/genera
 
 # Copy Prisma CLI and engines for running migrations in production
 COPY --from=builder --chown=nextjs:nodejs /app/node_modules/prisma ./node_modules/prisma
-COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma/engines ./node_modules/@prisma/engines
+COPY --from=builder --chown=nextjs:nodejs /app/node_modules/@prisma ./node_modules/@prisma
 
 # Copy translation messages for next-intl localizations
 COPY --from=builder --chown=nextjs:nodejs /app/messages ./messages

@@ -25,7 +25,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT}}
+          port: ${{ secrets.SSH_PORT || 22 }}
           source: "docker-compose.prod.yml"
           target: "/home/ubuntu/codeverse"
 
@@ -35,7 +35,7 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USERNAME }}
           key: ${{ secrets.SSH_KEY }}
-          port: ${{ secrets.SSH_PORT}}
+          port: ${{ secrets.SSH_PORT || 22 }}
           script: |
             mkdir -p /home/ubuntu/codeverse
             cd /home/ubuntu/codeverse

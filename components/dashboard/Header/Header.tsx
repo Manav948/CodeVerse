@@ -63,7 +63,7 @@ const Header = () => {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-black/40 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 w-full border-b border-white/5 bg-[#090909]/80 backdrop-blur-md">
       <div className="mx-auto flex h-16 max-w-7xl items-center gap-3 px-4">
 
         <div className="flex flex-1 items-center gap-2">
@@ -73,12 +73,12 @@ const Header = () => {
 
           <div className="relative w-full max-w-xs md:max-w-sm">
             <Search
-              size={16}
-              className="absolute left-3 top-1/2 -translate-y-1/2 text-white/40"
+              size={14}
+              className="absolute left-3 top-1/2 -translate-y-1/2 text-white/30"
             />
             <input
               placeholder="Search..."
-              className="h-10 w-full rounded-xl border border-white/10 bg-white/5 pl-9 pr-3 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-cyan-500/40"
+              className="h-9 w-full rounded-lg border border-white/5 bg-[#111111] pl-9 pr-3 text-xs text-white placeholder:text-white/30 focus:border-red-500/30 focus:outline-none transition-colors focus:ring-0"
             />
           </div>
         </div>
@@ -86,24 +86,24 @@ const Header = () => {
         <div className="flex items-center gap-3">
 
           {matched && (
-            <Button
+            <button
               onClick={() => router.push(matched.action.href)}
-              className="h-10 rounded-xl bg-red-500/60 text-white px-3 flex items-center gap-2"
+              className="h-9 rounded-lg bg-red-500 hover:bg-red-600 text-white px-4 flex items-center gap-2 text-xs font-medium shadow-[0_0_15px_rgba(239,68,68,0.1)] transition-all cursor-pointer border border-transparent"
             >
-              <matched.action.icon size={16} />
+              <matched.action.icon size={14} />
               <span className="hidden md:inline">
                 {matched.action.label}
               </span>
-            </Button>
+            </button>
           )}
 
           <Popover open={open} onOpenChange={handleOpenChange}>
             <PopoverTrigger asChild>
-              <button className="relative rounded-lg p-2 text-white/50 hover:text-white/80 hover:bg-white/[0.05] transition-all duration-150">
-                <Bell size={18} />
+              <button className="relative rounded-lg p-2 text-white/40 hover:text-white/80 hover:bg-white/5 border border-transparent hover:border-white/5 transition-all duration-150 cursor-pointer outline-none">
+                <Bell size={16} />
 
                 {newCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] flex items-center justify-center text-[9px] rounded-full bg-red-500/80 border border-black/60 text-white font-semibold px-[3px] leading-none">
+                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] flex items-center justify-center text-[9px] rounded-full bg-red-500 border border-[#090909] text-white font-semibold px-[3px] leading-none">
                     {newCount > 9 ? "9+" : newCount}
                   </span>
                 )}
@@ -113,7 +113,7 @@ const Header = () => {
             <PopoverContent
               align="end"
               sideOffset={8}
-              className="w-[380px] p-0 rounded-xl border border-white/[0.08] bg-[#111111] shadow-[0_8px_32px_rgba(0,0,0,0.55)] backdrop-blur-xl overflow-hidden"
+              className="w-[380px] p-0 rounded-xl border border-white/5 bg-[#111111] shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden"
             >
               <Notification close={() => setOpen(false)} />
             </PopoverContent>

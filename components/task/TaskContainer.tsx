@@ -13,7 +13,7 @@ const TaskContainer = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-black text-white relative flex">
+    <div className="min-h-screen bg-[#090909] text-white relative flex">
       <aside className="hidden lg:flex w-16">
         <Sidebar active={active} setActive={setActive} />
       </aside>
@@ -32,7 +32,7 @@ const TaskContainer = () => {
               animate={{ x: 0 }}
               exit={{ x: -80 }}
               transition={{ duration: 0.2 }}
-              className="fixed top-0 left-0 h-full w-16 bg-black border-r border-white/10 z-50 lg:hidden"
+              className="fixed top-0 left-0 h-full w-16 bg-[#090909] border-r border-white/10 z-50 lg:hidden"
             >
               <Sidebar active={active} setActive={setActive} />
             </motion.aside>

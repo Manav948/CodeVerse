@@ -32,26 +32,26 @@ export function TaskMetaFields<T extends FieldValues>({
 
           return (
             <FormItem className="flex flex-col">
-              <FormLabel>Due Date</FormLabel>
+              <FormLabel className="text-xs font-mono uppercase tracking-wider text-white/45">Due Date</FormLabel>
 
               <Popover>
                 <PopoverTrigger asChild>
                   <FormControl>
                     <button
                       type="button"
-                      className="flex items-center justify-between w-full px-4 py-2 rounded-xl border border-white/10 bg-black text-white hover:border-white/30 transition"
+                      className="flex items-center justify-between w-full px-4 py-2.5 rounded-xl border border-white/5 bg-[#090909] text-white hover:border-white/20 hover:bg-[#090909]/80 transition text-sm cursor-pointer outline-none"
                     >
                       {selectedDate
                         ? format(selectedDate, "PPP p")
                         : "Select date & time"}
 
-                      <CalendarIcon className="w-4 h-4 opacity-60" />
+                      <CalendarIcon className="w-4 h-4 opacity-60 text-white/40" />
                     </button>
                   </FormControl>
                 </PopoverTrigger>
 
                 <PopoverContent
-                  className="w-auto p-4 bg-black text-white border border-white/10 rounded-2xl"
+                  className="w-auto p-4 bg-[#111111] text-white border border-white/5 rounded-2xl shadow-2xl"
                   align="start"
                 >
                   <Calendar
@@ -75,7 +75,7 @@ export function TaskMetaFields<T extends FieldValues>({
                   />
 
                   <div className="mt-4">
-                    <label className="text-xs text-white/50 block mb-1">
+                    <label className="text-xs text-white/40 block mb-1.5 font-mono uppercase tracking-wider">
                       Time
                     </label>
                     <input
@@ -103,7 +103,7 @@ export function TaskMetaFields<T extends FieldValues>({
                           updated.toISOString()
                         );
                       }}
-                      className="w-full bg-black border border-white/10 rounded-xl px-3 py-2 text-white focus:ring-1 focus:ring-red-500"
+                      className="w-full bg-[#090909] border border-white/5 rounded-xl px-3 py-2 text-white focus:border-red-500/30 outline-none text-sm transition-colors focus:ring-0"
                     />
                   </div>
                 </PopoverContent>
@@ -120,21 +120,21 @@ export function TaskMetaFields<T extends FieldValues>({
         name={"priority" as any}
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Priority</FormLabel>
+            <FormLabel className="text-xs font-mono uppercase tracking-wider text-white/45">Priority</FormLabel>
             <Select
               onValueChange={field.onChange}
               value={field.value}
             >
               <FormControl>
-                <SelectTrigger className="bg-black/40 border-white/10 p-3 text-white">
+                <SelectTrigger className="bg-[#090909] border border-white/5 p-3 rounded-xl text-white text-sm focus:border-red-500/30 focus:ring-0">
                   <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
               </FormControl>
 
-              <SelectContent className="bg-black text-white border-white/10">
-                <SelectItem value="LOW">Low</SelectItem>
-                <SelectItem value="MEDIUM">Medium</SelectItem>
-                <SelectItem value="HIGH">High</SelectItem>
+              <SelectContent className="bg-[#111111] text-white border border-white shadow-2xl rounded-lg">
+                <SelectItem value="LOW" className="cursor-pointer hover:bg-white  text-xs py-2">Low</SelectItem>
+                <SelectItem value="MEDIUM" className="cursor-pointer hover:bg-white  text-xs py-2">Medium</SelectItem>
+                <SelectItem value="HIGH" className="cursor-pointer hover:bg-white text-xs py-2">High</SelectItem>
               </SelectContent>
             </Select>
 

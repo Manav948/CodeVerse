@@ -1,5 +1,6 @@
 "use client";
 
+import React from "react";
 import ReactFlow, {
   Background,
   Node,
@@ -13,7 +14,7 @@ const baseNodeStyle = {
   padding: "6px 10px",
   borderRadius: "8px",
   fontSize: "10px",
-  color: "#e5e7eb",
+  color: "#e5e7eb", 
   border: "1px solid rgba(255,255,255,0.08)",
   background: "rgba(255,255,255,0.04)",
   width: 110,
@@ -43,8 +44,8 @@ const nodes: Node[] = [
     data: { label: "Multi-Head Attn" },
     style: {
       ...baseNodeStyle,
-      boxShadow: "0 0 10px rgba(168,85,247,0.4)",
-      border: "1px solid rgba(168,85,247,0.4)",
+      boxShadow: "0 0 10px rgba(239,68,68,0.4)",
+      border: "1px solid rgba(239,68,68,0.4)",
     },
     sourcePosition: Position.Bottom,
     targetPosition: Position.Top,
@@ -72,8 +73,8 @@ const nodes: Node[] = [
     data: { label: "Cross Attn" },
     style: {
       ...baseNodeStyle,
-      boxShadow: "0 0 10px rgba(59,130,246,0.4)",
-      border: "1px solid rgba(59,130,246,0.4)",
+      boxShadow: "0 0 10px rgba(248,113,113,0.4)",
+      border: "1px solid rgba(248,113,113,0.4)",
     },
     sourcePosition: Position.Bottom,
     targetPosition: Position.Top,
@@ -87,28 +88,27 @@ const nodes: Node[] = [
 ];
 
 const edges: Edge[] = [
-  { id: "e1", source: "l1", target: "l2", animated: true },
-  { id: "e2", source: "l2", target: "l3", animated: true },
-  { id: "e3", source: "l3", target: "l4", animated: true },
+  { id: "e1", source: "l1", target: "l2", animated: true, style: { stroke: "rgba(255,255,255,0.2)" } },
+  { id: "e2", source: "l2", target: "l3", animated: true, style: { stroke: "rgba(255,255,255,0.2)" } },
+  { id: "e3", source: "l3", target: "l4", animated: true, style: { stroke: "rgba(255,255,255,0.2)" } },
 
-  { id: "e4", source: "r1", target: "r2", animated: true },
-  { id: "e5", source: "r2", target: "r3", animated: true },
+  { id: "e4", source: "r1", target: "r2", animated: true, style: { stroke: "rgba(255,255,255,0.2)" } },
+  { id: "e5", source: "r2", target: "r3", animated: true, style: { stroke: "rgba(255,255,255,0.2)" } },
 
   {
     id: "bridge",
     source: "l3",
     target: "r2",
     animated: true,
-    style: { stroke: "#a855f7" },
+    style: { stroke: "#ef4444" },
     markerEnd: { type: MarkerType.ArrowClosed },
   },
 ];
 
 const TaskArchitecturePanel = () => {
   return (
-    <div className="relative h-100 rounded-2xl border border-white/10 bg- shadow-[0_0_40px_rgba(99,102,241,0.08)] overflow-hidden">
-
-      <div className="absolute top-4 left-6 text-xs tracking-widest text-white/40">
+    <div className="relative h-100 rounded-2xl border border-white/10 bg-black/60 shadow-[0_0_40px_rgba(239,68,68,0.08)] overflow-hidden">
+      <div className="absolute top-4 left-6 text-xs tracking-widest text-white/40 font-mono">
         TASK WORKFLOW
       </div>
 
@@ -126,7 +126,7 @@ const TaskArchitecturePanel = () => {
           <Background
             gap={24}
             size={1}
-            color="rgba(255,255,255,0.04)"
+            color="rgba(255,255,255,0.02)"
           />
         </ReactFlow>
       </div>

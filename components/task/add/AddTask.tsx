@@ -18,20 +18,9 @@ import {
     FormLabel,
     FormMessage,
 } from "../../ui/form";
-import { Card } from "../../ui/card";
-import { Input } from "../../ui/input";
-import { Button } from "../../ui/button";
 import { Switch } from "../../ui/switch";
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from "../../ui/select";
-import { Textarea } from "../../ui/textarea";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
-import { CalendarIcon, CircleX } from "lucide-react";
+import { CalendarIcon, X } from "lucide-react";
 import { Calendar } from "@/components/ui/calendar";
 import { format } from "date-fns";
 import { TaskMetaFields } from "../TaskMetaFields";
@@ -87,21 +76,23 @@ const AddTask = () => {
     };
 
     return (
-        <div className="max-w-2xl mx-auto ">
-            <Card className=" relative p-6 bg-black border  py-8 border-white/10  shadow-2xl space-y-8 text-white">
+        <div className="max-w-2xl mx-auto">
+            <div className="relative p-6 sm:p-8 bg-[#111111] border border-white/5 rounded-2xl shadow-2xl space-y-8 text-white">
 
-                <div className="space-y-2">
-                    <h2 className="text-3xl font-bold tracking-tight text-white">
+                <div className="space-y-2.5">
+                    <h2 className="text-xl sm:text-2xl font-semibold tracking-tight text-white/95">
                         Create New Task
                     </h2>
-                    <p className="text-sm text-white/50">
+                    <p className="text-xs sm:text-sm text-white/40 font-normal leading-relaxed">
                         Organize your work efficiently and track GitHub progress if needed.
                     </p>
-                <button
-                    className="top-4 absolute right-4 flex items-center h-9 w-9 rounded-full justify-center  text-white/60 hover:text-white  transition"
-                    onClick={onClose}>
-                    <CircleX size={20} />
-                </button>
+                    <button
+                        type="button"
+                        className="top-6 absolute right-6 flex items-center h-8 w-8 rounded-lg justify-center text-white/30 hover:text-white/80 hover:bg-white/5 border border-white/5 transition cursor-pointer"
+                        onClick={onClose}
+                    >
+                        <X size={15} />
+                    </button>
                 </div>
 
                 <Form {...form}>
@@ -114,12 +105,12 @@ const AddTask = () => {
                             name="title"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Task Title</FormLabel>
+                                    <FormLabel className="text-xs font-mono uppercase tracking-wider text-white/45">Task Title</FormLabel>
                                     <FormControl>
-                                        <Input
+                                        <input
                                             placeholder="Build authentication system"
                                             {...field}
-                                            className="bg-black/40 border-white/10 focus:ring-1 focus:ring-red-500"
+                                            className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -131,30 +122,32 @@ const AddTask = () => {
                             name="content"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Description</FormLabel>
+                                    <FormLabel className="text-xs font-mono uppercase tracking-wider text-white/45">Description</FormLabel>
                                     <FormControl>
-                                        <Textarea
+                                        <textarea
                                             placeholder="Describe your task in detail..."
                                             rows={4}
                                             {...field}
-                                            className="bg-black/40 border-white/10 focus:ring-1 focus:ring-red-500"
+                                            className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0 resize-none"
                                         />
                                     </FormControl>
                                     <FormMessage />
                                 </FormItem>
                             )}
                         />
+                        
                         <TaskMetaFields control={form.control} />
+
                         <FormField
                             control={form.control}
                             name="isStudent"
                             render={({ field }) => (
-                                <FormItem className="flex items-center justify-between rounded-xl border border-white/10 p-5 bg-black/40">
-                                    <div>
-                                        <FormLabel className="text-base">
+                                <FormItem className="flex items-center justify-between rounded-xl border border-white/5 p-4 sm:p-5 bg-[#090909]">
+                                    <div className="space-y-0.5">
+                                        <FormLabel className="text-sm font-medium text-white/90">
                                             Track with GitHub
                                         </FormLabel>
-                                        <p className="text-xs text-white/50">
+                                        <p className="text-[11px] text-white/40 leading-normal">
                                             Enable to monitor repository activity.
                                         </p>
                                     </div>
@@ -162,6 +155,7 @@ const AddTask = () => {
                                         <Switch
                                             checked={field.value}
                                             onCheckedChange={field.onChange}
+                                            className="data-[state=checked]:bg-red-500"
                                         />
                                     </FormControl>
                                 </FormItem>
@@ -182,12 +176,12 @@ const AddTask = () => {
                                         name="githubRepo"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>GitHub Repository URL</FormLabel>
+                                                <FormLabel className="text-xs font-mono uppercase tracking-wider text-white/45">GitHub Repository URL</FormLabel>
                                                 <FormControl>
-                                                    <Input
+                                                    <input
                                                         placeholder="https://github.com/username/repo"
                                                         {...field}
-                                                        className="bg-black/40 border-white/10"
+                                                        className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -200,12 +194,12 @@ const AddTask = () => {
                                         name="githubUserName"
                                         render={({ field }) => (
                                             <FormItem>
-                                                <FormLabel>GitHub Username</FormLabel>
+                                                <FormLabel className="text-xs font-mono uppercase tracking-wider text-white/45">GitHub Username</FormLabel>
                                                 <FormControl>
-                                                    <Input
+                                                    <input
                                                         placeholder="username"
                                                         {...field}
-                                                        className="bg-black/40 border-white/10"
+                                                        className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -215,16 +209,17 @@ const AddTask = () => {
                                 </motion.div>
                             )}
                         </AnimatePresence>
-                        <Button
+                        
+                        <button
                             type="submit"
                             disabled={isPending}
-                            className="w-full h-10 rounded-xl bg-red-500/60 hover:opacity-90 transition-all font-semibold"
+                            className="w-full h-11 rounded-xl bg-red-500 hover:bg-red-600 text-white font-medium shadow-[0_0_20px_rgba(239,68,68,0.15)] transition-all cursor-pointer flex items-center justify-center gap-1.5 text-sm disabled:opacity-50 disabled:pointer-events-none"
                         >
                             {isPending ? "Creating Task..." : "Create Task"}
-                        </Button>
+                        </button>
                     </form>
                 </Form>
-            </Card>
+            </div>
         </div>
     );
 };

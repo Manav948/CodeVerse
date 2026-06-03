@@ -22,22 +22,6 @@ export default function Page() {
     enabled: !!snippetId,
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-black text-white">
-        <Loader />
-      </div>
-    );
-  }
-
-  if (!snippet) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-black text-white">
-        Snippet not found
-      </div>
-    );
-  }
-
   return (
     <div className="h-screen bg-black text-white flex flex-col">
       <Header />
@@ -45,7 +29,17 @@ export default function Page() {
         <Sidebar />
         <main className="flex-1 overflow-y-auto">
           <div className="mx-auto max-w-3xl py-10 px-4">
-            <ViewSnippet snippet={snippet} />
+            {isLoading ? (
+              <div className="py-20 text-center text-white/50">
+                <Loader />
+              </div>
+            ) : !snippet ? (
+              <div className="text-center py-20 text-white/50">
+                Snippet not found
+              </div>
+            ) : (
+              <ViewSnippet snippet={snippet} />
+            )}
           </div>
         </main>
       </div>

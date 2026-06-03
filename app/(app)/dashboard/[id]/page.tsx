@@ -21,22 +21,6 @@ export default function Page() {
     enabled: !!postId,
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-black text-white">
-        <Loader />
-      </div>
-    );
-  }
-
-  if (!post) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-black text-white">
-        Post not found
-      </div>
-    );
-  }
-
   return (
     <div className="h-screen bg-black text-white flex flex-col">
       <Header />
@@ -44,7 +28,17 @@ export default function Page() {
         <Sidebar />
         <main className="flex-1 overflow-y-auto">
           <div className="mx-auto max-w-3xl py-10 px-4">
-            <ViewPost post={post} />
+            {isLoading ? (
+              <div className="py-20 text-center text-white/50">
+                <Loader />
+              </div>
+            ) : !post ? (
+              <div className="text-center py-20 text-white/50">
+                Post not found
+              </div>
+            ) : (
+              <ViewPost post={post} />
+            )}
           </div>
         </main>
       </div>

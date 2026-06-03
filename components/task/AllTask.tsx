@@ -89,7 +89,11 @@ const AllTask = () => {
     onSuccess: () => toast.success("Task deleted"),
   });
 
-  if (isLoading) return <Loader />;
+  if (isLoading) return(
+    <div className="py-20 text-center text-white/50">
+      <Loader />
+    </div>
+  );
   if (isError)
     return (
       <div className="text-center text-red-500 mt-10">

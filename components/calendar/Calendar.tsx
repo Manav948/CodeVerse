@@ -37,7 +37,7 @@ const Calendar = () => {
       </aside>
       <main className="flex-1 px-6 py-8 space-y-6">
         {isLoading && (
-          <div className="flex justify-center py-20">
+          <div className="py-20 text-center text-white/50">
             <Loader />
           </div>
         )}

@@ -51,7 +51,7 @@ const Settings = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center ext-white/60 animate-pulse">
+      <div className="py-20 text-center text-white/50">
         <Loader />
       </div>
     );

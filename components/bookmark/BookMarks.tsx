@@ -29,7 +29,7 @@ const BookMarks = () => {
 
   if (isLoading) {
     return (
-      <div className="flex items-center justify-center py-20">
+      <div className="py-20 text-center text-white/50">
         <Loader />
       </div>
     );

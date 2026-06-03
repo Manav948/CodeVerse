@@ -77,7 +77,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#080809] flex items-center justify-center">
+      <div className="py-20 text-center text-white/50">
         <Loader />
       </div>
     );
@@ -85,7 +85,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
   if (isError) {
     return (
-      <div className="min-h-screen bg-[#080809] text-red-400/80 text-[13px] flex items-center justify-center">
+      <div className="py-20 text-center text-red-400/80 text-[13px]">
         {(error as Error).message}
       </div>
     );

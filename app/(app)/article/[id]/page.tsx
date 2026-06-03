@@ -23,22 +23,6 @@ export default function Page() {
     enabled: !!articleId,
   });
 
-  if (isLoading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-black text-white">
-        <Loader />
-      </div>
-    );
-  }
-
-  if (!article) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-black text-white">
-        article not found
-      </div>
-    );
-  }
-
   return (
     <div className="h-screen bg-black text-white flex flex-col">
       <Header />
@@ -46,7 +30,17 @@ export default function Page() {
         <Sidebar />
         <main className="flex-1 overflow-y-auto">
           <div className="mx-auto max-w-3xl py-10 px-4">
-            <ViewArticle article={article} />
+            {isLoading ? (
+              <div className="py-20 text-center text-white/50">
+                <Loader />
+              </div>
+            ) : !article ? (
+              <div className="text-center py-20 text-white/50">
+                article not found
+              </div>
+            ) : (
+              <ViewArticle article={article} />
+            )}
           </div>
         </main>
       </div>

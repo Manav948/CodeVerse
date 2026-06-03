@@ -33,7 +33,7 @@ const DashboardContainer = () => {
 
   if (isLoading) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-black">
+      <div className="py-20 text-center text-white/50">
         <Loader />
       </div>
     );

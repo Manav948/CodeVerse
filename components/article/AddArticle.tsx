@@ -19,16 +19,13 @@ import {
   FormLabel,
   FormMessage,
 } from "../ui/form";
-import { Input } from "../ui/input";
-import { Textarea } from "../ui/textarea";
-import { Button } from "../ui/button";
 import { ChipInput } from "../ui/ChipInput";
 import { ImageDropZone } from "../ui/Drag-Drop";
 
 import Header from "../dashboard/Header/Header";
 import Sidebar from "../dashboard/Sidebar";
 import { addArticleSchema, AddArticleSchema } from "@/schema/addArticleSchema";
-import { CircleX } from "lucide-react";
+import { X } from "lucide-react";
 
 const AddArticle = () => {
   const router = useRouter();
@@ -71,25 +68,33 @@ const AddArticle = () => {
     router.push("/article")
   }
   return (
-    <div className="h-screen bg-black text-white overflow-hidden">
+    <div className="min-h-screen bg-[#090909] text-white overflow-hidden">
       <Header />
       <div className="flex h-[calc(100vh-64px)]">
-        <aside className="hidden md:block w-64 shrink-0 border-r border-white/10">
+        <aside className="hidden md:block w-64 shrink-0 border-r border-white/5 bg-[#090909]">
           <Sidebar />
         </aside>
-        <main className="relative flex-1 overflow-y-auto overflow-x-hidden">
-          <div className="pointer-events-none absolute -top-32 -left-32 h-80 w-80 rounded-full bg-purple-500/20 blur-3xl" />
-          <div className="pointer-events-none absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-cyan-500/20 blur-3xl" />
-          <div className="relative mx-auto max-w-3xl px-4 py-10">
-            <div className="rounded-3xl border border-white/10 bg-black backdrop-blur-xl p-8">
-              <button
-                className="absolute top-4 right-4 flex items-center h-9 w-9 rounded-full justify-centerborder border-white/10 text-white/60 hover:text-white  transition"
-                onClick={onClose}>
-                <CircleX size={20} />
-              </button>
-              <h1 className="mb-6 text-2xl font-semibold">
-                Create Article
-              </h1>
+        <main className="relative flex-1 overflow-y-auto overflow-x-hidden p-6 sm:p-8 bg-[#090909]">
+          <div className="pointer-events-none absolute -top-32 -left-32 h-80 w-80 rounded-full bg-red-500/5 blur-3xl" />
+          <div className="pointer-events-none absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-red-500/5 blur-3xl" />
+          <div className="relative mx-auto max-w-3xl">
+            <div className="relative p-6 sm:p-8 bg-[#111111] border border-white/5 rounded-2xl shadow-2xl space-y-8 text-white">
+              
+              <div className="space-y-2">
+                <h1 className="text-xl sm:text-2xl font-semibold tracking-tight text-white/95">
+                  Create Article
+                </h1>
+                <p className="text-xs sm:text-sm text-white/40 font-normal leading-relaxed">
+                  Share deep-dives, tutorials, and guides with the CodeVerse community.
+                </p>
+                <button
+                  type="button"
+                  className="top-6 absolute right-6 flex items-center h-8 w-8 rounded-lg justify-center text-white/30 hover:text-white/80 hover:bg-white/5 border border-white/5 transition cursor-pointer"
+                  onClick={onClose}
+                >
+                  <X size={15} />
+                </button>
+              </div>
 
               <Form {...form}>
                 <form
@@ -101,12 +106,12 @@ const AddArticle = () => {
                     name="title"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Title</FormLabel>
+                        <FormLabel className="text-xs font-mono uppercase tracking-wider text-white/45">Title</FormLabel>
                         <FormControl>
-                          <Input
+                          <input
                             {...field}
-                            placeholder="Post title"
-                            className="bg-white/5 border-white/10"
+                            placeholder="Article title"
+                            className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0"
                           />
                         </FormControl>
                         <FormMessage />
@@ -119,12 +124,13 @@ const AddArticle = () => {
                     name="description"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Description</FormLabel>
+                        <FormLabel className="text-xs font-mono uppercase tracking-wider text-white/45">Description</FormLabel>
                         <FormControl>
-                          <Textarea
+                          <textarea
                             {...field}
-                            placeholder="Write something about your post"
-                            className="min-h-30 bg-white/5 border-white/10"
+                            placeholder="Write something about your article"
+                            rows={5}
+                            className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0 resize-none"
                           />
                         </FormControl>
                         <FormMessage />
@@ -133,10 +139,10 @@ const AddArticle = () => {
                   />
 
                   <div className="space-y-2">
-                    <FormLabel>Images</FormLabel>
+                    <FormLabel className="text-xs font-mono uppercase tracking-wider text-white/45">Images</FormLabel>
                     <ImageDropZone files={files} setFiles={setFiles} />
-                    <p className="text-xs text-white/40">
-                      Optional — upload post images
+                    <p className="text-[10px] font-mono text-white/30">
+                      Optional — upload article cover images
                     </p>
                   </div>
 
@@ -145,7 +151,7 @@ const AddArticle = () => {
                     name="links"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Links</FormLabel>
+                        <FormLabel className="text-xs font-mono uppercase tracking-wider text-white/45">Links</FormLabel>
                         <FormControl>
                           <ChipInput
                             {...field}
@@ -161,7 +167,7 @@ const AddArticle = () => {
                     name="tags"
                     render={({ field }) => (
                       <FormItem>
-                        <FormLabel>Tags</FormLabel>
+                        <FormLabel className="text-xs font-mono uppercase tracking-wider text-white/45">Tags</FormLabel>
                         <FormControl>
                           <ChipInput
                             {...field}
@@ -172,18 +178,13 @@ const AddArticle = () => {
                     )}
                   />
 
-                  <Button
+                  <button
                     type="submit"
                     disabled={isPending}
-                    className="
-                      h-11 w-full rounded-xl
-                      bg-red-500/60
-                      font-semibold text-white
-                      hover:opacity-90
-                    "
+                    className="w-full h-11 rounded-xl bg-red-500 hover:bg-red-600 text-white font-medium shadow-[0_0_20px_rgba(239,68,68,0.15)] transition-all cursor-pointer flex items-center justify-center gap-1.5 text-sm disabled:opacity-50 disabled:pointer-events-none"
                   >
                     {isPending ? "Creating..." : "Create Article"}
-                  </Button>
+                  </button>
                 </form>
               </Form>
             </div>

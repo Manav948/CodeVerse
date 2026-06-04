@@ -32,7 +32,7 @@ const SidebarMobile = () => {
 
       <SheetContent
         side="left"
-        className={`p-0 border-white/[0.06] bg-[#070708] text-white overflow-hidden ${
+        className={`p-0 border-white/5 bg-[#090909] text-white overflow-hidden ${
           isTaskRoute ? "w-[72px]" : "w-72"
         }`}
       >

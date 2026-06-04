@@ -35,7 +35,7 @@ const SidebarContainer = () => {
                     animate={{ width: "auto", opacity: 1, x: 0 }}
                     exit={{ width: 0, opacity: 0, x: -20 }}
                     transition={{ duration: 0.35, ease: "easeInOut" }}
-                    className="overflow-hidden border-l border-white/10 h-full flex"
+                    className="overflow-hidden border-l border-white/5 h-full flex"
                 >
                     <OptionSidebar active={active} />
                 </motion.div>

@@ -184,14 +184,14 @@ const AllTask = () => {
                   >
                     <DropdownMenuItem
                       onClick={() => router.push(`/task/edit/${task.id}`)}
-                      className="cursor-pointer hover:bg-white/5 focus:bg-white/5 text-xs py-2"
+                      className="cursor-pointer hover:bg-white/5 text-xs py-2"
                     >
                       <Edit size={14} className="mr-2 text-white/60" />
                       Edit
                     </DropdownMenuItem>
 
                     <DropdownMenuItem
-                      className="text-red-400 cursor-pointer hover:bg-red-500/10 focus:bg-red-500/10 text-xs py-2"
+                      className="text-red-400 cursor-pointer hover:bg-red-500/10 text-xs py-2"
                       onClick={() => deleteMutation.mutate(task.id)}
                     >
                       <Trash2 size={14} className="mr-2 text-red-500" />

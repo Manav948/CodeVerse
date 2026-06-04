@@ -48,11 +48,11 @@ const ActivityHeatmap = ({ activityByDate }: Props) => {
   });
 
   const getColor = (value: number) => {
-    if (value === 0) return "bg-white/[0.02] border border-white/[0.03]";
-    if (value < 2) return "bg-red-950/20 border border-red-500/10";
-    if (value < 4) return "bg-red-900/35 border border-red-500/20";
-    if (value < 6) return "bg-[#ef4444]/60 border border-red-400/30";
-    return "bg-[#ef4444] border border-red-300/40 shadow-[0_0_6px_rgba(239,68,68,0.3)]";
+    if (value === 0) return "bg-white/[0.03] border border-white/[0.06]";
+    if (value < 2) return "bg-emerald-500/20 border border-emerald-500/35";
+    if (value < 4) return "bg-emerald-500/45 border border-emerald-500/50";
+    if (value < 6) return "bg-emerald-500/70 border border-emerald-400/70";
+    return "bg-[#10b981] border border-emerald-300/80 shadow-[0_0_8px_rgba(16,185,129,0.5)]";
   };
 
  
@@ -94,43 +94,47 @@ const ActivityHeatmap = ({ activityByDate }: Props) => {
       <div className="relative">
         <div 
           ref={scrollRef} 
-          className="overflow-x-auto scrollbar-none pb-2 pt-1 flex flex-col cursor-grab active:cursor-grabbing select-none"
+          className="overflow-x-auto scrollbar-none pb-2 pt-1 flex cursor-grab active:cursor-grabbing select-none"
         >
-         
-          <div className="flex ml-8 mb-2 text-[10px] font-mono text-white/30 relative h-4 min-w-max">
-            {weeks.map((_, i) => {
-              const month = monthLabels.find((m) => m.index === i);
-              return (
-                <div key={i} className="w-3.5 shrink-0 text-left">
-                  {month ? month.month : ""}
-                </div>
-              );
-            })}
-          </div>
-
-          <div className="flex min-w-max">
-          
-            <div className="flex flex-col justify-between mr-2.5 text-[9px] font-mono text-white/30 py-0.5 h-[94px]">
-              <span>Mon</span>
-              <span>Wed</span>
-              <span>Fri</span>
+          <div className="mx-auto flex flex-col min-w-max">
+            {/* Month Row */}
+            <div className="flex mb-2 text-[10px] font-mono text-white/30 relative h-4">
+              <div className="w-[30px] shrink-0" />
+              <div className="flex gap-[4px]">
+                {weeks.map((_, i) => {
+                  const month = monthLabels.find((m) => m.index === i);
+                  return (
+                    <div key={i} className="w-3 shrink-0 text-left overflow-visible whitespace-nowrap">
+                      {month ? month.month : ""}
+                    </div>
+                  );
+                })}
+              </div>
             </div>
 
-          
-            <div className="flex gap-[3.5px]">
-              {weeks.map((week, i) => (
-                <div key={i} className="flex flex-col gap-[3.5px] shrink-0">
-                  {week.map((day, j) => (
-                    <div
-                      key={j}
-                      title={`${day.date} — ${day.value} completions`}
-                      className={`w-2.5 h-2.5 rounded-[1.5px] transition-colors duration-200 ${getColor(
-                        day.value
-                      )}`}
-                    />
-                  ))}
-                </div>
-              ))}
+            {/* Grid Row */}
+            <div className="flex">
+              <div className="flex flex-col justify-between mr-2 text-[9px] font-mono text-white/30 py-0.5 h-[108px] w-[22px] shrink-0">
+                <span>Mon</span>
+                <span>Wed</span>
+                <span>Fri</span>
+              </div>
+
+              <div className="flex gap-[4px]">
+                {weeks.map((week, i) => (
+                  <div key={i} className="flex flex-col gap-[4px] shrink-0">
+                    {week.map((day, j) => (
+                      <div
+                        key={j}
+                        title={`${day.date} — ${day.value} completions`}
+                        className={`w-3 h-3 rounded-[2px] transition-colors duration-200 ${getColor(
+                          day.value
+                        )}`}
+                      />
+                    ))}
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -141,11 +145,11 @@ const ActivityHeatmap = ({ activityByDate }: Props) => {
 
         <div className="flex items-center gap-1.5 self-end">
           <span className="text-[10px] font-mono">Less</span>
-          <div className="w-2.5 h-2.5 bg-white/[0.02] border border-white/[0.03] rounded-[1.5px]" />
-          <div className="w-2.5 h-2.5 bg-red-950/20 border border-red-500/10 rounded-[1.5px]" />
-          <div className="w-2.5 h-2.5 bg-red-900/35 border border-red-500/20 rounded-[1.5px]" />
-          <div className="w-2.5 h-2.5 bg-[#ef4444]/60 border border-red-400/30 rounded-[1.5px]" />
-          <div className="w-2.5 h-2.5 bg-[#ef4444] border border-red-300/40 rounded-[1.5px]" />
+          <div className="w-3 h-3 bg-white/[0.03] border border-white/[0.06] rounded-[2px]" />
+          <div className="w-3 h-3 bg-emerald-500/20 border border-emerald-500/35 rounded-[2px]" />
+          <div className="w-3 h-3 bg-emerald-500/45 border border-emerald-500/50 rounded-[2px]" />
+          <div className="w-3 h-3 bg-emerald-500/70 border border-emerald-400/70 rounded-[2px]" />
+          <div className="w-3 h-3 bg-[#10b981] border border-emerald-300/80 rounded-[2px]" />
           <span className="text-[10px] font-mono">More</span>
         </div>
       </div>

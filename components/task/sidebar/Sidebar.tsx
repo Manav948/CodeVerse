@@ -1,12 +1,10 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import {
   HomeIcon,
   LayoutDashboard,
   CalendarDaysIcon,
   CheckSquare,
-  MousePointerSquareDashedIcon,
 } from "lucide-react";
 import { ActiveSection } from "./SidebarContainer";
 import { usePathname, useRouter } from "next/navigation";
@@ -27,7 +25,6 @@ const Sidebar = ({ active, setActive }: Props) => {
       { key: "tasks", icon: CheckSquare, route: "/task" },
       { key: "calendar", icon: CalendarDaysIcon, route: "/calendar" },
       { key: "dashboard", icon: LayoutDashboard, route: "/dashboard" },
-      // { key: "media", icon: MousePointerSquareDashedIcon, route: "/media" },
     ] as const,
     []
   );
@@ -50,15 +47,13 @@ const Sidebar = ({ active, setActive }: Props) => {
   };
 
   return (
-    <div className="flex w-16 flex-col items-center gap-4 border-r border-white/10 bg-black py-6">
+    <div className="flex w-16 h-full flex-col items-center gap-4 border-r border-white/5 bg-[#090909] py-6">
       {items.map(({ key, icon: Icon, route }) => {
         const isActive = currentActive === key;
 
         return (
-          <Button
+          <button
             key={key}
-            variant="ghost"
-            size="icon"
             onClick={() =>
               handleNavigation(
                 key as ActiveSection,
@@ -66,13 +61,14 @@ const Sidebar = ({ active, setActive }: Props) => {
               )
             }
             className={cn(
-              "rounded-xl transition-all duration-200 hover:bg-muted",
-              isActive &&
-                "bg-red-500/60 text-primary-foreground shadow-md"
+              "w-10 h-10 flex items-center justify-center rounded-lg transition-all duration-200 cursor-pointer outline-none border border-transparent",
+              isActive
+                ? "bg-red-500 text-white shadow-[0_0_12px_rgba(239,68,68,0.25)]"
+                : "text-white/40 hover:text-white/80 hover:bg-white/5"
             )}
           >
             <Icon size={18} />
-          </Button>
+          </button>
         );
       })}
     </div>

@@ -116,7 +116,7 @@ const DashboardContainer = () => {
 
           
             <div className="flex items-center gap-3">
-              <div className="relative w-full max-w-[200px] hidden sm:block">
+              <div className="relative w-full max-w-50 hidden sm:block">
                 <Search className="absolute left-2.5 top-2.5 h-3.5 w-3.5 text-white/30" />
                 <input
                   type="text"
@@ -163,7 +163,7 @@ const DashboardContainer = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               
                 <div className="bg-[#111111] border border-white/5 p-5 sm:p-6 rounded-xl space-y-4 shadow-sm">
-                  <div className="flex items-center gap-2 border-b border-white/[0.04] pb-3">
+                  <div className="flex items-center gap-2 border-b border-white/4 pb-3">
                     <Clock size={14} className="text-amber-400" />
                     <h3 className="text-sm font-medium text-white/90">Upcoming Deadlines</h3>
                   </div>
@@ -217,14 +217,14 @@ const DashboardContainer = () => {
                 <div className="grid grid-cols-2 gap-2 text-[11px] font-medium font-mono text-white/60">
                   <button 
                     onClick={() => router.push("/task/new")}
-                    className="flex items-center justify-between p-2.5 rounded-lg border border-white/5 bg-white/[0.01] hover:bg-white/[0.04] transition-colors cursor-pointer group"
+                    className="flex items-center justify-between p-2.5 rounded-lg border border-white/5 bg-white/1 hover:bg-white/4 transition-colors cursor-pointer group"
                   >
                     <span>New Task</span>
                     <Plus size={12} className="text-white/30 group-hover:text-white transition-colors" />
                   </button>
                   <button 
                     onClick={() => router.push("/calendar")}
-                    className="flex items-center justify-between p-2.5 rounded-lg border border-white/5 bg-white/[0.01] hover:bg-white/[0.04] transition-colors cursor-pointer group"
+                    className="flex items-center justify-between p-2.5 rounded-lg border border-white/5 bg-white/1 hover:bg-white/4 transition-colors cursor-pointer group"
                   >
                     <span>Calendar</span>
                     <Calendar size={12} className="text-white/30 group-hover:text-white transition-colors" />
@@ -308,15 +308,15 @@ const DashboardContainer = () => {
                 <h4 className="text-xs font-mono tracking-wider text-white/40 uppercase">Productivity Benchmarks</h4>
               </div>
               <ul className="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs font-medium text-white/80">
-                <li className="flex items-center gap-2.5 p-2 bg-white/[0.01] border border-white/[0.02] rounded-lg">
+                <li className="flex items-center gap-2.5 p-2 bg-white/1 border border-white/2 rounded-lg">
                   <div className="w-1.5 h-1.5 rounded-full bg-[#ef4444] shrink-0" />
                   <span>Most productive day: <b className="text-white">Tuesday</b></span>
                 </li>
-                <li className="flex items-center gap-2.5 p-2 bg-white/[0.01] border border-white/[0.02] rounded-lg">
+                <li className="flex items-center gap-2.5 p-2 bg-white/1 border border-white/2 rounded-lg">
                   <div className="w-1.5 h-1.5 rounded-full bg-red-400 shrink-0" />
                   <span>Completion rate increased by <b className="text-red-400">15%</b></span>
                 </li>
-                <li className="flex items-center gap-2.5 p-2 bg-white/[0.01] border border-white/[0.02] rounded-lg">
+                <li className="flex items-center gap-2.5 p-2 bg-white/1 border border-white/2 rounded-lg">
                   <div className="w-1.5 h-1.5 rounded-full bg-orange-400 shrink-0" />
                   <span>Current streak status: <b className="text-orange-400">{analytics.currentStreak} days active</b></span>
                 </li>

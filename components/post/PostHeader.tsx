@@ -55,7 +55,7 @@ const PostHeader = ({ user }: { user?: PostUser }) => {
           />
         ) : (
           <div
-            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${gradient} text-[13px] font-semibold text-white ring-1 ring-white/10 group-hover/author:ring-white/25 transition`}
+            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-linear-to-br ${gradient} text-[13px] font-semibold text-white ring-1 ring-white/10 group-hover/author:ring-white/25 transition`}
           >
             {firstLetter}
           </div>

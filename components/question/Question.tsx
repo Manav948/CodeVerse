@@ -97,19 +97,19 @@ const Question = ({ question }: Props) => {
 
   return (
     <>
-      <Card className="group relative overflow-hidden rounded-xl border border-white/[0.05] bg-[#0a0a0c]/85 transition-all duration-300 mb-4 shadow-[0_8px_30px_rgb(0,0,0,0.5)] backdrop-blur-md">
+      <Card className="group relative overflow-hidden rounded-xl border border-white/5 bg-[#0a0a0c]/85 transition-all duration-300 mb-4 shadow-[0_8px_30px_rgb(0,0,0,0.5)] backdrop-blur-md">
    
-        <div className="absolute top-0 inset-x-0 h-[1px] bg-gradient-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+        <div className="absolute top-0 inset-x-0 h-0.5 bg-linear-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         <div className="p-5 space-y-4">
           <div className="flex justify-between items-start">
             <QuestionHeader user={question.user} />
-            <button className="flex h-7 w-7 items-center justify-center rounded-md text-white/30 hover:text-white/70 hover:bg-white/[0.06] transition-all focus:outline-none">
+            <button className="flex h-7 w-7 items-center justify-center rounded-md text-white/30 hover:text-white/70 hover:bg-white/6 transition-all focus:outline-none">
               <EllipsisVertical className="h-4 w-4" />
             </button>
           </div>
 
-          <div className="h-px border-t border-dashed border-white/[0.06]" />
+          <div className="h-px border-t border-dashed border-white/6" />
 
           <h3 className="text-[15.5px] font-semibold leading-snug tracking-tight text-white/90 group-hover:text-white transition-colors duration-200">
             {question.title}
@@ -135,7 +135,7 @@ const Question = ({ question }: Props) => {
                   toggleLike();
                 }}
                 className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/like
-                  ${question.isLiked ? "text-rose-500 bg-rose-500/[0.03] border border-rose-500/20" : "text-white/35 hover:text-rose-400 hover:bg-rose-500/[0.04] border border-transparent"}
+                  ${question.isLiked ? "text-rose-500 bg-rose-500/3 border border-rose-500/20" : "text-white/35 hover:text-rose-400 hover:bg-rose-500/4 border border-transparent"}
                   ${isPending ? "opacity-40 cursor-not-allowed" : ""}
                 `}
               >
@@ -152,7 +152,7 @@ const Question = ({ question }: Props) => {
               <button
                 onClick={() => toggleBookmark()}
                 className={`flex items-center gap-1.5 px-2.5 py-1.5 rounded-md transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/bm
-                  ${question.bookmarked ? "text-amber-400 bg-amber-400/[0.03] border border-amber-400/20" : "text-white/35 hover:text-amber-400 hover:bg-amber-400/[0.04] border border-transparent"}
+                  ${question.bookmarked ? "text-amber-400 bg-amber-400/3 border border-amber-400/20" : "text-white/35 hover:text-amber-400 hover:bg-amber-400/4 border border-transparent"}
                 `}
               >
                 <div className="p-0.5 rounded-full transition-colors">
@@ -163,7 +163,7 @@ const Question = ({ question }: Props) => {
 
               <button
                 onClick={replyButton}
-                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/70 hover:bg-white/[0.04] transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/rpl"
+                className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-md text-white/35 hover:text-white/70 hover:bg-white/4 transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 group/rpl"
               >
                 <div className="p-0.5 rounded-full transition-colors">
                   <CornerUpRight size={13.5} />
@@ -173,7 +173,7 @@ const Question = ({ question }: Props) => {
 
               <button
                 onClick={() => router.push(`/qa/question/${question.id}`)}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-white/[0.04] bg-white/[0.02] text-white/40 hover:text-white hover:bg-white/[0.06] hover:border-white/[0.08] transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 font-mono text-[11px]"
+                className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-white/4 bg-white/2 text-white/40 hover:text-white hover:bg-white/6 hover:border-white/8 transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 font-mono text-[11px]"
               >
                 View
                 <span className="text-white/20 group-hover:translate-x-0.5 transition-transform duration-200">→</span>

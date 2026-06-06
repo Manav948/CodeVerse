@@ -56,7 +56,7 @@ const SnippetHeader = ({ user }: { user?: SnippetUser }) => {
           />
         ) : (
           <div
-            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br ${gradient} text-[13px] font-semibold text-white ring-1 ring-white/10 group-hover/author:ring-white/25 transition`}
+            className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-linear-to-br ${gradient} text-[13px] font-semibold text-white ring-1 ring-white/10 group-hover/author:ring-white/25 transition`}
           >
             {firstLetter}
           </div>
@@ -72,7 +72,7 @@ const SnippetHeader = ({ user }: { user?: SnippetUser }) => {
         </div>
       </div>
 
-      <button className="flex h-7 w-7 items-center justify-center rounded-md text-white/30 hover:text-white/70 hover:bg-white/[0.06] transition-all focus:outline-none">
+      <button className="flex h-7 w-7 items-center justify-center rounded-md text-white/30 hover:text-white/70 hover:bg-white/6 transition-all focus:outline-none">
         <EllipsisVertical className="h-4 w-4" />
       </button>
     </div>

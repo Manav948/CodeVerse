@@ -103,7 +103,7 @@ const Header = () => {
                 <Bell size={16} />
 
                 {newCount > 0 && (
-                  <span className="absolute -top-0.5 -right-0.5 min-w-[16px] h-[16px] flex items-center justify-center text-[9px] rounded-full bg-red-500 border border-[#090909] text-white font-semibold px-[3px] leading-none">
+                  <span className="absolute -top-0.5 -right-0.5 min-w-4 h-4 flex items-center justify-center text-[9px] rounded-full bg-red-500 border border-[#090909] text-white font-semibold px-0.75 leading-none">
                     {newCount > 9 ? "9+" : newCount}
                   </span>
                 )}
@@ -113,7 +113,7 @@ const Header = () => {
             <PopoverContent
               align="end"
               sideOffset={8}
-              className="w-[380px] p-0 rounded-xl border border-white/5 bg-[#111111] shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden"
+              className="w-95 p-0 rounded-xl border border-white/5 bg-[#111111] shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden"
             >
               <Notification close={() => setOpen(false)} />
             </PopoverContent>

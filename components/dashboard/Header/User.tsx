@@ -40,7 +40,7 @@ const User = () => {
         sideOffset={10}
         className="w-60 rounded-xl border border-white/5 bg-[#111111] p-3 text-white shadow-xl"
       >
-        <div className="flex items-center gap-3 p-2 rounded-lg bg-white/[0.02] border border-white/5">
+        <div className="flex items-center gap-3 p-2 rounded-lg bg-white/2 border border-white/5">
           <UserAvatar
             profileImage={user?.image ?? null}
             username={user?.username ?? null}

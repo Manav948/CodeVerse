@@ -225,7 +225,7 @@ const AllTask = () => {
               </div>
 
               {/* Due Date & Action Footer */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3.5 border-t border-white/[0.04]">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3.5 border-t border-white/4">
                 {task.dueDate ? (
                   <div className={`flex items-center gap-1.5 text-[11px] font-mono ${
                     isOverdue ? "text-red-400 font-medium" : "text-white/40"

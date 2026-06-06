@@ -99,8 +99,8 @@ const ActivityHeatmap = ({ activityByDate }: Props) => {
           <div className="mx-auto flex flex-col min-w-max">
             {/* Month Row */}
             <div className="flex mb-2 text-[10px] font-mono text-white/30 relative h-4">
-              <div className="w-[30px] shrink-0" />
-              <div className="flex gap-[4px]">
+              <div className="w-7.5 shrink-0" />
+              <div className="flex gap-1">
                 {weeks.map((_, i) => {
                   const month = monthLabels.find((m) => m.index === i);
                   return (
@@ -114,15 +114,15 @@ const ActivityHeatmap = ({ activityByDate }: Props) => {
 
             {/* Grid Row */}
             <div className="flex">
-              <div className="flex flex-col justify-between mr-2 text-[9px] font-mono text-white/30 py-0.5 h-[108px] w-[22px] shrink-0">
+              <div className="flex flex-col justify-between mr-2 text-[9px] font-mono text-white/30 py-0.5 h-27 w-5.5 shrink-0">
                 <span>Mon</span>
                 <span>Wed</span>
                 <span>Fri</span>
               </div>
 
-              <div className="flex gap-[4px]">
+              <div className="flex gap-1">
                 {weeks.map((week, i) => (
-                  <div key={i} className="flex flex-col gap-[4px] shrink-0">
+                  <div key={i} className="flex flex-col gap-1 shrink-0">
                     {week.map((day, j) => (
                       <div
                         key={j}
@@ -140,12 +140,12 @@ const ActivityHeatmap = ({ activityByDate }: Props) => {
         </div>
       </div>
 
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 border-t border-white/[0.04] text-[11px] text-white/40">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 border-t border-white/4 text-[11px] text-white/40">
         <span className="font-mono text-[10px]">Contributions reflect completed tasks</span>
 
         <div className="flex items-center gap-1.5 self-end">
           <span className="text-[10px] font-mono">Less</span>
-          <div className="w-3 h-3 bg-white/[0.03] border border-white/[0.06] rounded-[2px]" />
+          <div className="w-3 h-3 bg-white/3 border border-white/6 rounded-[2px]" />
           <div className="w-3 h-3 bg-emerald-500/20 border border-emerald-500/35 rounded-[2px]" />
           <div className="w-3 h-3 bg-emerald-500/45 border border-emerald-500/50 rounded-[2px]" />
           <div className="w-3 h-3 bg-emerald-500/70 border border-emerald-400/70 rounded-[2px]" />

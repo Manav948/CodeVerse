@@ -197,7 +197,7 @@ const AddSnippet = () => {
                           <textarea
                             {...field}
                             placeholder="Paste your code here"
-                            className="w-full min-h-[260px] bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors font-mono text-sm placeholder-white/20 focus:ring-0 resize-y"
+                            className="w-full min-h-65 bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors font-mono text-sm placeholder-white/20 focus:ring-0 resize-y"
                           />
                         </FormControl>
                         <FormMessage />

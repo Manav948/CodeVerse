@@ -20,10 +20,10 @@ const ViewPost = ({ post }: Props) => {
 
   return (
     <div className="flex justify-center px-4 py-6">
-      <div className="relative w-full max-w-2xl rounded-xl border border-white/[0.06] bg-[#0d0d0e] text-white p-6 sm:p-8 shadow-xl">
+      <div className="relative w-full max-w-2xl rounded-xl border border-white/6 bg-[#0d0d0e] text-white p-6 sm:p-8 shadow-xl">
 
         <button
-          className="absolute top-1 right-4 flex items-center justify-center h-8 w-8 rounded-full text-white/40 hover:text-white hover:bg-white/[0.08] transition-all z-10"
+          className="absolute top-1 right-4 flex items-center justify-center h-8 w-8 rounded-full text-white/40 hover:text-white hover:bg-white/8 transition-all z-10"
           onClick={onClose}
         >
           <CircleX size={16} />
@@ -33,7 +33,7 @@ const ViewPost = ({ post }: Props) => {
           <PostHeader user={post.user} />
         </div>
 
-        <div className="h-px bg-white/[0.05] my-4" />
+        <div className="h-px bg-white/5 my-4" />
 
        
         <div className="space-y-1.5">
@@ -53,7 +53,7 @@ const ViewPost = ({ post }: Props) => {
      
         {post.image?.length > 0 && (
           <div
-            className={`mt-4 grid gap-1.5 rounded-lg overflow-hidden border border-white/[0.06] bg-[#070708] w-full aspect-[16/10] max-h-[340px] sm:max-h-[380px] ${
+            className={`mt-4 grid gap-1.5 rounded-lg overflow-hidden border border-white/6 bg-[#070708] w-full aspect-16/10 max-h-85 sm:max-h-95 ${
               post.image.length === 1
                 ? "grid-cols-1"
                 : post.image.length === 2
@@ -89,7 +89,7 @@ const ViewPost = ({ post }: Props) => {
             {post.tags.map((tag) => (
               <span
                 key={tag.id}
-                className="inline-flex text-[11px] font-medium text-white/45 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded-md hover:bg-white/[0.07] transition-colors cursor-default"
+                className="inline-flex text-[11px] font-medium text-white/45 bg-white/4 border border-white/6 px-2 py-0.5 rounded-md hover:bg-white/[0.07] transition-colors cursor-default"
               >
                 #{tag.name}
               </span>

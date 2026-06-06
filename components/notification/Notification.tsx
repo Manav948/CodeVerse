@@ -86,7 +86,7 @@ const Notification = ({ close }: Props) => {
   if (!data || data.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center gap-2.5 py-11 px-6 text-center">
-        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/[0.04] border border-white/[0.07]">
+        <div className="flex items-center justify-center w-10 h-10 rounded-xl bg-white/4 border border-white/[0.07]">
           <Bell size={18} className="text-white/30" />
         </div>
         <p className="text-[13px] text-white/40 font-medium m-0">No notifications</p>
@@ -98,13 +98,13 @@ const Notification = ({ close }: Props) => {
   return (
     <div className="w-full select-none">
  
-      <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+      <div className="flex items-center justify-between px-4 py-3 border-b border-white/6">
         <div className="flex items-center gap-2">
           <h2 className="text-[13px] font-semibold text-white/90 tracking-tight m-0">
             Notifications
           </h2>
           {unreadCount > 0 && (
-            <span className="inline-flex items-center justify-center min-w-[18px] h-[18px] px-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] font-semibold text-red-400 tracking-wide">
+            <span className="inline-flex items-center justify-center min-w-4.5 h-4.5 px-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-[10px] font-semibold text-red-400 tracking-wide">
               {unreadCount > 9 ? "9+" : unreadCount}
             </span>
           )}
@@ -115,7 +115,7 @@ const Notification = ({ close }: Props) => {
       </div>
 
       
-      <div className="max-h-[400px] overflow-y-auto p-1.5 space-y-0.5">
+      <div className="max-h-100 overflow-y-auto p-1.5 space-y-0.5">
         {data.map((notification, idx) => (
           <NotificationItem
             key={notification.id}
@@ -127,7 +127,7 @@ const Notification = ({ close }: Props) => {
       </div>
 
       {/* ── Footer ── */}
-      <div className="py-2.5 px-4 border-t border-white/[0.06] flex items-center justify-center">
+      <div className="py-2.5 px-4 border-t border-white/6 flex items-center justify-center">
         <span className="text-[10px] text-white/25 tracking-wider font-semibold uppercase">
           Recent activity
         </span>
@@ -136,9 +136,7 @@ const Notification = ({ close }: Props) => {
   );
 };
 
-/* ─────────────────────────────────────────
-   NotificationItem — isolated sub-component
-   ───────────────────────────────────────── */
+
 interface ItemProps {
   notification: NotificationType;
   onClick: () => void;
@@ -158,16 +156,16 @@ const NotificationItem = ({ notification, onClick, isLast }: ItemProps) => {
       onKeyDown={(e) => e.key === "Enter" && onClick()}
       className={clsx(
         "relative flex items-start gap-2.5 p-3 rounded-lg cursor-pointer transition-all duration-150 outline-none",
-        isLast ? "mb-0" : "mb-[2px]",
+        isLast ? "mb-0" : "mb-0.5",
         notification.isRead
-          ? "bg-transparent border border-transparent hover:bg-white/[0.03]"
-          : "bg-white/[0.02] border border-white/[0.05] hover:bg-white/[0.04]"
+          ? "bg-transparent border border-transparent hover:bg-white/3"
+          : "bg-white/2 border border-white/ hover:bg-white/"
       )}
     >
       {/* Unread indicator dot */}
       <div
         className={clsx(
-          "flex-shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full transition-all duration-200",
+          "shrink-0 mt-1.5 w-1.5 h-1.5 rounded-full transition-all duration-200",
           notification.isRead
             ? "bg-white/10"
             : "bg-red-500 shadow-[0_0_6px_rgba(239,68,68,0.25)]"
@@ -179,7 +177,7 @@ const NotificationItem = ({ notification, onClick, isLast }: ItemProps) => {
         <div className="flex justify-between items-start gap-2">
           <h3
             className={clsx(
-              "m-0 text-[13px] tracking-tight leading-normal break-words",
+              "m-0 text-[13px] tracking-tight leading-normal wrap-break-words",
               notification.isRead
                 ? "font-medium text-white/60"
                 : "font-semibold text-white/90"
@@ -188,13 +186,13 @@ const NotificationItem = ({ notification, onClick, isLast }: ItemProps) => {
             {notification.title}
           </h3>
 
-          <span className="flex-shrink-0 text-[11px] font-medium text-white/25 pt-0.5">
+          <span className="shrink-0 text-[11px] font-medium text-white/25 pt-0.5">
             {timeLabel}
           </span>
         </div>
 
         {notification.message && (
-          <p className="mt-1 mb-0 text-[12px] text-white/40 leading-relaxed break-words">
+          <p className="mt-1 mb-0 text-[12px] text-white/40 leading-relaxed wrap-break-words">
             {notification.message}
           </p>
         )}

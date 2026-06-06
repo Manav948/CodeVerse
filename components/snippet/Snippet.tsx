@@ -118,7 +118,7 @@ const SnippetCard = ({ snippet }: Props) => {
 
         
           <div
-            className="group/code relative rounded-lg border border-white/[0.06] bg-[#070708] p-4 font-mono text-[11.5px] text-white/70 leading-relaxed overflow-x-auto whitespace-pre-wrap bg-white/5"
+            className="group/code relative rounded-lg border border-white/6  p-4 font-mono text-[11.5px] text-white/70 leading-relaxed overflow-x-auto whitespace-pre-wrap bg-white/5"
           >
             {snippet.code}
           </div>
@@ -128,13 +128,13 @@ const SnippetCard = ({ snippet }: Props) => {
 
          
             <div className="flex flex-wrap gap-1.5">
-              <span className="inline-flex text-[11px] font-semibold text-cyan-400 bg-cyan-400/[0.06] border border-cyan-400/[0.12] px-2 py-0.5 rounded-md">
+              <span className="inline-flex text-[11px] font-semibold text-cyan-400 bg-cyan-400/6 border border-cyan-400/12 px-2 py-0.5 rounded-md">
                 {snippet.language}
               </span>
               {snippet.tags.slice(0, 3).map((tag) => (
                 <span
                   key={tag.id}
-                  className="inline-flex text-[11px] font-medium text-white/40 bg-white/[0.03] border border-white/[0.06] px-2 py-0.5 rounded-md"
+                  className="inline-flex text-[11px] font-medium text-white/40 bg-white/3 border border-white/6 px-2 py-0.5 rounded-md"
                 >
                   #{tag.name}
                 </span>
@@ -193,7 +193,7 @@ const SnippetCard = ({ snippet }: Props) => {
         </div>
       </Card>
 
-      <Separator className="bg-white/[0.04] my-3" />
+      <Separator className="bg-white/4 my-3" />
     </>
   );
 };

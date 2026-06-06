@@ -60,20 +60,20 @@ const AddAnswer = ({ questionId }: Props) => {
   };
 
   return (
-    <div className="rounded-xl border border-white/[0.06] bg-[#0d0d0e] p-5 space-y-4 shadow-sm">
+    <div className="rounded-xl border border-white/6 bg-[#0d0d0e] p-5 space-y-4 shadow-sm">
       <div className="flex items-center justify-between">
         <h3 className="text-[14px] font-semibold text-white/90 tracking-tight">
           Write Your Answer
         </h3>
         <button
           onClick={onClose}
-          className="text-[11px] text-white/30 hover:text-white/60 transition-colors px-2 py-1 rounded-md hover:bg-white/[0.04] cursor-pointer"
+          className="text-[11px] text-white/30 hover:text-white/60 transition-colors px-2 py-1 rounded-md hover:bg-white/4 cursor-pointer"
         >
           Cancel
         </button>
       </div>
 
-      <div className="h-px bg-white/[0.05]" />
+      <div className="h-px bg-white/6" />
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -89,7 +89,7 @@ const AddAnswer = ({ questionId }: Props) => {
                   <Textarea
                     {...field}
                     placeholder="Explain your solution clearly and concisely..."
-                    className="min-h-36 resize-none bg-[#070708] border border-white/[0.06] text-white/85 text-[13px] placeholder:text-white/20 focus:border-white/[0.14] focus:ring-0 rounded-lg"
+                    className="min-h-36 resize-none bg-[#070708] border border-white/6 text-white/85 text-[13px] placeholder:text-white/20 focus:border-white/[0.14] focus:ring-0 rounded-lg"
                   />
                 </FormControl>
                 <FormMessage className="text-[11px] text-red-400/80" />
@@ -101,7 +101,7 @@ const AddAnswer = ({ questionId }: Props) => {
             <button
               type="submit"
               disabled={isPending}
-              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.06] border border-white/[0.08] text-[13px] font-medium text-white/70 hover:text-white hover:bg-white/[0.09] hover:border-white/[0.14] transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+              className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/6 border border-white/8 text-[13px] font-medium text-white/70 hover:text-white hover:bg-white/9 hover:border-white/[0.14] transition-all duration-150 disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
             >
               <Send size={13} />
               {isPending ? "Submitting…" : "Submit Answer"}

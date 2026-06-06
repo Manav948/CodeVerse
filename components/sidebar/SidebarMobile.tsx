@@ -23,7 +23,7 @@ const SidebarMobile = () => {
         <Button
           size="icon"
           variant="ghost"
-          className="lg:hidden text-white/60 hover:text-white hover:bg-white/[0.05]"
+          className="lg:hidden text-white/60 hover:text-white hover:bg-white/5"
           aria-label="Open menu"
         >
           <Menu size={20} />
@@ -33,7 +33,7 @@ const SidebarMobile = () => {
       <SheetContent
         side="left"
         className={`p-0 border-white/5 bg-[#090909] text-white overflow-hidden ${
-          isTaskRoute ? "w-[72px]" : "w-72"
+          isTaskRoute ? "w-18" : "w-72"
         }`}
       >
         {isTaskRoute ? (

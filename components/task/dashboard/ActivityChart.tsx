@@ -60,7 +60,7 @@ const ActivityChart = ({ data }: Props) => {
         </div>
       </div>
 
-      <div className="h-[260px] w-full">
+      <div className="h-65 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
             data={chartData}

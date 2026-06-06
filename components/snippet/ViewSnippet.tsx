@@ -32,11 +32,11 @@ const ViewSnippet = ({ snippet }: Props) => {
 
   return (
     <div className="flex justify-center px-4 py-6">
-      <div className="relative w-full max-w-2xl rounded-xl border border-white/[0.06] bg-[#0d0d0e] text-white p-6 sm:p-8 space-y-5 shadow-xl">
+      <div className="relative w-full max-w-2xl rounded-xl border border-white/6 bg-[#0d0d0e] text-white p-6 sm:p-8 space-y-5 shadow-xl">
 
       
         <button
-          className="absolute top-1 right-4 flex items-center justify-center h-8 w-8 rounded-full text-white/40 hover:text-white hover:bg-white/[0.08] transition-all"
+          className="absolute top-1 right-4 flex items-center justify-center h-8 w-8 rounded-full text-white/40 hover:text-white hover:bg-white/8 transition-all"
           onClick={onClose}
         >
           <CircleX size={16} />
@@ -47,7 +47,7 @@ const ViewSnippet = ({ snippet }: Props) => {
           <PostHeader user={snippet.user} />
         </div>
 
-        <div className="h-px bg-white/[0.05]" />
+        <div className="h-px bg-white/5" />
 
         
         <div className="space-y-1.5">
@@ -64,8 +64,8 @@ const ViewSnippet = ({ snippet }: Props) => {
         </p>
 
 
-        <div className="rounded-lg overflow-hidden border border-white/[0.06] bg-[#070708]">
-          <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/[0.05] bg-white/[0.01]">
+        <div className="rounded-lg overflow-hidden border border-white/6 bg-[#070708]">
+          <div className="flex items-center justify-between px-4 py-2.5 border-b border-white/5 bg-white/1">
             <div className="flex items-center gap-2">
               {/* Red, Yellow, Green mock dots */}
               <div className="flex gap-1.5 mr-2">
@@ -80,7 +80,7 @@ const ViewSnippet = ({ snippet }: Props) => {
             </div>
             <button
               onClick={handleCopy}
-              className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-[11px] text-white/50 hover:text-white transition-all active:scale-95"
+              className="flex items-center gap-1.5 px-2.5 py-1 rounded bg-white/4 hover:bg-white/8 border border-white/6 text-[11px] text-white/50 hover:text-white transition-all active:scale-95"
             >
               {copied ? <Check size={12} className="text-emerald-400" /> : <Copy size={12} />}
               <span>{copied ? "Copied!" : "Copy"}</span>
@@ -101,7 +101,7 @@ const ViewSnippet = ({ snippet }: Props) => {
             {snippet.tags.map((tag) => (
               <span
                 key={tag.id}
-                className="inline-flex text-[11px] font-medium text-white/45 bg-white/[0.04] border border-white/[0.06] px-2 py-0.5 rounded-md hover:bg-white/[0.07] transition-colors cursor-default"
+                className="inline-flex text-[11px] font-medium text-white/45 bg-white/4 border border-white/6 px-2 py-0.5 rounded-md hover:bg-white/[0.07] transition-colors cursor-default"
               >
                 #{tag.name}
               </span>

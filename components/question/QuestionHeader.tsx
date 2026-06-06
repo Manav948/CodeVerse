@@ -51,11 +51,11 @@ const QuestionHeader = ({ user }: { user?: QuestionUser }) => {
             alt={username}
             width={32}
             height={32}
-            className="rounded-full object-cover ring-1 ring-white/[0.08]"
+            className="rounded-full object-cover ring-1 ring-white/8"
           />
         ) : (
           <div
-            className={`flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br ${gradient} text-[11px] font-semibold text-white shrink-0`}
+            className={`flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br ${gradient} text-[11px] font-semibold text-white shrink-0`}
           >
             {firstLetter}
           </div>

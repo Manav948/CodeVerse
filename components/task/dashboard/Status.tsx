@@ -127,7 +127,7 @@ const StatusDonut = ({ data }: Props) => {
                   </span>
                 </div>
 
-                <div className="w-full h-1 bg-white/[0.03] rounded-full overflow-hidden">
+                <div className="w-full h-1 bg-white/3 rounded-full overflow-hidden">
                   <div
                     className="h-full rounded-full transition-all duration-500"
                     style={{

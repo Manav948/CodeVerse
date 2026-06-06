@@ -90,18 +90,18 @@ const AppSidebar = ({ collapsed = false }: Props) => {
     <TooltipProvider delayDuration={collapsed ? 300 : 9999}>
       <aside
         className={cn(
-          "flex flex-col h-full bg-[#070708] border-r border-white/[0.06] transition-all duration-300 ease-in-out",
-          collapsed ? "w-[68px]" : "w-64"
+          "flex flex-col h-full bg-[#070708] border-r border-white/6 transition-all duration-300 ease-in-out",
+          collapsed ? "w-17" : "w-64"
         )}
       >
         <div
           className={cn(
-            "flex items-center gap-3 px-4 py-5 border-b border-white/[0.06]",
+            "flex items-center gap-3 px-4 py-5 border-b border-white/6",
             collapsed && "justify-center px-0"
           )}
         >
-          <div className="relative flex-shrink-0">
-            <div className="h-9 w-9 rounded-xl bg-gradient-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-lg shadow-red-500/20">
+          <div className="relative shrink-0">
+            <div className="h-9 w-9 rounded-xl bg-linaer-to-br from-red-500 to-orange-500 flex items-center justify-center shadow-lg shadow-red-500/20">
               <Code2 size={18} className="text-white" />
             </div>
             <div className="absolute -bottom-0.5 -right-0.5 h-2.5 w-2.5 rounded-full bg-emerald-400 border-2 border-[#070708]" />
@@ -139,19 +139,19 @@ const AppSidebar = ({ collapsed = false }: Props) => {
                       "group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-[13.5px] font-medium transition-all duration-150",
                       isActive
                         ? "bg-white/[0.07] text-white"
-                        : "text-white/45 hover:text-white/85 hover:bg-white/[0.04]",
+                        : "text-white/45 hover:text-white/85 hover:bg-white/4",
                       collapsed && "justify-center px-0 w-11 mx-auto"
                     )}
                   >
                  
                     {isActive && !collapsed && (
-                      <span className="absolute left-0 top-1/2 h-5 w-[3px] -translate-y-1/2 rounded-r-full bg-gradient-to-b from-red-400 to-orange-400" />
+                      <span className="absolute left-0 top-1/2 h-5 w-0.75 -translate-y-1/2 rounded-r-full bg-linear-to-b from-red-400 to-orange-400" />
                     )}
 
                    
                     <span
                       className={cn(
-                        "relative flex-shrink-0 transition-colors duration-150",
+                        "relative shrink-0 transition-colors duration-150",
                         isActive
                           ? "text-red-400"
                           : "text-white/35 group-hover:text-white/70"
@@ -173,7 +173,7 @@ const AppSidebar = ({ collapsed = false }: Props) => {
                     {isActive && !collapsed && (
                       <ChevronRight
                         size={13}
-                        className="ml-auto text-white/25 flex-shrink-0"
+                        className="ml-auto text-white/25 shrink-0"
                       />
                     )}
                   </Link>
@@ -190,7 +190,7 @@ const AppSidebar = ({ collapsed = false }: Props) => {
 
 
         <div className={cn(
-          "border-t border-white/[0.06] p-3",
+          "border-t border-white/6 p-3",
           collapsed && "p-2"
         )}>
           {collapsed ? (
@@ -198,7 +198,7 @@ const AppSidebar = ({ collapsed = false }: Props) => {
               <TooltipTrigger asChild>
                 <button
                   onClick={() => router.push("/dashboard/settings")}
-                  className="w-full flex justify-center p-1 rounded-xl hover:bg-white/[0.05] transition-colors"
+                  className="w-full flex justify-center p-1 rounded-xl hover:bg-white/5 transition-colors"
                 >
                   <UserAvatar
                     profileImage={user?.image ?? null}
@@ -212,10 +212,10 @@ const AppSidebar = ({ collapsed = false }: Props) => {
               </TooltipContent>
             </Tooltip>
           ) : (
-            <div className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/[0.04] transition-colors group/user">
+            <div className="flex items-center gap-2.5 p-2 rounded-xl hover:bg-white/4 transition-colors group/user">
               <button
                 onClick={() => router.push(`/profile/${user?.id}`)}
-                className="flex-shrink-0 ring-2 ring-transparent group-hover/user:ring-white/10 rounded-full transition-all duration-200"
+                className="shrink-0 ring-2 ring-transparent group-hover/user:ring-white/10 rounded-full transition-all duration-200"
               >
                 <UserAvatar
                   profileImage={user?.image ?? null}
@@ -233,12 +233,12 @@ const AppSidebar = ({ collapsed = false }: Props) => {
                 </p>
               </div>
 
-              <div className="flex items-center gap-1 flex-shrink-0">
+              <div className="flex items-center gap-1 shrink-0">
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button
                       onClick={() => router.push("/dashboard/settings")}
-                      className="h-7 w-7 rounded-lg flex items-center justify-center text-white/25 hover:text-white/70 hover:bg-white/[0.06] transition-all"
+                      className="h-7 w-7 rounded-lg flex items-center justify-center text-white/25 hover:text-white/70 hover:bg-white/6 transition-all"
                     >
                       <Settings size={13} />
                     </button>

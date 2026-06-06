@@ -114,12 +114,12 @@ const CommentDropdown = ({ entityId, entityType, initialCommentCount = 0 }: Prop
 
       {isOpen && (
         <div
-          className="absolute bottom-full right-0 mb-2 w-[340px] sm:w-[380px] rounded-xl border border-white/[0.08] bg-[#0a0a0b] shadow-2xl shadow-black/60 z-50 overflow-hidden"
+          className="absolute bottom-full right-0 mb-2 w-85 sm:w-95 rounded-xl border border-white/8 bg-[#0a0a0b] shadow-2xl shadow-black/60 z-50 overflow-hidden"
           style={{
             animation: "slideUpFade 0.15s ease-out forwards",
           }}
         >
-          <div className="flex items-center justify-between px-4 py-3 border-b border-white/[0.06]">
+          <div className="flex items-center justify-between px-4 py-3 border-b border-white/6">
             <div className="flex items-center gap-2">
               <MessageCircle size={14} className="text-blue-400" />
               <span className="text-[13px] font-semibold text-white/80">
@@ -128,16 +128,16 @@ const CommentDropdown = ({ entityId, entityType, initialCommentCount = 0 }: Prop
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="h-6 w-6 rounded-full flex items-center justify-center text-white/30 hover:text-white/70 hover:bg-white/[0.06] transition-all"
+              className="h-6 w-6 rounded-full flex items-center justify-center text-white/30 hover:text-white/70 hover:bg-white/6 transition-all"
             >
               <X size={12} />
             </button>
           </div>
 
          
-          <div className="px-4 py-3 border-b border-white/[0.06] bg-[#0d0d0e]">
+          <div className="px-4 py-3 border-b border-white/6 bg-[#0d0d0e]">
             <div className="flex gap-2.5">
-              <div className="w-7 h-7 rounded-full bg-gradient-to-br from-blue-500/30 to-purple-500/30 border border-white/[0.08] flex items-center justify-center flex-shrink-0 mt-0.5">
+              <div className="w-7 h-7 rounded-full bg-linear-to-br from-blue-500/30 to-purple-500/30 border border-white/8 flex items-center justify-center shrink-0 mt-0.5">
                 <User size={13} className="text-white/50" />
               </div>
               <div className="flex-1 min-w-0">
@@ -149,7 +149,7 @@ const CommentDropdown = ({ entityId, entityType, initialCommentCount = 0 }: Prop
                   placeholder="Add a comment..."
                   rows={1}
                   maxLength={500}
-                  className="w-full bg-transparent text-[13px] text-white/85 placeholder:text-white/25 resize-none outline-none leading-relaxed min-h-[36px] max-h-[100px] overflow-y-auto"
+                  className="w-full bg-transparent text-[13px] text-white/85 placeholder:text-white/25 resize-none outline-none leading-relaxed min-h-9 max-h-25 overflow-y-auto"
                   style={{ scrollbarWidth: "none" }}
                 />
                 <div className="flex items-center justify-between mt-1.5">
@@ -170,7 +170,7 @@ const CommentDropdown = ({ entityId, entityType, initialCommentCount = 0 }: Prop
                       className={`flex items-center gap-1.5 px-3 py-1 rounded-full text-[12px] font-medium transition-all duration-150
                         ${commentText.trim() && !isPending && commentText.length <= 500
                           ? "bg-blue-500 hover:bg-blue-400 text-white cursor-pointer"
-                          : "bg-white/[0.05] text-white/25 cursor-not-allowed"
+                          : "bg-white/5 text-white/25 cursor-not-allowed"
                         }
                       `}
                     >
@@ -187,7 +187,7 @@ const CommentDropdown = ({ entityId, entityType, initialCommentCount = 0 }: Prop
             </div>
           </div>
 
-          <div className="max-h-[240px] overflow-y-auto">
+          <div className="max-h-60 overflow-y-auto">
             {isLoading ? (
               <div className="flex items-center justify-center py-8">
                 <Loader2 size={18} className="animate-spin text-white/30" />
@@ -198,11 +198,11 @@ const CommentDropdown = ({ entityId, entityType, initialCommentCount = 0 }: Prop
                 <p className="text-[12px] text-white/25">No comments yet. Be the first!</p>
               </div>
             ) : (
-              <div className="divide-y divide-white/[0.04]">
+              <div className="divide-y divide-white/4">
                 {comments.map((comment) => (
-                  <div key={comment.id} className="px-4 py-3 hover:bg-white/[0.02] transition-colors">
+                  <div key={comment.id} className="px-4 py-3 hover:bg-white/2 transition-colors">
                     <div className="flex gap-2.5">
-                      <div className="w-7 h-7 rounded-full overflow-hidden flex-shrink-0 border border-white/[0.06] bg-white/[0.04]">
+                      <div className="w-7 h-7 rounded-full overflow-hidden shrink-0 border border-white/6 bg-white/4">
                         {comment.user.image ? (
                           <Image
                             src={comment.user.image}
@@ -227,11 +227,11 @@ const CommentDropdown = ({ entityId, entityType, initialCommentCount = 0 }: Prop
                               @{comment.user.username}
                             </span>
                           )}
-                          <span className="text-[11px] text-white/20 ml-auto flex-shrink-0">
+                          <span className="text-[11px] text-white/20 ml-auto shrink-0">
                             {formatRelativeTime(comment.created_at)}
                           </span>
                         </div>
-                        <p className="text-[12.5px] text-white/65 leading-relaxed mt-0.5 break-words">
+                        <p className="text-[12.5px] text-white/65 leading-relaxed mt-0.5 wrap-break-words">
                           {comment.commentText}
                         </p>
                       </div>

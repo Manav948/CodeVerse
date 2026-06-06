@@ -90,7 +90,7 @@ export const FormattedContent = ({ text }: Props) => {
           <code
             key={matchIndex}
             style={{ fontFamily: 'ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace' }}
-            className="mx-1 px-1.5 py-0.5 rounded bg-white/[0.08] text-white/95 text-[12px] border border-white/[0.04]"
+            className="mx-1 px-1.5 py-0.5 rounded bg-white/8 text-white/95 text-[12px] border border-white/4"
           >
             {matchedText.slice(1, -1)}
           </code>
@@ -145,7 +145,7 @@ export const FormattedContent = ({ text }: Props) => {
     }
 
     return (
-      <div key={lineKey} className="min-h-[1.2rem] whitespace-pre-wrap break-words leading-relaxed text-white/75">
+      <div key={lineKey} className="min-h-[1.2rem] whitespace-pre-wrap wrap-break-words leading-relaxed text-white/75">
         {renderInlineStyles(line)}
       </div>
     );
@@ -191,9 +191,9 @@ const CodeBlock = ({ code, language }: CodeBlockProps) => {
   };
 
   return (
-    <div className="rounded-lg overflow-hidden border border-white/[0.06] bg-[#070708] my-3">
+    <div className="rounded-lg overflow-hidden border border-white/6 bg-[#070708] my-3">
       {/* Code window header */}
-      <div className="flex items-center justify-between px-4 py-2 border-b border-white/[0.05] bg-white/[0.01]">
+      <div className="flex items-center justify-between px-4 py-2 border-b border-white/5 bg-white/1">
         <div className="flex items-center gap-2">
           {/* Red, Yellow, Green mock dots */}
           <div className="flex gap-1.5 mr-2">
@@ -208,7 +208,7 @@ const CodeBlock = ({ code, language }: CodeBlockProps) => {
         </div>
         <button
           onClick={handleCopy}
-          className="flex items-center gap-1.5 px-2 py-1 rounded bg-white/[0.04] hover:bg-white/[0.08] border border-white/[0.06] text-[11px] text-white/50 hover:text-white transition-all active:scale-95 cursor-pointer"
+          className="flex items-center gap-1.5 px-2 py-1 rounded bg-white/4 hover:bg-white/8 border border-white/6 text-[11px] text-white/50 hover:text-white transition-all active:scale-95 cursor-pointer"
         >
           {copied ? (
             <Check size={12} className="text-emerald-400" />

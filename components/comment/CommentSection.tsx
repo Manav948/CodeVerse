@@ -105,13 +105,13 @@ const CommentSection = ({ entityId, entityType }: Props) => {
               : `${comments.length} Comment${comments.length !== 1 ? "s" : ""}`}
           </h2>
         </div>
-        <div className="flex-1 h-px bg-white/[0.05]" />
+        <div className="flex-1 h-px bg-white/5" />
       </div>
 
       {/* Compose Box */}
       <div className="rounded-xl border border-white/[0.07] bg-[#0d0d0e] p-4 space-y-3 transition-all duration-200 focus-within:border-blue-500/30 focus-within:bg-[#0f0f10]">
         <div className="flex gap-3">
-          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-white/[0.08] flex items-center justify-center flex-shrink-0">
+          <div className="w-8 h-8 rounded-full bg-linear-to-br from-blue-500/20 to-purple-500/20 border border-white/8 flex items-center justify-center shrink-0">
             <User size={14} className="text-white/40" />
           </div>
           <textarea
@@ -152,7 +152,7 @@ const CommentSection = ({ entityId, entityType }: Props) => {
                 ${
                   commentText.trim() && !isPending && commentText.length <= 500
                     ? "bg-blue-500 hover:bg-blue-400 text-white cursor-pointer shadow-lg shadow-blue-500/20"
-                    : "bg-white/[0.05] text-white/25 cursor-not-allowed"
+                    : "bg-white/5 text-white/25 cursor-not-allowed"
                 }
               `}
             >
@@ -174,7 +174,7 @@ const CommentSection = ({ entityId, entityType }: Props) => {
         </div>
       ) : comments.length === 0 ? (
         <div className="flex flex-col items-center justify-center py-12 gap-3">
-          <div className="w-12 h-12 rounded-full bg-white/[0.03] border border-white/[0.06] flex items-center justify-center">
+          <div className="w-12 h-12 rounded-full bg-white/3 border border-white/6 flex items-center justify-center">
             <MessageCircle size={22} className="text-white/15" />
           </div>
           <div className="text-center space-y-1">
@@ -191,13 +191,13 @@ const CommentSection = ({ entityId, entityType }: Props) => {
           {displayedComments.map((comment, idx) => (
             <div
               key={comment.id}
-              className="group flex gap-3 p-3.5 rounded-xl hover:bg-white/[0.02] transition-colors duration-150"
+              className="group flex gap-3 p-3.5 rounded-xl hover:bg-white/2 transition-colors duration-150"
               style={{
                 animation: `fadeSlideIn 0.2s ease-out ${idx * 0.03}s both`,
               }}
             >
               {/* Avatar */}
-              <div className="w-8 h-8 rounded-full overflow-hidden flex-shrink-0 border border-white/[0.06] bg-[#0d0d0e]">
+              <div className="w-8 h-8 rounded-full overflow-hidden shrink-0 border border-white/6 bg-[#0d0d0e]">
                 {comment.user.image ? (
                   <Image
                     src={comment.user.image}
@@ -207,7 +207,7 @@ const CommentSection = ({ entityId, entityType }: Props) => {
                     className="object-cover w-full h-full"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-500/20 to-purple-500/20">
+                  <div className="w-full h-full flex items-center justify-center bg-linear-to-br from-blue-500/20 to-purple-500/20">
                     <User size={14} className="text-white/40" />
                   </div>
                 )}
@@ -228,7 +228,7 @@ const CommentSection = ({ entityId, entityType }: Props) => {
                     {formatRelativeTime(comment.created_at)}
                   </span>
                 </div>
-                <p className="text-[13px] text-white/65 leading-relaxed mt-1 break-words whitespace-pre-wrap">
+                <p className="text-[13px] text-white/65 leading-relaxed mt-1 wrap-break-words whitespace-pre-wrap">
                   {comment.commentText}
                 </p>
               </div>

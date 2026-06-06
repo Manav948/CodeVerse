@@ -8,7 +8,6 @@ import ReactFlow, {
   MarkerType,
   Position,
 } from "reactflow";
-import "reactflow/dist/style.css";
 
 const baseNodeStyle = {
   padding: "6px 10px",

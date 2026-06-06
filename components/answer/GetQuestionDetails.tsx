@@ -105,7 +105,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
       <div className="mx-auto max-w-2xl px-4 sm:px-6 py-8 space-y-6">
 
        
-        <Card className="border border-white/[0.06] bg-[#0d0d0e] rounded-xl p-6 space-y-4 shadow-sm">
+        <Card className="border border-white/6 bg-[#0d0d0e] rounded-xl p-6 space-y-4 shadow-sm">
 
           <h2 className="text-[18px] sm:text-[20px] font-bold tracking-tight leading-snug text-white">
             {data.title}
@@ -140,7 +140,7 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
           <button
             onClick={handleAnswerClick}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/[0.05] border border-white/[0.08] text-[13px] font-medium text-white/70 hover:text-white hover:bg-white/[0.08] hover:border-white/[0.14] transition-all duration-150 cursor-pointer"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/8 text-[13px] font-medium text-white/70 hover:text-white hover:bg-white/8 hover:border-white/[0.14] transition-all duration-150 cursor-pointer"
           >
             <Send size={13} />
             Write Answer
@@ -149,11 +149,11 @@ const GetQuestionDetails = ({ questionId }: Props) => {
 
         {/* Divider with answer count */}
         <div className="flex items-center gap-3">
-          <div className="h-px flex-1 bg-white/[0.05]" />
+          <div className="h-px flex-1 bg-white/5" />
           <span className="text-[11.5px] text-white/30 tabular-nums shrink-0">
             {data.answer.length} {data.answer.length === 1 ? "answer" : "answers"}
           </span>
-          <div className="h-px flex-1 bg-white/[0.05]" />
+          <div className="h-px flex-1 bg-white/5" />
         </div>
 
         {/* Empty state */}
@@ -168,11 +168,11 @@ const GetQuestionDetails = ({ questionId }: Props) => {
           {data.answer.map((ans) => (
             <Card
               key={ans.id}
-              className="border border-white/[0.06] bg-[#0d0d0e] rounded-xl p-5 space-y-3.5 shadow-sm"
+              className="border border-white/6 bg-[#0d0d0e] rounded-xl p-5 space-y-3.5 shadow-sm"
             >
               <AnswerHeader user={ans.user} />
 
-              <div className="h-px bg-white/[0.05]" />
+              <div className="h-px bg-white/5" />
 
               <div className="py-1">
                 <FormattedContent text={ans.description} />

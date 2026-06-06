@@ -62,7 +62,7 @@ const BookMarks = () => {
       {/* Page header */}
       <div className="space-y-1 px-1">
         <div className="flex items-center gap-2.5">
-          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/[0.04] border border-white/[0.06]">
+          <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-white/4 border border-white/6">
             <Bookmark size={13} className="text-white/50" />
           </div>
           <h1 className="text-[17px] font-semibold text-white/90 tracking-tight">
@@ -75,15 +75,15 @@ const BookMarks = () => {
       </div>
 
       {/* Tab filter bar */}
-      <div className="flex items-center gap-0.5 border border-white/[0.06] bg-[#0a0a0b] rounded-lg p-1 w-fit">
+      <div className="flex items-center gap-0.5 border border-white/6 bg-[#0a0a0b] rounded-lg p-1 w-fit">
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
             className={`capitalize text-[12px] font-medium px-3 py-1.5 rounded-md transition-all duration-150
               ${activeTab === tab
-                ? "bg-white/[0.08] text-white/90 shadow-sm"
-                : "text-white/35 hover:text-white/65 hover:bg-white/[0.04]"
+                ? "bg-white/8 text-white/90 shadow-sm"
+                : "text-white/35 hover:text-white/65 hover:bg-white/4"
               }`}
           >
             {tab}

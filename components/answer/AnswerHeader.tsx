@@ -52,11 +52,11 @@ const AnswerHeader = ({ user }: { user?: PostUser }) => {
             alt={username}
             width={32}
             height={32}
-            className="rounded-full object-cover ring-1 ring-white/[0.08]"
+            className="rounded-full object-cover ring-1 ring-white/8"
           />
         ) : (
           <div
-            className={`flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br ${gradient} text-[11px] font-semibold text-white shrink-0`}
+            className={`flex h-8 w-8 items-center justify-center rounded-full bg-linear-to-br ${gradient} text-[11px] font-semibold text-white shrink-0`}
           >
             {firstLetter}
           </div>
@@ -72,7 +72,7 @@ const AnswerHeader = ({ user }: { user?: PostUser }) => {
         </div>
       </div>
 
-      <button className="flex h-7 w-7 items-center justify-center rounded-md text-white/30 hover:text-white/70 hover:bg-white/[0.06] transition-all focus:outline-none">
+      <button className="flex h-7 w-7 items-center justify-center rounded-md text-white/30 hover:text-white/70 hover:bg-white/6 transition-all focus:outline-none">
         <EllipsisVertical className="h-4 w-4" />
       </button>
     </div>

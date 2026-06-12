@@ -10,12 +10,12 @@ import { z } from "zod";
 import toast from "react-hot-toast";
 import { signIn } from "next-auth/react";
 
-import { CardContent } from "../ui/card";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "../ui/form";
 import ProviderBtns from "./ProviderBtns";
@@ -31,48 +31,29 @@ const SignUpCard = () => {
 
   const form = useForm<SignUpValues>({
     resolver: zodResolver(signUpSchema),
-    defaultValues: {
-      username: "",
-      email: "",
-      password: "",
-    },
+    defaultValues: { username: "", email: "", password: "" },
     mode: "onSubmit",
   });
 
   const onSubmit = async (values: SignUpValues) => {
-    if (loading) return; 
+    if (loading) return;
     setLoading(true);
-
     try {
       await axios.post("/api/auth/register", values);
-
       toast.success("Account created successfully");
-
       const res = await signIn("credentials", {
         email: values.email,
         password: values.password,
         redirect: false,
       });
-
-      if (res?.error) {
-        toast.error("Login failed. Please sign in manually.");
-        router.replace("/sign-in");
-        return;
-      }
-
-      // If login successful → go dashboard
+      if (res?.error) { toast.error("Login failed. Please sign in manually."); router.replace("/sign-in"); return; }
       router.replace("/dashboard");
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
         const status = error.response?.status;
-
-        if (status === 409) {
-          toast.error("Email or username already exists.");
-        } else if (status === 400) {
-          toast.error("Invalid data submitted.");
-        } else {
-          toast.error("Server error. Please try again.");
-        }
+        if (status === 409) toast.error("Email or username already exists.");
+        else if (status === 400) toast.error("Invalid data submitted.");
+        else toast.error("Server error. Please try again.");
       } else {
         toast.error("Unexpected error occurred.");
       }
@@ -82,99 +63,101 @@ const SignUpCard = () => {
   };
 
   return (
-    <CardContent className="relative overflow-hidden rounded-3xl p-8">
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
 
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
+      
+        <ProviderBtns intent="signup" onLoading={setLoading} disabled={loading} />
+
+    
+        <div className="flex items-center gap-3">
+          <div className="h-px flex-1 bg-white/[0.08]" />
+          <span className="text-xs text-white/30 tracking-widest">OR</span>
+          <div className="h-px flex-1 bg-white/[0.08]" />
+        </div>
+
+      
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="gap-1.5">
+              <FormLabel className="text-xs font-medium text-white/60">
+                Email <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="email"
+                  placeholder="your@email.com"
+                  disabled={loading}
+                  autoComplete="email"
+                  {...field}
+                  className="h-11 bg-white/[0.04] border-white/[0.1] text-white placeholder:text-white/20 focus:border-red-500/50 focus:ring-0 rounded-lg text-sm"
+                />
+              </FormControl>
+              <FormMessage className="text-red-400 text-xs" />
+            </FormItem>
+          )}
+        />
+
+     
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => (
+            <FormItem className="gap-1.5">
+              <FormLabel className="text-xs font-medium text-white/60">
+                Username <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="your_username"
+                  disabled={loading}
+                  autoComplete="username"
+                  {...field}
+                  className="h-11 bg-white/[0.04] border-white/[0.1] text-white placeholder:text-white/20 focus:border-red-500/50 focus:ring-0 rounded-lg text-sm"
+                />
+              </FormControl>
+              <FormMessage className="text-red-400 text-xs" />
+            </FormItem>
+          )}
+        />
+
+     
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem className="gap-1.5">
+              <FormLabel className="text-xs font-medium text-white/60">
+                Password <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="password"
+                  placeholder="Create a strong password"
+                  disabled={loading}
+                  autoComplete="new-password"
+                  {...field}
+                  className="h-11 bg-white/[0.04] border-white/[0.1] text-white placeholder:text-white/20 focus:border-red-500/50 focus:ring-0 rounded-lg text-sm"
+                />
+              </FormControl>
+              <FormMessage className="text-red-400 text-xs" />
+            </FormItem>
+          )}
+        />
+
+     
+        <Button
+          disabled={loading}
+          type="submit"
+          className="mt-1 h-11 rounded-lg bg-red-600 hover:bg-red-500 font-semibold text-white text-sm transition-all duration-200 shadow-lg shadow-red-600/20 disabled:opacity-50"
         >
-        
-          <ProviderBtns
-            intent="signup"
-            onLoading={setLoading}
-            disabled={loading}
-          />
+          {loading ? <LoadingState loadingText="Creating account" /> : "Continue"}
+        </Button>
 
-          <div className="relative flex items-center gap-2 py-2">
-            <div className="h-px flex-1 bg-white/10" />
-            <span className="text-xs text-white/40 tracking-wide">OR</span>
-            <div className="h-px flex-1 bg-white/10" />
-          </div>
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="Email"
-                    disabled={loading}
-                    autoComplete="email"
-                    {...field}
-                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-cyan-400/40 focus:ring-cyan-400/20"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="username"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    placeholder="Username"
-                    disabled={loading}
-                    autoComplete="username"
-                    {...field}
-                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-purple-400/40 focus:ring-purple-400/20"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Password"
-                    disabled={loading}
-                    autoComplete="new-password"
-                    {...field}
-                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-purple-400/40 focus:ring-purple-400/20"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button
-            disabled={loading}
-            type="submit"
-            className="mt-2 h-11 rounded-xl bg-red-500/60 font-semibold text-white transition-all duration-200 hover:opacity-90 disabled:opacity-60"
-          >
-            {loading ? (
-              <LoadingState loadingText="Creating account" />
-            ) : (
-              "Create account"
-            )}
-          </Button>
-        </form>
-      </Form>
-    </CardContent>
+      </form>
+    </Form>
   );
 };
 

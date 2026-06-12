@@ -13,7 +13,7 @@ const ProviderBtns = ({ disabled, onLoading, intent }: Props) => {
   const isSignIn = intent === "signin";
 
   const baseStyles =
-    "w-full flex items-center justify-center gap-3 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md text-sm sm:text-base h-12 transition-all duration-200 hover:border-white/30 hover:bg-white/10";
+    "w-full flex items-center justify-center gap-3 rounded-xl border border-white/[0.08] bg-white/[0.04] text-sm h-11 transition-all duration-200 hover:border-white/[0.15] hover:bg-white/[0.07] text-white/70 hover:text-white";
 
   return (
     <div className="flex flex-col gap-4 text-white">

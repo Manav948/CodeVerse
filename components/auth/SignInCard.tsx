@@ -8,13 +8,14 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { z } from "zod";
+import Link from "next/link";
 
-import { CardContent } from "../ui/card";
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
+  FormLabel,
   FormMessage,
 } from "../ui/form";
 import ProviderBtns from "./ProviderBtns";
@@ -30,41 +31,22 @@ const SignInCard = () => {
 
   const form = useForm<SignInValues>({
     resolver: zodResolver(signInSchema),
-    defaultValues: {
-      email: "",
-      password: "",
-    },
+    defaultValues: { email: "", password: "" },
     mode: "onSubmit",
   });
 
   const onSubmit = async (values: SignInValues) => {
     if (loading) return;
-
     setLoading(true);
-
     try {
       const res = await signIn("credentials", {
         email: values.email,
         password: values.password,
         redirect: false,
       });
-
-      if (!res) {
-        toast.error("Server did not respond.");
-        return;
-      }
-
-      if (res.error) {
-        toast.error("Invalid email or password.");
-        return;
-      }
-
-      if (res.ok) {
-        toast.success("Signed in successfully.");
-        router.replace("/dashboard");
-        return;
-      }
-
+      if (!res) { toast.error("Server did not respond."); return; }
+      if (res.error) { toast.error("Invalid email or password."); return; }
+      if (res.ok) { toast.success("Signed in successfully."); router.replace("/dashboard"); return; }
       toast.error("Unexpected authentication response.");
     } catch (error) {
       console.error("Sign-in failed:", error);
@@ -75,78 +57,86 @@ const SignInCard = () => {
   };
 
   return (
-    <CardContent className="relative overflow-hidden rounded-3xl p-8">
-      <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="flex flex-col gap-4"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
+
+        
+        <ProviderBtns intent="signin" onLoading={setLoading} disabled={loading} />
+
+       
+        <div className="flex items-center gap-3">
+          <div className="h-px flex-1 bg-white/[0.08]" />
+          <span className="text-xs text-white/30 tracking-widest">OR</span>
+          <div className="h-px flex-1 bg-white/[0.08]" />
+        </div>
+
+       
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => (
+            <FormItem className="gap-1.5">
+              <FormLabel className="text-xs font-medium text-white/60">
+                Email <span className="text-red-500">*</span>
+              </FormLabel>
+              <FormControl>
+                <Input
+                  type="email"
+                  placeholder="your@email.com"
+                  disabled={loading}
+                  autoComplete="email"
+                  {...field}
+                  className="h-11 bg-white/[0.04] border-white/[0.1] text-white placeholder:text-white/20 focus:border-red-500/50 focus:ring-0 rounded-lg text-sm"
+                />
+              </FormControl>
+              <FormMessage className="text-red-400 text-xs" />
+            </FormItem>
+          )}
+        />
+
+       
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem className="gap-1.5">
+              <div className="flex items-center justify-between">
+                <FormLabel className="text-xs font-medium text-white/60">
+                  Password <span className="text-red-500">*</span>
+                </FormLabel>
+                <Link
+                  href="/forgot-password"
+                  className="text-xs text-red-500/70 hover:text-red-400 transition-colors"
+                >
+                  Forgot password?
+                </Link>
+              </div>
+              <FormControl>
+                <Input
+                  type="password"
+                  placeholder="Enter your password"
+                  disabled={loading}
+                  autoComplete="current-password"
+                  {...field}
+                  className="h-11 bg-white/[0.04] border-white/[0.1] text-white placeholder:text-white/20 focus:border-red-500/50 focus:ring-0 rounded-lg text-sm"
+                />
+              </FormControl>
+              <FormMessage className="text-red-400 text-xs" />
+            </FormItem>
+          )}
+        />
+
+    
+        <Button
+          type="submit"
+          disabled={loading}
+          className="mt-1 h-11 rounded-lg bg-red-600 hover:bg-red-500 font-semibold text-white text-sm transition-all duration-200 shadow-lg shadow-red-600/20 disabled:opacity-50"
         >
-          <ProviderBtns
-            intent="signin"
-            onLoading={setLoading}
-            disabled={loading}
-          />
+          {loading ? <LoadingState loadingText="Signing in" /> : "Continue"}
+        </Button>
 
-          <div className="relative flex items-center gap-2 py-2">
-            <div className="h-px flex-1 bg-white/10" />
-            <span className="text-xs text-white/40 tracking-wide">OR</span>
-            <div className="h-px flex-1 bg-white/10" />
-          </div>
-
-          <FormField
-            control={form.control}
-            name="email"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="Email"
-                    disabled={loading}
-                    autoComplete="email"
-                    {...field}
-                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-cyan-400/40 focus:ring-cyan-400/20"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <FormField
-            control={form.control}
-            name="password"
-            render={({ field }) => (
-              <FormItem>
-                <FormControl>
-                  <Input
-                    type="password"
-                    placeholder="Password"
-                    disabled={loading}
-                    autoComplete="current-password"
-                    {...field}
-                    className="h-11 bg-white/5 border-white/10 text-white placeholder:text-white/40 focus:border-purple-400/40 focus:ring-purple-400/20"
-                  />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-
-          <Button
-            type="submit"
-            disabled={loading}
-            className="mt-2 h-11 rounded-xl bg-red-500/60 font-semibold text-white transition-all duration-200 hover:opacity-90 disabled:opacity-60"
-          >
-            {loading ? (
-              <LoadingState loadingText="Signing in" />
-            ) : (
-              "Sign in"
-            )}
-          </Button>
-        </form>
-      </Form>
-    </CardContent>
+      </form>
+    </Form>
   );
 };
 

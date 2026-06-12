@@ -1,90 +1,84 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { FileText, Code2, MessageCircleQuestion, CheckSquare, ArrowUpRight } from "lucide-react";
 
-interface FeatureItem {
-  title: string;
-  description: string;
-}
-
-const features: FeatureItem[] = [
+const features = [
   {
+    icon: <FileText size={18} />,
     title: "Developer Posts",
-    description:
-      "Write structured technical articles and build a public archive that reflects your growth.",
+    description: "Write structured technical articles and build a public archive that reflects your growth as a developer.",
+    tag: "Write & Share",
   },
   {
+    icon: <Code2 size={18} />,
     title: "Snippet Library",
-    description:
-      "Store reusable components and utilities in an organized system built for speed.",
+    description: "Store reusable components, utilities, and algorithm solutions — access them instantly whenever you need.",
+    tag: "Save & Reuse",
   },
   {
+    icon: <MessageCircleQuestion size={18} />,
     title: "Community Q&A",
-    description:
-      "Ask meaningful questions and collaborate in focused technical discussions.",
+    description: "Ask meaningful questions and collaborate in focused technical discussions with real developers.",
+    tag: "Ask & Answer",
   },
   {
+    icon: <CheckSquare size={18} />,
     title: "Task Tracking",
-    description:
-      "Manage development tasks and track progress with an engineer-focused workflow.",
+    description: "Manage development tasks and track progress with an engineer-focused workflow built for real projects.",
+    tag: "Plan & Track",
   },
 ];
 
-export default function FeatureTimeline() {
+export default function FeatureGrid() {
   return (
-    <section className="relative w-full bg-black text-white py-20 px-6 overflow-hidden">
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-100 h-100 bg-red-600/10 blur-[100px] pointer-events-none" />
-      <div className="max-w-5xl mx-auto relative">
+    <div className="max-w-6xl mx-auto px-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+        {features.map((f, i) => (
+          <motion.div
+            key={i}
+            
+            initial={{ opacity: 0, rotateY: 90, scale: 0.9 }}
+            whileInView={{ opacity: 1, rotateY: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-40px" }}
+            transition={{
+              duration: 0.7,
+              delay: i * 0.12,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            style={{ transformPerspective: 900, transformOrigin: "left center" }}
+            whileHover={{ y: -4, transition: { duration: 0.2 } }}
+            className="group relative bg-[#0a0a0a] border border-white/[0.07] rounded-2xl p-6 flex flex-col gap-4 overflow-hidden cursor-default transition-colors duration-300 hover:border-red-500/20"
+          >
+        
+            <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none bg-gradient-to-br from-red-500/5 via-transparent to-transparent rounded-2xl" />
 
-        {/*  Vertical Line */}
-        <div className="absolute left-1/2 top-0 -translate-x-1/2 h-full w-px bg-white/10" />
+            <div className="flex items-center justify-between">
+              <div className="w-9 h-9 rounded-lg bg-white/[0.05] border border-white/[0.08] flex items-center justify-center text-red-400 group-hover:bg-red-500/10 group-hover:border-red-500/20 transition-all duration-300">
+                {f.icon}
+              </div>
+              <ArrowUpRight size={14} className="text-white/15 group-hover:text-red-400/60 transition-colors duration-300" />
+            </div>
 
-        <div className="space-y-4">
+           
+            <div>
+              <h3 className="text-sm font-semibold text-white/85 mb-2 group-hover:text-white transition-colors">
+                {f.title}
+              </h3>
+              <p className="text-xs text-white/35 leading-relaxed">
+                {f.description}
+              </p>
+            </div>
 
-          {features.map((feature, index) => {
-            const isLeft = index % 2 === 0;
-
-            return (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                viewport={{ once: true }}
-                className="relative grid md:grid-cols-2 items-center"
-              >
-                <div className="hidden md:block absolute left-1/2 -translate-x-1/2">
-                  <div className="h-3 w-3 rounded-full bg-white/80" />
-                </div>
-
-                <div
-                  className={`relative ${
-                    isLeft
-                      ? "md:pr-14 md:text-right"
-                      : "md:col-start-2 md:pl-14"
-                  }`}
-                >
-                  <motion.div
-                    whileHover={{ scale: 1.02 }}
-                    className="inline-block bg-black border border-white/10 rounded-xl p-6 transition hover:border-purple-500/30"
-                  >
-                    <h3 className="text-lg font-semibold mb-3">
-                      {feature.title}
-                    </h3>
-
-                    <p className="text-white/60 text-sm leading-relaxed max-w-sm">
-                      {feature.description}
-                    </p>
-                  </motion.div>
-                </div>
-
-                <div className="hidden md:block" />
-              </motion.div>
-            );
-          })}
-
-        </div>
+            
+            <div className="mt-auto pt-2 border-t border-white/[0.05]">
+              <span className="text-[10px] font-mono tracking-widest uppercase text-white/20 group-hover:text-red-500/50 transition-colors duration-300">
+                {f.tag}
+              </span>
+            </div>
+          </motion.div>
+        ))}
       </div>
-    </section>
+    </div>
   );
 }

@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useEffect } from "react";
 import Lenis from "lenis";
-import { motion, useInView, useAnimation, Variants } from "framer-motion";
+import { motion, Variants } from "framer-motion";
 import {
   FileText, Code2, MessageCircleQuestion, CheckSquare,
   ArrowUpRight, Terminal, Layers, Cpu, Globe
@@ -18,45 +18,27 @@ import GamifiedSection from "./FieldSection";
 import CommunitySection from "./CommunitySection";
 
 
-const splitIn: Variants = {
-  hidden: { opacity: 0, letterSpacing: "0.5em", filter: "blur(8px)" },
-  visible: {
-    opacity: 1,
-    letterSpacing: "-0.02em",
-    filter: "blur(0px)",
-    transition: { duration: 0.9, ease: [0.22, 1, 0.36, 1] },
-  },
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 40 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
 };
 
-const curtainReveal: Variants = {
-  hidden: { clipPath: "inset(0 100% 0 0)", opacity: 1 },
-  visible: {
-    clipPath: "inset(0 0% 0 0)",
-    opacity: 1,
-    transition: { duration: 0.85, ease: [0.76, 0, 0.24, 1] },
-  },
+const blurFade: Variants = {
+  hidden: { opacity: 0, filter: "blur(10px)", y: 20 },
+  visible: { opacity: 1, filter: "blur(0px)", y: 0, transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] } },
 };
-
 
 const maskReveal: Variants = {
-  hidden: { clipPath: "inset(100% 0 0 0)", y: 30, opacity: 0 },
-  visible: {
-    clipPath: "inset(0% 0 0 0)",
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.7, ease: [0.22, 1, 0.36, 1] },
-  },
+  hidden: { opacity: 0, y: 30, clipPath: "inset(100% 0 0 0)" },
+  visible: { opacity: 1, y: 0, clipPath: "inset(0% 0 0 0)", transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
 };
 
 const skewIn = (i: number): Variants => ({
-  hidden: { opacity: 0, skewX: -8, x: -30 },
-  visible: {
-    opacity: 1,
-    skewX: 0,
-    x: 0,
-    transition: { duration: 0.55, delay: i * 0.1, ease: [0.22, 1, 0.36, 1] },
-  },
+  hidden: { opacity: 0, skewX: -6, x: -24 },
+  visible: { opacity: 1, skewX: 0, x: 0, transition: { duration: 0.5, delay: i * 0.09, ease: [0.22, 1, 0.36, 1] } },
 });
+
+
 
 const showcaseItems = [
   {
@@ -92,137 +74,69 @@ const showcaseItems = [
 ];
 
 const whyItems = [
-  {
-    icon: <Terminal size={18} />,
-    title: "Built for Developers",
-    desc: "Every feature is designed around how real engineers actually work — not generic productivity tools.",
-  },
-  {
-    icon: <Layers size={18} />,
-    title: "All-in-One Ecosystem",
-    desc: "Posts, snippets, Q&A, and tasks — stop juggling multiple platforms and build in one place.",
-  },
-  {
-    icon: <Cpu size={18} />,
-    title: "Public by Default",
-    desc: "Your work is discoverable. Build a reputation by sharing your knowledge openly with the community.",
-  },
-  {
-    icon: <Globe size={18} />,
-    title: "Global Community",
-    desc: "Connect with developers across 48+ countries who are serious about growing publicly.",
-  },
+  { icon: <Terminal size={18} />, title: "Built for Developers", desc: "Every feature is designed around how real engineers actually work — not generic productivity tools." },
+  { icon: <Layers size={18} />, title: "All-in-One Ecosystem", desc: "Posts, snippets, Q&A, and tasks — stop juggling multiple platforms and build in one place." },
+  { icon: <Cpu size={18} />, title: "Public by Default", desc: "Your work is discoverable. Build a reputation by sharing your knowledge openly with the community." },
+  { icon: <Globe size={18} />, title: "Global Community", desc: "Connect with developers across 48+ countries who are serious about growing publicly." },
 ];
 
-function useScrollReveal(threshold = 0.15) {
-  const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
-  const controls = useAnimation();
-  useEffect(() => {
-    if (isInView) controls.start("visible");
-  }, [isInView, controls]);
-  return { ref, controls };
-}
+
+const VP = { once: true, margin: "-80px" } as const;
 
 const HomePage = () => {
 
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.2,
+      duration: 1.1,
       smoothWheel: true,
-      wheelMultiplier: 0.9,
-      touchMultiplier: 1.1,
+      wheelMultiplier: 0.85,
+      touchMultiplier: 1.0,
     });
     function raf(time: number) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-    return () => lenis.destroy();
+    const id = requestAnimationFrame(raf);
+    return () => { lenis.destroy(); cancelAnimationFrame(id); };
   }, []);
-
-  const featHeaderRev = useScrollReveal();
-  const whyHeadRev = useScrollReveal();
 
   return (
     <main className="relative w-full min-h-screen bg-black text-white overflow-x-hidden">
 
       <Header />
-
-     
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 1, ease: "easeOut" }}
-      >
-        <Hero />
-      </motion.div>
-
+      <Hero />
       <Slider />
 
-
       <section className="py-24 px-6">
-        <div className="max-w-6xl mx-auto text-center mb-12" ref={featHeaderRev.ref}>
-          <motion.span
-            initial="hidden"
-            animate={featHeaderRev.controls}
-            variants={splitIn}
-            className="inline-block text-xs font-mono tracking-[0.2em] uppercase text-red-500/70 mb-4"
-          >
+        <motion.div
+          className="max-w-6xl mx-auto text-center mb-12"
+          initial="hidden"
+          whileInView="visible"
+          viewport={VP}
+          variants={blurFade}
+        >
+          <span className="inline-block text-xs font-mono tracking-[0.2em] uppercase text-red-500/70 mb-4">
             What you get
-          </motion.span>
-
-          <motion.h2
-            initial="hidden"
-            animate={featHeaderRev.controls}
-            variants={{
-              hidden: { opacity: 0, y: 50, filter: "blur(12px)" },
-              visible: {
-                opacity: 1, y: 0, filter: "blur(0px)",
-                transition: { duration: 0.8, delay: 0.1, ease: [0.22, 1, 0.36, 1] },
-              },
-            }}
-            className="text-4xl md:text-5xl font-bold tracking-tight"
-          >
+          </span>
+          <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
             Features of CodeVerse
-          </motion.h2>
-
-          <motion.p
-            initial="hidden"
-            animate={featHeaderRev.controls}
-            variants={{
-              hidden: { opacity: 0, y: 20 },
-              visible: { opacity: 1, y: 0, transition: { duration: 0.6, delay: 0.25 } },
-            }}
-            className="mt-5 text-white/40 max-w-xl mx-auto text-sm leading-relaxed"
-          >
+          </h2>
+          <p className="mt-5 text-white/40 max-w-xl mx-auto text-sm leading-relaxed">
             Everything you need to build your public developer identity —
             from writing posts to managing tasks in one unified ecosystem.
-          </motion.p>
-        </div>
+          </p>
+        </motion.div>
 
         <FeatureBlock />
       </section>
 
- 
       <section className="py-8 px-6">
         <div className="max-w-6xl mx-auto space-y-6">
           {showcaseItems.map((item, idx) => (
             <motion.div
               key={idx}
-              initial={{
-                opacity: 0,
-                x: idx % 2 === 0 ? -60 : 60,
-                rotateY: idx % 2 === 0 ? -6 : 6,
-                scale: 0.97,
-              }}
-              whileInView={{
-                opacity: 1,
-                x: 0,
-                rotateY: 0,
-                scale: 1,
-              }}
+              initial="hidden"
+              whileInView="visible"
               viewport={{ once: true, margin: "-60px" }}
-              transition={{ duration: 0.75, ease: [0.22, 1, 0.36, 1], delay: 0.04 }}
-              style={{ transformPerspective: 1000 }}
-              className="group relative bg-[#080808] border border-white/[0.07] rounded-3xl overflow-hidden hover:border-white/[0.12] transition-all duration-500"
+              variants={fadeUp}
+              className="group relative bg-[#080808] border border-white/[0.07] rounded-3xl overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
             >
               <div className={`absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent ${item.borderColor.replace("border-", "via-")} to-transparent opacity-60`} />
 
@@ -244,7 +158,6 @@ const HomePage = () => {
                   </button>
                 </div>
 
-               
                 <div className={`relative border-white/[0.05] overflow-hidden ${idx % 2 !== 0 ? "md:border-r" : "md:border-l"}`}>
                   <div className="absolute inset-0 bg-gradient-to-br from-white/[0.02] to-transparent" />
                   <div className="absolute inset-0 flex items-center justify-center p-8">
@@ -259,26 +172,24 @@ const HomePage = () => {
         </div>
       </section>
 
+
       <section className="py-24 px-6">
         <div className="max-w-6xl mx-auto">
+          <motion.div
+            className="text-center mb-12 overflow-hidden"
+            initial="hidden"
+            whileInView="visible"
+            viewport={VP}
+            variants={maskReveal}
+          >
+            <span className="inline-block text-xs font-mono tracking-[0.2em] uppercase text-red-500/70 mb-4">
+              Why CodeVerse
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
+              Built different, <span className="text-red-500">by design.</span>
+            </h2>
+          </motion.div>
 
-         
-          <div className="text-center mb-12 overflow-hidden" ref={whyHeadRev.ref}>
-            <motion.div
-              initial="hidden"
-              animate={whyHeadRev.controls}
-              variants={maskReveal}
-            >
-              <span className="inline-block text-xs font-mono tracking-[0.2em] uppercase text-red-500/70 mb-4">
-                Why CodeVerse
-              </span>
-              <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-                Built different, <span className="text-red-500">by design.</span>
-              </h2>
-            </motion.div>
-          </div>
-
-      
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
             {whyItems.map((item, i) => (
               <motion.div
@@ -287,7 +198,7 @@ const HomePage = () => {
                 whileInView="visible"
                 viewport={{ once: true, margin: "-40px" }}
                 variants={skewIn(i)}
-                className="group bg-[#080808] border border-white/[0.07] rounded-2xl p-7 hover:border-white/[0.12] transition-all duration-300"
+                className="group bg-[#080808] border border-white/[0.07] rounded-2xl p-7 hover:border-white/[0.12] transition-colors duration-300"
               >
                 <div className="w-9 h-9 rounded-lg bg-red-500/10 border border-red-500/15 flex items-center justify-center text-red-400 mb-5 group-hover:bg-red-500/15 transition-colors">
                   {item.icon}
@@ -300,12 +211,8 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* ── Gamified — blur+scale (handled inside FieldSection) ── */}
       <GamifiedSection />
-
-      {/* ── Community — spring slide from right (inside CommunitySection) ── */}
       <CommunitySection />
-
       <Footer />
     </main>
   );

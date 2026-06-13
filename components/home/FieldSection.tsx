@@ -59,7 +59,7 @@ export default function GamifiedSection() {
             whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-all duration-300"
+            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
           >
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-yellow-500/20 to-transparent" />
 
@@ -91,7 +91,7 @@ export default function GamifiedSection() {
             whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-all duration-300"
+            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
           >
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500/20 to-transparent" />
 
@@ -138,7 +138,7 @@ export default function GamifiedSection() {
             whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
-            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-all duration-300"
+            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
           >
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
 

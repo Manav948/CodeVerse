@@ -18,7 +18,7 @@ const ProfileContainer = ({ userId }: Props) => {
           <Sidebar />
         </aside>
 
-        <main className="flex-1 overflow-y-auto">
+        <main className="flex-1 overflow-y-auto overflow-x-hidden">
           <div className="mx-auto max-w-5xl px-6 py-8">
             <Profile userId={userId} />
           </div>

@@ -56,134 +56,92 @@ const Profile = ({ userId }: Props) => {
   const activeData: any[] = data[activeTab] ?? [];
 
   return (
-    <div className="min-h-screen bg-black text-white">
-
-  
-      <div className="relative h-40 md:h-52 w-full rounded-2xl overflow-hidden bg-[#0d0d0d] border border-white/[0.06] mb-0">
-   
-        <div className="absolute inset-0 bg-gradient-to-br from-red-600/20 via-transparent to-purple-600/10" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_60%_40%,rgba(239,68,68,0.12),transparent_70%)]" />
+    <div className="max-w-2xl mx-auto px-4 py-6 text-white bg-black min-h-screen">
      
-        <div
-          className="absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage: "linear-gradient(rgba(255,255,255,0.4) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.4) 1px, transparent 1px)",
-            backgroundSize: "40px 40px",
-          }}
-        />
-      </div>
-
-      
-      <div className="relative px-4 md:px-8 pb-6">
-   
-        <div className="absolute -top-14 left-6 md:left-8">
-          <div className="relative">
-            <div className="absolute inset-0 rounded-full bg-red-500/20 blur-xl scale-110" />
+      <div className="flex items-center gap-6 md:gap-12 mb-6">
+        <div className="relative shrink-0">
+          <div className="p-[2.5px] bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 rounded-full">
             <UserAvatar
               profileImage={data.image}
               username={data.username}
-              size={100}
-              className="relative ring-4 ring-black rounded-full"
+              size={80}
+              className="ring-4 ring-black rounded-full"
             />
           </div>
         </div>
-
-        
-        <div className="flex items-start justify-end pt-3 mb-14 md:mb-4">
-          <button className="px-4 py-1.5 rounded-lg border border-white/[0.12] text-xs text-white/60 hover:text-white hover:border-white/25 transition-colors font-medium">
-            Follow
-          </button>
-        </div>
-
-      
-        <div className="mt-2 space-y-2">
-          <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-white tracking-tight">
-              {data.name || data.username}
-            </h1>
-            <p className="text-sm text-white/40 mt-0.5">@{data.username}</p>
-          </div>
-
-          {data.bio && (
-            <p className="text-sm text-white/65 leading-relaxed max-w-lg">
-              {data.bio}
-            </p>
-          )}
-
-          
-          <div className="flex flex-wrap items-center gap-4 text-xs text-white/35 pt-1">
-            <span className="flex items-center gap-1.5">
-              <Calendar size={12} />
-              Joined {joinDate}
-            </span>
-          </div>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mt-6">
+        <div className="flex-1 flex justify-around text-center">
           {[
-            { label: "Posts",     value: data._count.posts,     icon: <FileText size={14} />,               color: "text-red-400",    bg: "bg-red-500/8 border-red-500/15" },
-            { label: "Snippets",  value: data._count.snippets,  icon: <Code2 size={14} />,                  color: "text-orange-400", bg: "bg-orange-500/8 border-orange-500/15" },
-            { label: "Questions", value: data._count.questions, icon: <MessageCircleQuestion size={14} />,  color: "text-blue-400",   bg: "bg-blue-500/8 border-blue-500/15" },
-            { label: "Articles",  value: data._count.articles,  icon: <BookOpen size={14} />,               color: "text-purple-400", bg: "bg-purple-500/8 border-purple-500/15" },
-          ].map((s) => (
-            <div
-              key={s.label}
-              className={`rounded-xl border ${s.bg} p-4 flex flex-col gap-2`}
-            >
-              <div className={`${s.color}`}>{s.icon}</div>
-              <div className="text-2xl font-bold text-white tabular-nums">
-                {s.value}
-              </div>
-              <div className="text-[11px] text-white/30 uppercase tracking-wider font-mono">
-                {s.label}
-              </div>
+            { label: "Posts", count: data._count.posts },
+            { label: "Snippets", count: data._count.snippets },
+            { label: "Questions", count: data._count.questions },
+            { label: "Articles", count: data._count.articles },
+          ].map((stat) => (
+            <div key={stat.label} className="flex flex-col items-center">
+              <span className="text-base md:text-lg font-bold font-mono tracking-tight">{stat.count}</span>
+              <span className="text-[10px] md:text-xs text-white/45 tracking-wide lowercase">{stat.label}</span>
             </div>
           ))}
         </div>
       </div>
 
-      <div className="px-4 md:px-8 mt-2">
-        <div className="flex gap-1 border-b border-white/[0.06] mb-6">
-          {TABS.map((tab) => {
-            const count = data._count[tab.key] ?? 0;
-            const isActive = activeTab === tab.key;
-            return (
-              <button
-                key={tab.key}
-                onClick={() => setActiveTab(tab.key)}
-                className={`relative flex items-center gap-2 px-4 py-3 text-sm font-medium transition-colors duration-200 ${
-                  isActive ? "text-white" : "text-white/35 hover:text-white/70"
-                }`}
-              >
-                <span className={isActive ? "text-red-400" : "text-white/20"}>
-                  {tab.icon}
-                </span>
-                {tab.label}
-                <span className={`text-[11px] font-mono px-1.5 py-0.5 rounded-md ${
-                  isActive ? "bg-red-500/15 text-red-400" : "bg-white/[0.05] text-white/20"
-                }`}>
-                  {count}
-                </span>
-                {isActive && (
-                  <span className="absolute bottom-0 left-0 right-0 h-0.5 bg-red-500 rounded-full" />
-                )}
-              </button>
-            );
-          })}
+     
+      <div className="space-y-1.5 mb-6">
+        <h1 className="text-lg font-bold tracking-tight text-white">{data.name || data.username}</h1>
+        <div className="flex items-center gap-2 text-xs text-white/40">
+          <span>@{data.username}</span>
+          <span>•</span>
+          <span className="flex items-center gap-1">
+            <Calendar size={11} />
+            Joined {joinDate}
+          </span>
         </div>
+        {data.bio && (
+          <p className="text-sm text-white/80 pt-1 leading-relaxed max-w-xl">
+            {data.bio}
+          </p>
+        )}
+      </div>
 
-        <div className="pb-12">
-          {activeData.length === 0 ? (
-            <EmptyState tab={activeTab} />
-          ) : (
-            <div className="space-y-3">
-              {activeTab === "posts"     && activeData.map((item: any) => <PostCard key={item.id} item={item} />)}
-              {activeTab === "snippets"  && activeData.map((item: any) => <SnippetCard key={item.id} item={item} />)}
-              {activeTab === "questions" && activeData.map((item: any) => <QuestionCard key={item.id} item={item} />)}
-              {activeTab === "articles"  && activeData.map((item: any) => <PostCard key={item.id} item={item} />)}
-            </div>
-          )}
-        </div>
+      
+      <div className="flex justify-around border-t border-white/[0.08] -mx-4 px-4 md:mx-0 md:px-0">
+        {TABS.map((tab) => {
+          const count = data._count[tab.key] ?? 0;
+          const isActive = activeTab === tab.key;
+          return (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              className={`flex items-center gap-1.5 py-4 text-xs font-mono uppercase tracking-widest transition-colors ${
+                isActive
+                  ? "text-white border-t border-white -mt-[1px]"
+                  : "text-white/35 hover:text-white/70"
+              }`}
+            >
+              <span className={isActive ? "text-red-400" : "text-white/20"}>
+                {tab.icon}
+              </span>
+              <span className="hidden sm:inline">{tab.label}</span>
+              <span className={`text-[10px] font-mono px-1 rounded ${
+                isActive ? "bg-red-500/15 text-red-400" : "bg-white/[0.05] text-white/20"
+              }`}>
+                {count}
+              </span>
+            </button>
+          );
+        })}
+      </div>
+
+      <div className="pt-6 pb-12">
+        {activeData.length === 0 ? (
+          <EmptyState tab={activeTab} />
+        ) : (
+          <div className="space-y-3">
+            {activeTab === "posts"     && activeData.map((item: any) => <PostCard key={item.id} item={item} />)}
+            {activeTab === "snippets"  && activeData.map((item: any) => <SnippetCard key={item.id} item={item} />)}
+            {activeTab === "questions" && activeData.map((item: any) => <QuestionCard key={item.id} item={item} />)}
+            {activeTab === "articles"  && activeData.map((item: any) => <PostCard key={item.id} item={item} />)}
+          </div>
+        )}
       </div>
     </div>
   );

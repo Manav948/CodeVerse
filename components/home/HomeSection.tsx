@@ -54,9 +54,21 @@ export default function CodeVerseHero() {
 
     const clock = new THREE.Clock();
     let animationId: number;
+    let isIntersecting = true;
+
+    // Intersection Observer to pause rendering when off-screen
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        isIntersecting = entry.isIntersecting;
+      },
+      { threshold: 0 }
+    );
+    observer.observe(mount);
 
     const animate = () => {
       animationId = requestAnimationFrame(animate);
+
+      if (!isIntersecting) return;
 
       const time = clock.getElapsedTime();
       const positions = geometry.attributes.position;
@@ -94,6 +106,7 @@ export default function CodeVerseHero() {
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", handleResize);
+      observer.disconnect();
 
       mount.removeChild(renderer.domElement);
       geometry.dispose();

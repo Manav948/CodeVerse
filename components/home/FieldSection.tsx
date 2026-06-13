@@ -30,8 +30,8 @@ export default function GamifiedSection() {
       <div className="max-w-6xl mx-auto relative">
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.88, filter: "blur(16px)" }}
-          whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+          initial={{ opacity: 0, scale: 0.88, y: 15 }}
+          whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16"
@@ -55,8 +55,8 @@ export default function GamifiedSection() {
          
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.82, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
             className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
@@ -87,8 +87,8 @@ export default function GamifiedSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.82, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
             className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
@@ -134,8 +134,8 @@ export default function GamifiedSection() {
        
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.82, filter: "blur(10px)" }}
-            whileInView={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
+            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-40px" }}
             transition={{ duration: 0.7, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
             className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"

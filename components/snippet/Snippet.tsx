@@ -178,14 +178,14 @@ const SnippetCard = ({ snippet }: Props) => {
                 <div className="p-0.5 rounded-full group-hover/bm:bg-amber-400/10 transition-colors">
                   <Bookmark size={14} fill={snippet.bookmarked ? "currentColor" : "none"} />
                 </div>
-                <span className="font-medium">Save</span>
+                <span className="font-medium hidden sm:inline">Save</span>
               </button>
 
               <button
                 onClick={() => router.push(`/snippet/${snippet.id}`)}
                 className="flex items-center gap-1 px-2 py-1.5 rounded-md text-white/35 hover:text-white/80 transition-all cursor-pointer font-medium"
               >
-                View
+                <span className="hidden sm:inline">View</span>
                 <span className="text-white/20">→</span>
               </button>
             </div>

@@ -161,9 +161,9 @@ const PostCard = ({ post }: Props) => {
           )}
 
           <div className="pt-1 flex items-center justify-between text-[11.5px] text-white/35">
-            <span className="font-mono tabular-nums">
-              {new Date(post.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
-            </span>
+              <span className="mr-2 tabular-nums text-white/25 text-[11.5px]">
+                {new Date(post.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
+              </span>
 
             <div className="flex items-center gap-1.5">
               <button
@@ -193,7 +193,7 @@ const PostCard = ({ post }: Props) => {
                 <div className="p-0.5 rounded-full transition-colors">
                   <Bookmark size={13.5} fill={post.bookmarked ? "currentColor" : "none"} />
                 </div>
-                <span className="font-mono font-medium text-[11px]">Save</span>
+                <span className="font-mono font-medium text-[11px] hidden sm:inline">Save</span>
               </button>
 
               <CommentDropdown
@@ -204,9 +204,9 @@ const PostCard = ({ post }: Props) => {
 
               <button
                 onClick={() => router.push(`/dashboard/${post.id}`)}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-white/4 bg-white/2 text-white/40 hover:text-white hover:bg-white/6 hover:border-white/8 transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 font-mono text-[11px]"
+                className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-md border border-white/4 bg-white/2 text-white/40 hover:text-white hover:bg-white/6 hover:border-white/8 transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 font-mono text-[11px]"
               >
-                View
+                <span className="hidden sm:inline">View</span>
                 <span className="text-white/20 group-hover:translate-x-0.5 transition-transform duration-200">→</span>
               </button>
             </div>

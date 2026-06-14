@@ -14,7 +14,7 @@ const PostContainer = () => {
           <Sidebar />
         </aside>
         <main className="flex-1 overflow-y-auto">
-          <div className="mx-auto w-full max-w-3xl  px-5 sm:py-8">
+          <div className="mx-auto w-full max-w-3xl  px-5 sm:py-8 py-6">
             <AllPost />
           </div>
         </main>

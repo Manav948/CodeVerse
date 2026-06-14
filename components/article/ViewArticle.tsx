@@ -20,7 +20,7 @@ const ViewArticle = ({ article }: Props) => {
   };
 
   return (
-    <div className="flex justify-center px-4">
+    <div className="flex justify-center">
       <div
         className="w-full max-w-3xl rounded-2xl border border-white/10 bg-black text-white
         backdrop-blur-xl p-6 space-y-6"

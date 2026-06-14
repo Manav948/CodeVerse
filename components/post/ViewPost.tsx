@@ -19,7 +19,7 @@ const ViewPost = ({ post }: Props) => {
   };
 
   return (
-    <div className="flex justify-center px-4 py-6">
+    <div className="flex justify-center">
       <div className="relative w-full max-w-2xl rounded-xl border border-white/6 bg-[#0d0d0e] text-white p-6 sm:p-8 shadow-xl">
 
         <button

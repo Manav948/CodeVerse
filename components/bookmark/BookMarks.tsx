@@ -75,12 +75,15 @@ const BookMarks = () => {
       </div>
 
       {/* Tab filter bar */}
-      <div className="flex items-center gap-0.5 border border-white/6 bg-[#0a0a0b] rounded-lg p-1 w-fit">
+      <div
+        className="flex items-center gap-0.5 border border-white/6 bg-[#0a0a0b] rounded-lg p-1 w-full sm:w-fit overflow-x-auto snap-x snap-mandatory"
+        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
+      >
         {tabs.map((tab) => (
           <button
             key={tab}
             onClick={() => setActiveTab(tab)}
-            className={`capitalize text-[12px] font-medium px-3 py-1.5 rounded-md transition-all duration-150
+            className={`capitalize text-[12px] font-medium px-3 py-1.5 rounded-md transition-all duration-150 shrink-0 snap-start
               ${activeTab === tab
                 ? "bg-white/8 text-white/90 shadow-sm"
                 : "text-white/35 hover:text-white/65 hover:bg-white/4"

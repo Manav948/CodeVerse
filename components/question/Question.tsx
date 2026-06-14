@@ -98,7 +98,7 @@ const Question = ({ question }: Props) => {
   return (
     <>
       <Card className="group relative overflow-hidden rounded-xl border border-white/5 bg-[#0a0a0c]/85 transition-all duration-300 mb-4 shadow-[0_8px_30px_rgb(0,0,0,0.5)] backdrop-blur-md">
-   
+
         <div className="absolute top-0 inset-x-0 h-0.5 bg-linear-to-r from-transparent via-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
         <div className="p-5 space-y-4">
@@ -123,8 +123,8 @@ const Question = ({ question }: Props) => {
           </p>
 
           <div className="pt-1 flex items-center justify-between text-[11.5px] text-white/35">
-            <span className="font-mono tabular-nums">
-              {new Date(question.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric", year: "numeric" })}
+            <span className="mr-2 tabular-nums text-white/25 text-[11.5px]">
+              {new Date(question.created_at).toLocaleDateString(undefined, { month: "short", day: "numeric" })}
             </span>
 
             <div className="flex items-center gap-1.5">
@@ -158,7 +158,7 @@ const Question = ({ question }: Props) => {
                 <div className="p-0.5 rounded-full transition-colors">
                   <Bookmark size={13.5} fill={question.bookmarked ? "currentColor" : "none"} />
                 </div>
-                <span className="font-mono font-medium text-[11px]">Save</span>
+                <span className="font-mono font-medium text-[11px] hidden sm:inline">Save</span>
               </button>
 
               <button
@@ -168,14 +168,14 @@ const Question = ({ question }: Props) => {
                 <div className="p-0.5 rounded-full transition-colors">
                   <CornerUpRight size={13.5} />
                 </div>
-                <span className="font-mono font-medium text-[11px]">Reply</span>
+                <span className="font-mono font-medium text-[11px] hidden sm:inline">Reply</span>
               </button>
 
               <button
                 onClick={() => router.push(`/qa/question/${question.id}`)}
-                className="flex items-center gap-1 px-3 py-1.5 rounded-md border border-white/4 bg-white/2 text-white/40 hover:text-white hover:bg-white/6 hover:border-white/8 transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 font-mono text-[11px]"
+                className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-md border border-white/4 bg-white/2 text-white/40 hover:text-white hover:bg-white/6 hover:border-white/8 transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 font-mono text-[11px]"
               >
-                View
+                <span className="hidden sm:inline">View</span>
                 <span className="text-white/20 group-hover:translate-x-0.5 transition-transform duration-200">→</span>
               </button>
             </div>

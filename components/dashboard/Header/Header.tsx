@@ -113,7 +113,7 @@ const Header = () => {
             <PopoverContent
               align="end"
               sideOffset={8}
-              className="w-95 p-0 rounded-xl border border-white/5 bg-[#111111] shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden"
+              className="w-[calc(100vw-32px)] sm:w-95 p-0 rounded-xl border border-white/5 bg-[#111111] shadow-[0_8px_32px_rgba(0,0,0,0.5)] overflow-hidden"
             >
               <Notification close={() => setOpen(false)} />
             </PopoverContent>

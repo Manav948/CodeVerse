@@ -63,16 +63,7 @@ const CommentDropdown = ({ entityId, entityType, initialCommentCount = 0 }: Prop
     }
   }, [commentText]);
 
-  // Close on outside click (only needed for custom mobile layout if not inside Popover)
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (isMobile && dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    };
-    if (isOpen && isMobile) document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, [isOpen, isMobile]);
+
 
   const handleSubmit = () => {
     if (!commentText.trim() || isPending) return;

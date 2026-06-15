@@ -159,7 +159,7 @@ const NotificationItem = ({ notification, onClick, isLast }: ItemProps) => {
         isLast ? "mb-0" : "mb-0.5",
         notification.isRead
           ? "bg-transparent border border-transparent hover:bg-white/3"
-          : "bg-white/2 border border-white/ hover:bg-white/"
+          : "bg-white/2 border border-white/5 hover:bg-white/4"
       )}
     >
       {/* Unread indicator dot */}

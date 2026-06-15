@@ -73,9 +73,10 @@ const navItems = [
 
 type Props = {
   collapsed?: boolean;
+  isMobile?: boolean;
 };
 
-const AppSidebar = ({ collapsed = false }: Props) => {
+const AppSidebar = ({ collapsed = false, isMobile = false }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
   const { data: session } = useSession();
@@ -90,8 +91,9 @@ const AppSidebar = ({ collapsed = false }: Props) => {
     <TooltipProvider delayDuration={collapsed ? 300 : 9999}>
       <aside
         className={cn(
-          "flex flex-col h-full bg-[#070708] border-r border-white/6 transition-all duration-300 ease-in-out",
-          collapsed ? "w-17" : "w-64"
+          "flex flex-col h-full bg-[#070708] transition-all duration-300 ease-in-out",
+          !isMobile && "border-r border-white/6",
+          isMobile ? "w-full" : (collapsed ? "w-17" : "w-64")
         )}
       >
         <div

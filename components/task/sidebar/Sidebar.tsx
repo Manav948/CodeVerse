@@ -14,9 +14,10 @@ import { useMemo } from "react";
 interface Props {
   active: ActiveSection;
   setActive: (v: ActiveSection) => void;
+  isMobile?: boolean;
 }
 
-const Sidebar = ({ active, setActive }: Props) => {
+const Sidebar = ({ active, setActive, isMobile = false }: Props) => {
   const pathname = usePathname();
   const router = useRouter();
   const items = useMemo(
@@ -47,7 +48,13 @@ const Sidebar = ({ active, setActive }: Props) => {
   };
 
   return (
-    <div className="flex w-16 h-full flex-col items-center gap-4 border-r border-white/5 bg-[#090909] py-6">
+    <div
+      className={cn(
+        "flex h-full flex-col items-center gap-4 bg-[#090909] py-6",
+        !isMobile && "border-r border-white/5",
+        isMobile ? "w-full" : "w-16"
+      )}
+    >
       {items.map(({ key, icon: Icon, route }) => {
         const isActive = currentActive === key;
 

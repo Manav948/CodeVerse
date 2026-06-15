@@ -10,9 +10,7 @@ const PostContainer = () => {
 
       <div className="flex flex-1">
 
-        <aside className="hidden md:block w-64 border-r border-white/10">
-          <Sidebar />
-        </aside>
+        <Sidebar />
         <main className="flex-1 overflow-y-auto">
           <div className="mx-auto w-full max-w-3xl  px-5 sm:py-8 py-6">
             <AllPost />

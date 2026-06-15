@@ -72,9 +72,7 @@ const AddPost = () => {
     <div className="min-h-screen bg-[#090909] text-white overflow-hidden">
       <Header />
       <div className="flex h-[calc(100vh-64px)]">
-        <aside className="hidden md:block w-64 shrink-0 border-r border-white/5 bg-[#090909]">
-          <Sidebar />
-        </aside>
+        <Sidebar />
         <main className="relative flex-1 overflow-y-auto overflow-x-hidden p-6 sm:p-8 bg-[#090909]">
           <div className="pointer-events-none absolute -top-32 -left-32 h-80 w-80 rounded-full bg-red-500/5 blur-3xl" />
           <div className="pointer-events-none absolute -bottom-32 -right-32 h-80 w-80 rounded-full bg-red-500/5 blur-3xl" />

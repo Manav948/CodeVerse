@@ -33,14 +33,14 @@ const SidebarMobile = () => {
       <SheetContent
         side="left"
         className={`p-0 border-white/5 bg-[#090909] text-white overflow-hidden ${
-          isTaskRoute ? "w-18" : "w-72"
+          isTaskRoute ? "w-16" : "w-72"
         }`}
       >
         {isTaskRoute ? (
-          <TaskSidebar active={activeTask} setActive={setActiveTask} />
+          <TaskSidebar active={activeTask} setActive={setActiveTask} isMobile />
         ) : (
           <div className="h-full overflow-y-auto">
-            <AppSidebar collapsed={false} />
+            <AppSidebar collapsed={false} isMobile />
           </div>
         )}
       </SheetContent>

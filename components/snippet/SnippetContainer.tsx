@@ -8,9 +8,7 @@ const SnippetContainer = () => {
       <Header />
       <div className="flex flex-1 overflow-hidden">
       
-        <aside className="hidden md:block w-64 border-r border-white/10">
-          <Sidebar />
-        </aside>
+        <Sidebar />
 
         <main className="flex-1 overflow-y-auto relative">
           <div className="relative mx-auto max-w-4xl py-8 px-5">

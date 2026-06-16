@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { SnippetWithExtras } from "@/types/snippet";
-import { Bookmark, FileCode, Heart } from "lucide-react";
+import { Bookmark, FileCode, Heart, ArrowRight } from "lucide-react";
 import SnippetHeader from "./SnippetHeader";
 import { Separator } from "../ui/separator";
 import { Button } from "../ui/button";
@@ -183,10 +183,10 @@ const SnippetCard = ({ snippet }: Props) => {
 
               <button
                 onClick={() => router.push(`/snippet/${snippet.id}`)}
-                className="flex items-center gap-1 px-2 py-1.5 rounded-md text-white/35 hover:text-white/80 transition-all cursor-pointer font-medium"
+                className="group flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-white/4 bg-white/2 text-white/40 hover:text-white hover:bg-white/6 hover:border-white/8 transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 text-[11px] font-medium"
               >
-                <span className="hidden sm:inline">View</span>
-                <span className="text-white/20">→</span>
+                <span>View</span>
+                <ArrowRight size={12} className="text-white/20 group-hover:translate-x-0.5 transition-transform duration-200" />
               </button>
             </div>
           </div>

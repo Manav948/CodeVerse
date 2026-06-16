@@ -192,8 +192,8 @@ const AppSidebar = ({ collapsed = false, isMobile = false }: Props) => {
 
 
         <div className={cn(
-          "border-t border-white/6 p-3",
-          collapsed && "p-2"
+          "border-t border-white/6 p-3 pb-5",
+          collapsed && "p-2 pb-4"
         )}>
           {collapsed ? (
             <Tooltip>

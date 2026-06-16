@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
-import { Bookmark, CornerUpRight, EllipsisVertical, Heart } from "lucide-react";
+import { Bookmark, CornerUpRight, EllipsisVertical, Heart, ArrowRight } from "lucide-react";
 import toast from "react-hot-toast";
 import { QuestionWithExtras } from "@/types/question";
 import QuestionHeader from "./QuestionHeader";
@@ -173,10 +173,10 @@ const Question = ({ question }: Props) => {
 
               <button
                 onClick={() => router.push(`/qa/question/${question.id}`)}
-                className="flex items-center gap-1 px-2.5 sm:px-3 py-1.5 rounded-md border border-white/4 bg-white/2 text-white/40 hover:text-white hover:bg-white/6 hover:border-white/8 transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 font-mono text-[11px]"
+                className="group flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-white/4 bg-white/2 text-white/40 hover:text-white hover:bg-white/6 hover:border-white/8 transition-all duration-200 cursor-pointer hover:scale-105 active:scale-95 text-[11px] font-medium"
               >
-                <span className="hidden sm:inline">View</span>
-                <span className="text-white/20 group-hover:translate-x-0.5 transition-transform duration-200">→</span>
+                <span>View</span>
+                <ArrowRight size={12} className="text-white/20 group-hover:translate-x-0.5 transition-transform duration-200" />
               </button>
             </div>
           </div>

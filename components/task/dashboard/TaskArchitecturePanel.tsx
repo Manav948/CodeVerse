@@ -8,6 +8,7 @@ import ReactFlow, {
   MarkerType,
   Position,
 } from "reactflow";
+import "reactflow/dist/style.css";
 
 const baseNodeStyle = {
   padding: "6px 10px",
@@ -99,8 +100,9 @@ const edges: Edge[] = [
     source: "l3",
     target: "r2",
     animated: true,
-    style: { stroke: "#ef4444" },
-    markerEnd: { type: MarkerType.ArrowClosed },
+    type: "smoothstep",
+    style: { stroke: "#ef4444", strokeWidth: 2 },
+    markerEnd: { type: MarkerType.ArrowClosed, color: "#ef4444" },
   },
 ];
 

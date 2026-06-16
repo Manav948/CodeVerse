@@ -5,10 +5,10 @@ import AllPost from "./AllPost";
 
 const PostContainer = () => {
   return (
-    <div className="min-h-screen bg-black text-white flex flex-col">
+    <div className="h-screen bg-black text-white flex flex-col">
       <Header />
 
-      <div className="flex flex-1">
+      <div className="flex flex-1 overflow-hidden">
 
         <Sidebar />
         <main className="flex-1 overflow-y-auto">

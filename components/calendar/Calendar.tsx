@@ -32,7 +32,7 @@ const Calendar = () => {
 
   return (
     <section className="w-full min-h-screen flex bg-black text-white">
-      <aside className="hidden md:block border-r border-white/10">
+      <aside className="hidden md:block w-16">
         <Sidebar active={active} setActive={setActive} />
       </aside>
       <main className="flex-1 px-6 py-8 space-y-6">

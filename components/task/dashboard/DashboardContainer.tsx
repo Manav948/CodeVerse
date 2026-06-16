@@ -82,7 +82,7 @@ const DashboardContainer = () => {
   return (
     <div className="flex min-h-screen bg-[#090909] text-white">
   
-      <aside className="hidden lg:flex border-r border-white/5 bg-[#090909]">
+      <aside className="hidden lg:flex w-16">
         <Sidebar active={active} setActive={setActive} />
       </aside>
 

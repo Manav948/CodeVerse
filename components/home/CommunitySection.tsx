@@ -29,8 +29,8 @@ export default function CommunitySection() {
 
         
         <motion.div
-          initial={{ opacity: 0, x: -70 }}
-          whileInView={{ opacity: 1, x: 0 }}
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ type: "spring", stiffness: 80, damping: 18, mass: 0.8 }}
           className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12"
@@ -54,8 +54,8 @@ export default function CommunitySection() {
           {stats.map((stat, i) => (
             <motion.div
               key={i}
-              initial={{ opacity: 0, x: 60, scale: 0.9 }}
-              whileInView={{ opacity: 1, x: 0, scale: 1 }}
+              initial={{ opacity: 0, y: 30, scale: 0.95 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
               transition={{ type: "spring", stiffness: 90, damping: 14, delay: i * 0.08 }}
               className="bg-[#080808] border border-white/[0.07] rounded-2xl px-5 py-5"
@@ -70,8 +70,8 @@ export default function CommunitySection() {
 
        
         <motion.div
-          initial={{ opacity: 0, x: 80, scale: 0.97 }}
-          whileInView={{ opacity: 1, x: 0, scale: 1 }}
+          initial={{ opacity: 0, y: 40, scale: 0.97 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ type: "spring", stiffness: 70, damping: 18, delay: 0.1 }}
           className="bg-[#080808] border border-white/[0.07] rounded-2xl overflow-hidden"
@@ -85,8 +85,8 @@ export default function CommunitySection() {
             {feed.map((item, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, x: 30 }}
-                whileInView={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 100, damping: 20, delay: i * 0.07 }}
                 className="flex items-center justify-between px-5 py-4 hover:bg-white/[0.02] transition-colors group"

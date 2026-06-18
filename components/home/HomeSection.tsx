@@ -65,6 +65,12 @@ export default function CodeVerseHero() {
     );
     observer.observe(mount);
 
+    let scrollY = 0;
+    const handleScroll = () => {
+      scrollY = window.scrollY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
     const animate = () => {
       animationId = requestAnimationFrame(animate);
 
@@ -86,8 +92,18 @@ export default function CodeVerseHero() {
 
       positions.needsUpdate = true;
 
-      // Smooth camera motion
+      // Smooth camera and material changes based on scroll
+      const targetY = 8 - scrollY * 0.012;
+      const targetZ = 25 - scrollY * 0.008;
+      const targetRotX = -0.25 - scrollY * 0.0003;
+
+      camera.position.y += (targetY - camera.position.y) * 0.06;
+      camera.position.z += (targetZ - camera.position.z) * 0.06;
+      camera.rotation.x += (targetRotX - camera.rotation.x) * 0.06;
       camera.position.x = Math.sin(time * 0.1) * 2;
+
+      const targetOpacity = Math.max(0.1, 0.6 - (scrollY / window.innerHeight) * 0.6);
+      material.opacity += (targetOpacity - material.opacity) * 0.06;
 
       renderer.render(scene, camera);
     };
@@ -106,6 +122,7 @@ export default function CodeVerseHero() {
     return () => {
       cancelAnimationFrame(animationId);
       window.removeEventListener("resize", handleResize);
+      window.removeEventListener("scroll", handleScroll);
       observer.disconnect();
 
       mount.removeChild(renderer.domElement);

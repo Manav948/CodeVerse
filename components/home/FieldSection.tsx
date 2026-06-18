@@ -30,10 +30,10 @@ export default function GamifiedSection() {
       <div className="max-w-6xl mx-auto relative">
 
         <motion.div
-          initial={{ opacity: 0, scale: 0.88, y: 15 }}
+          initial={{ opacity: 0, scale: 0.94, y: 30 }}
           whileInView={{ opacity: 1, scale: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
-          transition={{ duration: 0.9, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ type: "spring", stiffness: 50, damping: 15, mass: 0.8 }}
           className="text-center mb-16"
         >
           <span className="inline-block text-xs font-mono tracking-[0.2em] uppercase text-red-500/70 mb-4">
@@ -55,10 +55,10 @@ export default function GamifiedSection() {
          
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            initial={{ opacity: 0, scale: 0.94, y: 40 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ type: "spring", stiffness: 60, damping: 15, mass: 0.8 }}
             className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
           >
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-yellow-500/20 to-transparent" />
@@ -87,10 +87,10 @@ export default function GamifiedSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            initial={{ opacity: 0, scale: 0.94, y: 40 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.7, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ type: "spring", stiffness: 60, damping: 15, mass: 0.8, delay: 0.1 }}
             className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
           >
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500/20 to-transparent" />
@@ -134,10 +134,10 @@ export default function GamifiedSection() {
        
           
           <motion.div
-            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            initial={{ opacity: 0, scale: 0.94, y: 40 }}
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
-            viewport={{ once: true, margin: "-40px" }}
-            transition={{ duration: 0.7, delay: 0.24, ease: [0.22, 1, 0.36, 1] }}
+            viewport={{ once: true, margin: "-60px" }}
+            transition={{ type: "spring", stiffness: 60, damping: 15, mass: 0.8, delay: 0.2 }}
             className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
           >
             <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />

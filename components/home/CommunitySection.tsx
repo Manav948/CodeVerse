@@ -76,12 +76,12 @@ export default function CommunitySection() {
           transition={{ type: "spring", stiffness: 70, damping: 18, delay: 0.1 }}
           className="bg-[#080808] border border-white/[0.07] rounded-2xl overflow-hidden"
         >
-          <div className="flex items-center gap-3 px-5 py-4 border-b border-white/[0.05]">
+          <div className="flex items-center gap-3 px-5 py-4 border-b border-white/5">
             <div className="w-2 h-2 rounded-full bg-red-500 animate-pulse" />
             <span className="text-xs font-mono tracking-widest uppercase text-white/30">Live Activity</span>
           </div>
 
-          <div className="divide-y divide-white/[0.04]">
+          <div className="divide-y divide-white/4">
             {feed.map((item, i) => (
               <motion.div
                 key={i}
@@ -89,17 +89,17 @@ export default function CommunitySection() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ type: "spring", stiffness: 100, damping: 20, delay: i * 0.07 }}
-                className="flex items-center justify-between px-5 py-4 hover:bg-white/[0.02] transition-colors group"
+                className="flex items-center justify-between px-5 py-4 hover:bg-white/2 transition-colors group"
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-6 h-6 rounded-lg border flex items-center justify-center flex-shrink-0 ${item.bg} ${item.color}`}>
+                  <div className={`w-6 h-6 rounded-lg border flex items-center justify-center shrink-0 ${item.bg} ${item.color}`}>
                     {item.icon}
                   </div>
                   <p className="text-xs text-white/55">{item.text}</p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-[10px] text-white/20 font-mono flex-shrink-0">{item.time}</span>
-                  <ArrowRight size={11} className="text-white/10 group-hover:text-white/30 transition-colors flex-shrink-0" />
+                  <span className="text-[10px] text-white/20 font-mono shrink-0">{item.time}</span>
+                  <ArrowRight size={11} className="text-white/10 group-hover:text-white/30 transition-colors shrink-0" />
                 </div>
               </motion.div>
             ))}

@@ -65,9 +65,9 @@ const SignInCard = () => {
 
        
         <div className="flex items-center gap-3">
-          <div className="h-px flex-1 bg-white/[0.08]" />
+          <div className="h-px flex-1 bg-white/8" />
           <span className="text-xs text-white/30 tracking-widest">OR</span>
-          <div className="h-px flex-1 bg-white/[0.08]" />
+          <div className="h-px flex-1 bg-white/8" />
         </div>
 
        
@@ -86,7 +86,7 @@ const SignInCard = () => {
                   disabled={loading}
                   autoComplete="email"
                   {...field}
-                  className="h-11 bg-white/[0.04] border-white/[0.1] text-white placeholder:text-white/20 focus:border-red-500/50 focus:ring-0 rounded-lg text-sm"
+                  className="h-11 bg-white/4 border-white/10 text-white placeholder:text-white/20 focus:border-red-500/50 focus:ring-0 rounded-lg text-sm"
                 />
               </FormControl>
               <FormMessage className="text-red-400 text-xs" />
@@ -118,7 +118,7 @@ const SignInCard = () => {
                   disabled={loading}
                   autoComplete="current-password"
                   {...field}
-                  className="h-11 bg-white/[0.04] border-white/[0.1] text-white placeholder:text-white/20 focus:border-red-500/50 focus:ring-0 rounded-lg text-sm"
+                  className="h-11 bg-white/4 border-white/10 text-white placeholder:text-white/20 focus:border-red-500/50 focus:ring-0 rounded-lg text-sm"
                 />
               </FormControl>
               <FormMessage className="text-red-400 text-xs" />

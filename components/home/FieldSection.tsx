@@ -59,9 +59,9 @@ export default function GamifiedSection() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ type: "spring", stiffness: 60, damping: 15, mass: 0.8 }}
-            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
+            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/12 transition-colors duration-300"
           >
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-yellow-500/20 to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-yellow-500/20 to-transparent" />
 
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-8 rounded-lg bg-yellow-500/10 border border-yellow-500/20 flex items-center justify-center">
@@ -72,7 +72,7 @@ export default function GamifiedSection() {
 
             <div className="space-y-2">
               {leaderboard.map((user, i) => (
-                <div key={i} className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.05] rounded-xl px-4 py-3">
+                <div key={i} className="flex items-center gap-3 bg-white/3 border border-white/5 rounded-xl px-4 py-3">
                   <span className="text-xs font-mono text-white/20 w-4">#{user.rank}</span>
                   <span className="flex-1 text-xs text-white/70">{user.name}</span>
                   <span className="text-xs text-red-400 font-medium font-mono">{user.score}</span>
@@ -91,9 +91,9 @@ export default function GamifiedSection() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ type: "spring", stiffness: 60, damping: 15, mass: 0.8, delay: 0.1 }}
-            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
+            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/12 transition-colors duration-300"
           >
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-orange-500/20 to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-orange-500/20 to-transparent" />
 
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-8 rounded-lg bg-orange-500/10 border border-orange-500/20 flex items-center justify-center">
@@ -120,7 +120,7 @@ export default function GamifiedSection() {
                         : day.intensity === 2
                         ? "bg-red-500/60"
                         : "bg-red-500/30"
-                      : "bg-white/[0.04]"
+                      : "bg-white/4"
                   }`}
                 />
               ))}
@@ -138,9 +138,9 @@ export default function GamifiedSection() {
             whileInView={{ opacity: 1, scale: 1, y: 0 }}
             viewport={{ once: true, margin: "-60px" }}
             transition={{ type: "spring", stiffness: 60, damping: 15, mass: 0.8, delay: 0.2 }}
-            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/[0.12] transition-colors duration-300"
+            className="group relative bg-[#080808] border border-white/[0.07] rounded-2xl p-6 overflow-hidden hover:border-white/12 transition-colors duration-300"
           >
-            <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-red-500/20 to-transparent" />
+            <div className="absolute top-0 left-0 right-0 h-px bg-linear-to-r from-transparent via-red-500/20 to-transparent" />
 
             <div className="flex items-center gap-3 mb-6">
               <div className="w-8 h-8 rounded-lg bg-red-500/10 border border-red-500/20 flex items-center justify-center">
@@ -151,7 +151,7 @@ export default function GamifiedSection() {
 
             <div className="grid grid-cols-2 gap-3 mb-6">
               {badges.map((badge, i) => (
-                <div key={i} className="flex items-center gap-3 bg-white/[0.03] border border-white/[0.05] rounded-xl px-3 py-3">
+                <div key={i} className="flex items-center gap-3 bg-white/3 border border-white/5 rounded-xl px-3 py-3">
                   <span className="text-xl">{badge.emoji}</span>
                   <span className="text-[11px] text-white/50 leading-tight">{badge.label}</span>
                 </div>

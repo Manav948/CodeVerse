@@ -60,7 +60,7 @@ const Profile = ({ userId }: Props) => {
      
       <div className="flex items-center gap-6 md:gap-12 mb-6">
         <div className="relative shrink-0">
-          <div className="p-[2.5px] bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 rounded-full">
+          <div className="p-[2.5px] bg-linear-to-tr from-yellow-400 via-red-500 to-purple-600 rounded-full">
             <UserAvatar
               profileImage={data.image}
               username={data.username}
@@ -103,7 +103,7 @@ const Profile = ({ userId }: Props) => {
       </div>
 
       
-      <div className="flex justify-around border-t border-white/[0.08] -mx-4 px-4 md:mx-0 md:px-0">
+      <div className="flex justify-around border-t border-white/8 -mx-4 px-4 md:mx-0 md:px-0">
         {TABS.map((tab) => {
           const count = data._count[tab.key] ?? 0;
           const isActive = activeTab === tab.key;
@@ -113,7 +113,7 @@ const Profile = ({ userId }: Props) => {
               onClick={() => setActiveTab(tab.key)}
               className={`flex items-center gap-1.5 py-4 text-xs font-mono uppercase tracking-widest transition-colors ${
                 isActive
-                  ? "text-white border-t border-white -mt-[1px]"
+                  ? "text-white border-t border-white -mt-px"
                   : "text-white/35 hover:text-white/70"
               }`}
             >
@@ -122,7 +122,7 @@ const Profile = ({ userId }: Props) => {
               </span>
               <span className="hidden sm:inline">{tab.label}</span>
               <span className={`text-[10px] font-mono px-1 rounded ${
-                isActive ? "bg-red-500/15 text-red-400" : "bg-white/[0.05] text-white/20"
+                isActive ? "bg-red-500/15 text-red-400" : "bg-white/5 text-white/20"
               }`}>
                 {count}
               </span>
@@ -152,7 +152,7 @@ export default Profile;
 
 const EmptyState = ({ tab }: { tab: string }) => (
   <div className="flex flex-col items-center justify-center py-20 gap-4">
-    <div className="w-14 h-14 rounded-2xl bg-white/[0.03] border border-white/[0.07] flex items-center justify-center">
+    <div className="w-14 h-14 rounded-2xl bg-white/3 border border-white/[0.07] flex items-center justify-center">
       <Layers size={22} className="text-white/15" />
     </div>
     <div className="text-center">
@@ -163,7 +163,7 @@ const EmptyState = ({ tab }: { tab: string }) => (
 );
 
 const PostCard = ({ item }: { item: any }) => (
-  <div className="group bg-[#0a0a0a] border border-white/[0.06] rounded-2xl p-5 hover:border-white/[0.12] transition-colors duration-200">
+  <div className="group bg-[#0a0a0a] border border-white/6 rounded-2xl p-5 hover:border-white/12 transition-colors duration-200">
     <div className="flex items-start gap-4">
       
       {item.image?.[0] && (
@@ -198,9 +198,9 @@ const PostCard = ({ item }: { item: any }) => (
 );
 
 const SnippetCard = ({ item }: { item: any }) => (
-  <div className="group bg-[#0a0a0a] border border-white/[0.06] rounded-2xl overflow-hidden hover:border-white/[0.12] transition-colors duration-200">
+  <div className="group bg-[#0a0a0a] border border-white/6 rounded-2xl overflow-hidden hover:border-white/12 transition-colors duration-200">
     
-    <div className="flex items-center justify-between px-5 py-4 border-b border-white/[0.05]">
+    <div className="flex items-center justify-between px-5 py-4 border-b border-white/5">
       <div className="flex items-center gap-3">
         <div className="w-7 h-7 rounded-lg bg-orange-500/10 border border-orange-500/15 flex items-center justify-center">
           <Code2 size={13} className="text-orange-400" />
@@ -215,7 +215,7 @@ const SnippetCard = ({ item }: { item: any }) => (
         </div>
       </div>
       {item.language && (
-        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/[0.05] text-white/30 border border-white/[0.06]">
+        <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-white/5 text-white/30 border border-white/6">
           {item.language}
         </span>
       )}
@@ -230,7 +230,7 @@ const SnippetCard = ({ item }: { item: any }) => (
 );
 
 const QuestionCard = ({ item }: { item: any }) => (
-  <div className="group bg-[#0a0a0a] border border-white/[0.06] rounded-2xl p-5 hover:border-white/[0.12] transition-colors duration-200">
+  <div className="group bg-[#0a0a0a] border border-white/6 rounded-2xl p-5 hover:border-white/12 transition-colors duration-200">
     <div className="flex items-start gap-3">
       <div className="w-7 h-7 rounded-lg bg-blue-500/10 border border-blue-500/15 flex items-center justify-center shrink-0 mt-0.5">
         <MessageCircleQuestion size={13} className="text-blue-400" />

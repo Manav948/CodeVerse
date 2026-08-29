@@ -44,7 +44,7 @@ const AuthCard = ({ mode }: Props) => {
       </div>
 
  
-      <div className="w-full max-w-[900px] flex rounded-2xl overflow-hidden border border-white/8 shadow-2xl shadow-black/60">
+      <div className="w-full max-w-225 flex rounded-2xl overflow-hidden border border-white/8 shadow-2xl shadow-black/60">
 
        
         <div className="w-full lg:w-[48%] bg-[#161616] px-10 py-10 flex flex-col">
@@ -88,7 +88,7 @@ const AuthCard = ({ mode }: Props) => {
         <div className="hidden lg:flex flex-col w-[52%] bg-[#0f0f0f] px-10 py-10 relative overflow-hidden border-l border-white/6">
 
           
-          <div className="absolute -top-20 -right-20 w-[350px] h-[350px] bg-red-600/10 rounded-full blur-[120px] pointer-events-none" />
+          <div className="absolute -top-20 -right-20 w-87.5 h-87.5 bg-red-600/10 rounded-full blur-[120px] pointer-events-none" />
 
         
           <div className="flex-1">

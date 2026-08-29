@@ -23,7 +23,7 @@ export default function CommunitySection() {
   return (
     <section className="relative w-full bg-black text-white py-28 px-6 overflow-hidden">
      
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-red-600/5 blur-[160px] pointer-events-none rounded-full" />
+      <div className="absolute top-0 right-0 w-125 h-125 bg-red-600/5 blur-[160px] pointer-events-none rounded-full" />
 
       <div className="max-w-6xl mx-auto relative">
 

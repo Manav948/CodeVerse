@@ -25,7 +25,7 @@ export default function GamifiedSection() {
   return (
     <section className="relative w-full bg-black text-white py-32 px-6 overflow-hidden">
       
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-red-600/6 blur-[180px] pointer-events-none rounded-full" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-175 h-100 bg-red-600/6 blur-[180px] pointer-events-none rounded-full" />
 
       <div className="max-w-6xl mx-auto relative">
 

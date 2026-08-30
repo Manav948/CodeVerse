@@ -101,7 +101,7 @@ const AddSnippet = () => {
                           <input
                             {...field}
                             placeholder="Snippet title"
-                            className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0"
+                            className="w-full bg-[#1a1a1e] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:border-red-500/40 focus:bg-[#202026] outline-none transition-all text-sm placeholder-white/30 focus:ring-0 shadow-xs"
                           />
                         </FormControl>
                         <FormMessage />
@@ -119,7 +119,7 @@ const AddSnippet = () => {
                             {...field}
                             placeholder="Short description"
                             rows={3}
-                            className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0 resize-none"
+                            className="w-full bg-[#1a1a1e] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:border-red-500/40 focus:bg-[#202026] outline-none transition-all text-sm placeholder-white/30 focus:ring-0 resize-none shadow-xs"
                           />
                         </FormControl>
                         <FormMessage />
@@ -139,10 +139,10 @@ const AddSnippet = () => {
                               value={field.value}
                               onValueChange={field.onChange}
                             >
-                              <SelectTrigger className="bg-[#090909] border border-white/5 p-3 rounded-xl text-white text-sm focus:border-red-500/30 focus:ring-0 h-10 select-trigger">
+                              <SelectTrigger className="bg-[#1a1a1e] border border-white/10 p-3 rounded-xl text-white text-sm focus:border-red-500/40 focus:ring-0 h-10 select-trigger">
                                 <SelectValue placeholder="Select language" />
                               </SelectTrigger>
-                              <SelectContent className="bg-[#111111] text-white border border-white/5 shadow-2xl rounded-lg">
+                              <SelectContent className="bg-[#111111] text-white border border-white/10 shadow-2xl rounded-lg">
                                 {SNIPPET_LANGUAGES.map((lang) => (
                                   <SelectItem
                                     key={lang}
@@ -170,10 +170,10 @@ const AddSnippet = () => {
                               value={field.value}
                               onValueChange={field.onChange}
                             >
-                              <SelectTrigger className="bg-[#090909] border border-white/5 p-3 rounded-xl text-white text-sm focus:border-red-500/30 focus:ring-0 h-10 select-trigger">
+                              <SelectTrigger className="bg-[#1a1a1e] border border-white/10 p-3 rounded-xl text-white text-sm focus:border-red-500/40 focus:ring-0 h-10 select-trigger">
                                 <SelectValue />
                               </SelectTrigger>
-                              <SelectContent className="bg-[#111111] text-white border border-white/5 shadow-2xl rounded-lg p-1">
+                              <SelectContent className="bg-[#111111] text-white border border-white/10 shadow-2xl rounded-lg p-1">
                                 <SelectItem value="PUBLIC" className="cursor-pointer hover:bg-white/5 text-xs py-2 text-white">Public</SelectItem>
                                 <SelectItem value="PRIVATE" className="cursor-pointer hover:bg-white/5  text-xs py-2 text-white">Private</SelectItem>
                                 <SelectItem value="SHARED" className="cursor-pointer hover:bg-white/5  text-xs py-2 text-white">Shared</SelectItem>
@@ -195,7 +195,7 @@ const AddSnippet = () => {
                           <textarea
                             {...field}
                             placeholder="Paste your code here"
-                            className="w-full min-h-65 bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors font-mono text-sm placeholder-white/20 focus:ring-0 resize-y"
+                            className="w-full min-h-65 bg-[#1a1a1e] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:border-red-500/40 focus:bg-[#202026] outline-none transition-all font-mono text-sm placeholder-white/30 focus:ring-0 resize-y shadow-xs"
                           />
                         </FormControl>
                         <FormMessage />
@@ -212,7 +212,7 @@ const AddSnippet = () => {
                         <FormControl>
                           <input
                             placeholder="react, nextjs, prisma"
-                            className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0"
+                            className="w-full bg-[#1a1a1e] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:border-red-500/40 focus:bg-[#202026] outline-none transition-all text-sm placeholder-white/30 focus:ring-0 shadow-xs"
                             onChange={(e) =>
                               field.onChange(
                                 e.target.value

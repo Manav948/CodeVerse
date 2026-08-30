@@ -89,7 +89,7 @@ const AddAnswer = ({ questionId }: Props) => {
                   <Textarea
                     {...field}
                     placeholder="Explain your solution clearly and concisely..."
-                    className="min-h-36 resize-none bg-[#070708] border border-white/6 text-white/85 text-[13px] placeholder:text-white/20 focus:border-white/[0.14] focus:ring-0 rounded-lg"
+                    className="min-h-36 resize-none bg-[#1a1a1e] border border-white/10 text-white text-[13px] placeholder:text-white/30 focus:border-red-500/40 focus:ring-0 rounded-lg transition-all"
                   />
                 </FormControl>
                 <FormMessage className="text-[11px] text-red-400/80" />

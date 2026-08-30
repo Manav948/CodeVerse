@@ -39,7 +39,7 @@ export function TaskMetaFields<T extends FieldValues>({
                   <FormControl>
                     <button
                       type="button"
-                      className="flex items-center justify-between w-full px-4 py-2.5 rounded-xl border border-white/5 bg-[#090909] text-white hover:border-white/20 hover:bg-[#090909]/80 transition text-sm cursor-pointer outline-none"
+                      className="flex items-center justify-between w-full px-4 py-2.5 rounded-xl border border-white/10 bg-[#1a1a1e] text-white hover:border-white/20 hover:bg-[#202026] transition text-sm cursor-pointer outline-none"
                     >
                       {selectedDate
                         ? format(selectedDate, "PPP p")
@@ -51,7 +51,7 @@ export function TaskMetaFields<T extends FieldValues>({
                 </PopoverTrigger>
 
                 <PopoverContent
-                  className="w-auto p-4 bg-[#111111] text-white border border-white/5 rounded-2xl shadow-2xl"
+                  className="w-auto p-4 bg-[#111111] text-white border border-white/10 rounded-2xl shadow-2xl"
                   align="start"
                 >
                   <Calendar
@@ -103,7 +103,7 @@ export function TaskMetaFields<T extends FieldValues>({
                           updated.toISOString()
                         );
                       }}
-                      className="w-full bg-[#090909] border border-white/5 rounded-xl px-3 py-2 text-white focus:border-red-500/30 outline-none text-sm transition-colors focus:ring-0"
+                      className="w-full bg-[#1a1a1e] border border-white/10 rounded-xl px-3 py-2 text-white focus:border-red-500/40 outline-none text-sm transition-all focus:ring-0"
                     />
                   </div>
                 </PopoverContent>
@@ -126,7 +126,7 @@ export function TaskMetaFields<T extends FieldValues>({
               value={field.value}
             >
               <FormControl>
-                <SelectTrigger className="bg-[#090909] border border-white/5 p-3 rounded-xl text-white text-sm focus:border-red-500/30 focus:ring-0">
+                <SelectTrigger className="bg-[#1a1a1e] border border-white/10 p-3 rounded-xl text-white text-sm focus:border-red-500/40 focus:ring-0">
                   <SelectValue placeholder="Select priority" />
                 </SelectTrigger>
               </FormControl>

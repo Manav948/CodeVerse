@@ -86,7 +86,7 @@ const SignInCard = () => {
                   disabled={loading}
                   autoComplete="email"
                   {...field}
-                  className="h-11 bg-white/4 border-white/10 text-white placeholder:text-white/20 focus:border-red-500/50 focus:ring-0 rounded-lg text-sm"
+                  className="h-11 bg-[#1a1a1e] border border-white/10 text-white placeholder:text-white/30 focus:border-red-500/50 focus:bg-[#202026] focus:ring-0 rounded-lg text-sm transition-all"
                 />
               </FormControl>
               <FormMessage className="text-red-400 text-xs" />
@@ -118,7 +118,7 @@ const SignInCard = () => {
                   disabled={loading}
                   autoComplete="current-password"
                   {...field}
-                  className="h-11 bg-white/4 border-white/10 text-white placeholder:text-white/20 focus:border-red-500/50 focus:ring-0 rounded-lg text-sm"
+                  className="h-11 bg-[#1a1a1e] border border-white/10 text-white placeholder:text-white/30 focus:border-red-500/50 focus:bg-[#202026] focus:ring-0 rounded-lg text-sm transition-all"
                 />
               </FormControl>
               <FormMessage className="text-red-400 text-xs" />

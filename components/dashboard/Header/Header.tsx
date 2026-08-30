@@ -78,7 +78,7 @@ const Header = () => {
             />
             <input
               placeholder="Search..."
-              className="h-9 w-full rounded-lg border border-white/5 bg-[#111111] pl-9 pr-3 text-xs text-white placeholder:text-white/30 focus:border-red-500/30 focus:outline-none transition-colors focus:ring-0"
+              className="h-9 w-full rounded-lg border border-white/10 bg-[#1a1a1e] pl-9 pr-3 text-xs text-white placeholder:text-white/30 focus:border-red-500/40 focus:bg-[#202026] focus:outline-none transition-all focus:ring-0"
             />
           </div>
         </div>

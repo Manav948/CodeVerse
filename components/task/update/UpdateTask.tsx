@@ -111,7 +111,7 @@ const UpdateTask = ({ task }: Props) => {
                   <FormControl>
                     <Input
                       {...field}
-                      className="bg-black/40 border-white/10"
+                      className="bg-[#1a1a1e] border-white/10"
                     />
                   </FormControl>
                   <FormMessage />
@@ -128,7 +128,7 @@ const UpdateTask = ({ task }: Props) => {
                     <Textarea
                       rows={4}
                       {...field}
-                      className="bg-black/40 border-white/10"
+                      className="bg-[#1a1a1e] border-white/10"
                     />
                   </FormControl>
                   <FormMessage />
@@ -140,7 +140,7 @@ const UpdateTask = ({ task }: Props) => {
               control={form.control}
               name="isStudent"
               render={({ field }) => (
-                <FormItem className="flex items-center justify-between rounded-xl border border-white/10 p-5 bg-black/40">
+                <FormItem className="flex items-center justify-between rounded-xl border border-white/10 p-5 bg-[#1a1a1e]">
                   <div>
                     <FormLabel className="text-base">
                       Track with GitHub
@@ -177,7 +177,7 @@ const UpdateTask = ({ task }: Props) => {
                         <FormControl>
                           <Input
                             {...field}
-                            className="bg-black/40 border-white/10"
+                            className="bg-[#1a1a1e] border-white/10"
                           />
                         </FormControl>
                         <FormMessage />
@@ -194,7 +194,7 @@ const UpdateTask = ({ task }: Props) => {
                         <FormControl>
                           <Input
                             {...field}
-                            className="bg-black/40 border-white/10"
+                            className="bg-[#1a1a1e] border-white/10"
                           />
                         </FormControl>
                         <FormMessage />

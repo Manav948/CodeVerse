@@ -22,7 +22,7 @@ export function ChipInput({
             e.currentTarget.value = "";
           }
         }}
-        className="bg-white/5 border-white/10 text-white"
+        className="bg-[#1a1a1e] border-white/10 text-white placeholder-white/30 focus-visible:border-red-500/40 focus-visible:bg-[#202026]"
       />
 
       <div className="flex flex-wrap gap-2">

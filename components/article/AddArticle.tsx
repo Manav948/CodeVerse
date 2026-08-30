@@ -109,7 +109,7 @@ const AddArticle = () => {
                           <input
                             {...field}
                             placeholder="Article title"
-                            className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0"
+                            className="w-full bg-[#1a1a1e] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:border-red-500/40 focus:bg-[#202026] outline-none transition-all text-sm placeholder-white/30 focus:ring-0 shadow-xs"
                           />
                         </FormControl>
                         <FormMessage />
@@ -128,7 +128,7 @@ const AddArticle = () => {
                             {...field}
                             placeholder="Write something about your article"
                             rows={5}
-                            className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0 resize-none"
+                            className="w-full bg-[#1a1a1e] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:border-red-500/40 focus:bg-[#202026] outline-none transition-all text-sm placeholder-white/30 focus:ring-0 resize-none shadow-xs"
                           />
                         </FormControl>
                         <FormMessage />

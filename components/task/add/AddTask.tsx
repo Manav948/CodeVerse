@@ -110,7 +110,7 @@ const AddTask = () => {
                                         <input
                                             placeholder="Build authentication system"
                                             {...field}
-                                            className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0"
+                                            className="w-full bg-[#1a1a1e] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:border-red-500/40 focus:bg-[#202026] outline-none transition-all text-sm placeholder-white/30 focus:ring-0 shadow-xs"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -128,7 +128,7 @@ const AddTask = () => {
                                             placeholder="Describe your task in detail..."
                                             rows={4}
                                             {...field}
-                                            className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0 resize-none"
+                                            className="w-full bg-[#1a1a1e] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:border-red-500/40 focus:bg-[#202026] outline-none transition-all text-sm placeholder-white/30 focus:ring-0 resize-none shadow-xs"
                                         />
                                     </FormControl>
                                     <FormMessage />
@@ -142,7 +142,7 @@ const AddTask = () => {
                             control={form.control}
                             name="isStudent"
                             render={({ field }) => (
-                                <FormItem className="flex items-center justify-between rounded-xl border border-white/5 p-4 sm:p-5 bg-[#090909]">
+                                <FormItem className="flex items-center justify-between rounded-xl border border-white/10 p-4 sm:p-5 bg-[#1a1a1e]">
                                     <div className="space-y-0.5">
                                         <FormLabel className="text-sm font-medium text-white/90">
                                             Track with GitHub
@@ -181,7 +181,7 @@ const AddTask = () => {
                                                     <input
                                                         placeholder="https://github.com/username/repo"
                                                         {...field}
-                                                        className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0"
+                                                        className="w-full bg-[#1a1a1e] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:border-red-500/40 focus:bg-[#202026] outline-none transition-all text-sm placeholder-white/30 focus:ring-0 shadow-xs"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />
@@ -199,7 +199,7 @@ const AddTask = () => {
                                                     <input
                                                         placeholder="username"
                                                         {...field}
-                                                        className="w-full bg-[#090909] border border-white/5 rounded-xl px-4 py-2.5 text-white focus:border-red-500/30 outline-none transition-colors text-sm placeholder-white/20 focus:ring-0"
+                                                        className="w-full bg-[#1a1a1e] border border-white/10 rounded-xl px-4 py-2.5 text-white focus:border-red-500/40 focus:bg-[#202026] outline-none transition-all text-sm placeholder-white/30 focus:ring-0 shadow-xs"
                                                     />
                                                 </FormControl>
                                                 <FormMessage />

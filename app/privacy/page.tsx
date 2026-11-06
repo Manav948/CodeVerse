@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import MarketingPageShell from "@/components/home/MarketingPageShell";
 
 export const metadata: Metadata = {
   title: "Privacy Policy | CodeVerse",
@@ -19,22 +20,28 @@ const sections = [
 
 export default function PrivacyPolicyPage() {
   return (
-    <main className="min-h-screen bg-black px-5 py-16 text-white sm:px-8">
-      <article className="mx-auto max-w-3xl">
-        <Link href="/" className="text-sm text-red-400 hover:text-red-300">← Back to CodeVerse</Link>
-        <p className="mt-10 text-xs uppercase tracking-[0.2em] text-red-400">CodeVerse · Legal</p>
-        <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Privacy Policy</h1>
-        <p className="mt-4 text-sm text-white/50">Effective date: November 6, 2026</p>
-        <p className="mt-8 leading-7 text-white/70">This policy describes the information handled when you use CodeVerse, a community for sharing developer content and managing coding tasks.</p>
-        <div className="mt-10 space-y-9">
-          {sections.map(({ title, body }) => (
-            <section key={title}>
-              <h2 className="text-xl font-semibold">{title}</h2>
-              <p className="mt-3 leading-7 text-white/65">{body}</p>
-            </section>
-          ))}
-        </div>
-      </article>
-    </main>
+    <MarketingPageShell>
+      <main className="relative min-h-screen overflow-hidden bg-[#050505] px-5 pb-24 pt-28 text-white sm:px-8">
+        <div className="pointer-events-none absolute -top-24 left-1/2 h-80 w-180 -translate-x-1/2 rounded-full bg-red-600/10 blur-[140px]" />
+        <article className="relative mx-auto max-w-4xl">
+          <Link href="/" className="text-sm text-red-400 hover:text-red-300">← Back to CodeVerse</Link>
+          <p className="mt-10 text-xs uppercase tracking-[0.2em] text-red-400">CodeVerse · Legal</p>
+          <h1 className="mt-3 text-4xl font-bold tracking-tight sm:text-5xl">Privacy Policy</h1>
+          <p className="mt-4 text-sm text-white/50">Effective date: November 6, 2026</p>
+          <p className="mt-8 leading-7 text-white/70">This policy describes the information handled when you use CodeVerse, a community for sharing developer content and managing coding tasks.</p>
+          <div className="mt-14 border-t border-white/10">
+            {sections.map(({ title, body }, index) => (
+              <section key={title} className="grid gap-3 border-b border-white/10 py-7 sm:grid-cols-[72px_minmax(0,1fr)] sm:gap-8">
+                <span className="font-mono text-sm text-red-400/70">{String(index + 1).padStart(2, "0")}</span>
+                <div>
+                  <h2 className="text-xl font-semibold tracking-tight">{title}</h2>
+                  <p className="mt-3 max-w-3xl leading-7 text-white/65">{body}</p>
+                </div>
+              </section>
+            ))}
+          </div>
+        </article>
+      </main>
+    </MarketingPageShell>
   );
 }

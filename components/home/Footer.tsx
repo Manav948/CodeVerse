@@ -122,14 +122,14 @@ export default function Footer() {
           
           <div className="grid grid-cols-2 gap-16 text-sm">
             <div className="space-y-4">
-              {["Posts", "Snippets", "Questions", "Tasks"].map((item) => (
+              {[{ label: "Articles", href: "/article" }, { label: "Snippets", href: "/snippet" }, { label: "Questions", href: "/qa" }, { label: "Tasks", href: "/task" }].map((item) => (
                 <Link
-                  key={item}
-                  href={`/${item.toLowerCase()}`}
+                  key={item.href}
+                  href={item.href}
                   className="group relative block w-fit"
                 >
                   <span className="group-hover:opacity-70 transition">
-                    {item}
+                    {item.label}
                   </span>
                   <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all group-hover:w-full" />
                 </Link>
@@ -137,14 +137,14 @@ export default function Footer() {
             </div>
 
             <div className="space-y-4">
-              {["About", "Privacy", "Terms", "Contact"].map((item) => (
+              {[{ label: "About", href: "/about" }, { label: "Privacy", href: "/privacy" }, { label: "Terms", href: "/terms" }].map((item) => (
                 <Link
-                  key={item}
-                  href={`/${item.toLowerCase()}`}
+                  key={item.href}
+                  href={item.href}
                   className="group relative block w-fit"
                 >
                   <span className="group-hover:opacity-70 transition">
-                    {item}
+                    {item.label}
                   </span>
                   <span className="absolute -bottom-1 left-0 w-0 h-px bg-white transition-all group-hover:w-full" />
                 </Link>

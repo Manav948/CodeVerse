@@ -144,11 +144,6 @@ export default function CodeVerseHero() {
       <div className="absolute inset-0 bg-linear-to-b from-black/60 via-black/70 to-black z-20" />
 
       <div className="relative z-30 flex flex-col items-center justify-center h-full text-center px-6">
-
-        <span className="px-4 py-1 text-sm bg-cyan-500/10 text-white rounded-full border border-red-400 backdrop-blur-md tracking-wide">
-          The Developer Public Workspace
-        </span>
-
         <h1 className="mt-8 text-5xl md:text-7xl font-bold leading-tight tracking-tight">
           Create. Share.
           <br />

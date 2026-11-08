@@ -1,7 +1,7 @@
 
 import type { ReactNode } from "react";
 import Header from "./Header";
-import Footer from "./Footer";
+  import Footer from "./Footer";
 
 export default function MarketingPageShell({ children }: { children: ReactNode }) {
   return (

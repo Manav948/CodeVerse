@@ -119,7 +119,7 @@ const whyItems = [
   { icon: <Terminal size={18} />, title: "Built for Developers", desc: "Every feature is designed around how real engineers actually work — not generic productivity tools." },
   { icon: <Layers size={18} />, title: "All-in-One Ecosystem", desc: "Posts, snippets, Q&A, and tasks — stop juggling multiple platforms and build in one place." },
   { icon: <Cpu size={18} />, title: "Public by Default", desc: "Your work is discoverable. Build a reputation by sharing your knowledge openly with the community." },
-  { icon: <Globe size={18} />, title: "Global Community", desc: "Connect with developers across 48+ countries who are serious about growing publicly." },
+  { icon: <Globe size={18} />, title: "Global Community", desc: "Connect with developers across 48+ countries." },
 ];
 
 
@@ -288,7 +288,7 @@ const HomePage = () => {
               Why CodeVerse
             </span>
             <h2 className="text-4xl md:text-5xl font-bold tracking-tight">
-              Built different, <span className="text-red-500">by design.</span>
+              Why developers choose <span className="text-red-500">CodeVerse.</span>
             </h2>
           </motion.div>
 

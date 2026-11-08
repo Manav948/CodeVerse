@@ -5,12 +5,7 @@ const items = [
   "Snippet Library",
   "Community Q&A",
   "Task Tracking",
-  "Build in Public",
-  "Public Developer Identity",
   "Share Knowledge",
-  "Grow Consistently",
-  "Open Source",
-  "Code Reviews",
 ];
 
 export default function Slider() {

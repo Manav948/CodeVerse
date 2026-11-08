@@ -16,7 +16,6 @@ const stats = [
   { value: 15000, label: "Active Developers", suffix: "+" },
   { value: 3200, label: "Weekly Contributions", suffix: "+" },
   { value: 48, label: "Countries", suffix: "" },
-  { value: 94, label: "Satisfaction Rate", suffix: "%" },
 ];
 
 export default function CommunitySection() {

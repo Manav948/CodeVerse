@@ -14,7 +14,6 @@ import Hero from "./HomeSection";
 import FeatureBlock from "./Feature";
 import Slider from "./Slider";
 import ImageCarousel from "./Carousel";
-import GamifiedSection from "./FieldSection";
 import CommunitySection from "./CommunitySection";
 import { useCardEffects } from "@/hooks/useCardEffects";
 
@@ -313,7 +312,6 @@ const HomePage = () => {
         </div>
       </section>
 
-      <GamifiedSection />
       <CommunitySection />
       <Footer />
     </main>

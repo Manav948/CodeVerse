@@ -23,7 +23,7 @@ import {
 
 const NAV_LINKS = [
   { label: "About", href: "/about" },
-  { label: "Contact", href: "#" },
+  { label: "Terms", href: "/terms" },
 ];
 
 const PRODUCTS = [
@@ -197,3 +197,4 @@ export default function Header() {
     </>
   );
 }
+

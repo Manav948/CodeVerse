@@ -23,6 +23,7 @@ import {
 
 const NAV_LINKS = [
   { label: "About", href: "/about" },
+  { label: "Privacy", href: "/privacy" },
   { label: "Terms", href: "/terms" },
 ];
 

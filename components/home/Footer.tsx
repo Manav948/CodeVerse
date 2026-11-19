@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { motion, Variants } from "framer-motion";
+import { motion, useReducedMotion, Variants } from "framer-motion";
 import { Github, Linkedin } from "lucide-react";
 
 const XIcon = (props: React.SVGProps<SVGSVGElement>) => (
@@ -61,6 +61,7 @@ const letterVariant: Variants = {
 };
 
 export default function Footer() {
+  const prefersReducedMotion = useReducedMotion();
   return (
     <footer className="relative w-full bg-black text-white overflow-hidden border-t border-white/10">
       
@@ -158,7 +159,7 @@ export default function Footer() {
       <div className="relative w-full flex justify-center items-end overflow-hidden">
         <motion.div
           variants={container}
-          initial="hidden"
+          initial={prefersReducedMotion ? false : "hidden"}
           whileInView="visible"
           viewport={{ once: true }}
           className="flex leading-none font-black tracking-tight text-[22vw] md:text-[14rem] text-white select-none"
